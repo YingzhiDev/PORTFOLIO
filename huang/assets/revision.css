@@ -11,6 +11,38 @@
   }
 }
 
+/* English labels need more horizontal room than the Chinese equivalents. */
+html[lang="en"] .demo-tab {
+  min-height: 68px;
+}
+
+html[lang="en"] .demo-tab b {
+  overflow: visible;
+  white-space: normal;
+  text-overflow: clip;
+  line-height: 1.18;
+}
+
+@media (min-width: 1041px) {
+  html[lang="en"] .toc-list {
+    width: max(100%, 780px);
+    grid-template-columns: repeat(6, minmax(112px, 1fr));
+    gap: 6px;
+    padding-right: 116px;
+  }
+
+  html[lang="en"] .toc a {
+    padding-inline: 9px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 900px) {
+  html[lang="en"] .demo-switcher {
+    grid-template-columns: repeat(7, minmax(138px, 1fr));
+  }
+}
+
 /* July 23 content-system revision:
    pain/problem states use muted brick red; solution and system states use
    HUANG Director green with amber wayfinding. */

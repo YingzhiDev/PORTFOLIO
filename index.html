@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="YINGZHI HUANG portfolio: AI product engineering, multimodal prototyping, and selected technical storytelling."
+      content="YINGZHI HUANG portfolio: AI product and developer experience engineering, multimodal prototyping, generative AI workflow design, and technical storytelling."
     />
     <meta name="theme-color" content="#f4e8d4" />
     <link rel="icon" type="image/png" href="./LOGO.png" />
-    <title>YINGZHI HUANG | AI Product &amp; Technical Storytelling</title>
+    <title>YINGZHI HUANG | AI Product &amp; Developer Experience Engineer</title>
     <style>
       :root {
         color-scheme: light;
@@ -456,6 +456,10 @@
         text-transform: uppercase;
       }
 
+      html[lang="en"] .home__stat span {
+        max-width: 150px;
+      }
+
       .dock {
         --dock-bg: rgba(248, 239, 223, 0.9);
         --dock-border: rgba(26, 44, 38, 0.14);
@@ -792,7 +796,7 @@
 
         .home__role {
           margin-top: 18px;
-          font-size: 17px;
+          font-size: 15.5px;
         }
 
         .home__lede {
@@ -839,6 +843,13 @@
         .home__stat span {
           margin-top: 3px;
           font-size: 7px;
+        }
+
+        html[lang="en"] .home__stat span {
+          max-width: none;
+          font-size: 7.5px;
+          letter-spacing: 0.055em;
+          line-height: 1.35;
         }
       }
 
@@ -899,7 +910,7 @@
               </div>
             </div>
             <div class="home__status" data-i18n="home.status">
-              Shanghai · Open to global opportunities
+              Shanghai, China · Open to San Francisco relocation
             </div>
           </header>
 
@@ -914,13 +925,13 @@
                 <span class="home__name-en" lang="en">YINGZHI HUANG</span>
               </h1>
               <p class="home__role" data-i18n="home.role">
-                AI Product Developer × Visual Storyteller
+                AI Product &amp; Developer Experience Engineer
               </p>
               <p class="home__lede" data-i18n="home.lede">
                 Product-minded AI builder combining seven years of visual storytelling with
-                hands-on full-stack prototyping and generative AI workflow design. I turn
-                complex multimodal capabilities into product experiences, reusable creative
-                workflows, and technical narratives that make sense to non-technical audiences.
+                hands-on full-stack prototyping and generative AI workflow design. I turn ambiguous
+                model capabilities into clear demos, reusable workflows, and technical narratives
+                for creators, e-commerce teams, SaaS enterprises, and AI influencers.
               </p>
               <div
                 class="home__actions"
@@ -946,8 +957,8 @@
                 </a>
                 <a
                   class="home__button"
-                  href="./HUANG_RESUME.docx"
-                  download="HUANG_RESUME.docx"
+                  href="./Yingzhi_Huang_Resume.docx"
+                  download="Yingzhi_Huang_Resume.docx"
                 >
                   <span data-i18n="cta.resume">Download Resume</span>
                   <span aria-hidden="true">↓</span>
@@ -970,10 +981,10 @@
                 <strong>7</strong><span data-i18n="home.stats.years">Years of visual storytelling</span>
               </div>
               <div class="home__stat">
-                <strong>55,941</strong><span data-i18n="home.stats.records">Structured records / 16 knowledge databases</span>
+                <strong>55,941</strong><span data-i18n="home.stats.records">Structured records across 16 databases</span>
               </div>
               <div class="home__stat">
-                <strong>1.2M+</strong><span data-i18n="home.stats.views">Average views per distributed video</span>
+                <strong>1.2M+</strong><span data-i18n="home.stats.views">Average viewership / video</span>
               </div>
             </div>
           </footer>
@@ -1065,6 +1076,7 @@
         <button
           type="button"
           data-language="en"
+          lang="en"
           aria-label="Use English"
           data-i18n-aria="language.english"
           aria-pressed="true"
@@ -1074,11 +1086,12 @@
         <button
           type="button"
           data-language="zh"
+          lang="zh-CN"
           aria-label="Use Chinese"
           data-i18n-aria="language.chinese"
           aria-pressed="false"
         >
-          中
+          中文
         </button>
       </div>
       <nav class="dock__nav" aria-label="Select a section" data-i18n-aria="dock.select">
@@ -1174,8 +1187,8 @@
       (() => {
         const translations = {
           "meta.description": {
-            en: "YINGZHI HUANG portfolio: AI product engineering, multimodal prototyping, and selected technical storytelling.",
-            zh: "YINGZHI HUANG 个人作品集：AI 产品开发、多模态原型与技术叙事精选。",
+            en: "YINGZHI HUANG portfolio: AI product and developer experience engineering, multimodal prototyping, generative AI workflow design, and technical storytelling.",
+            zh: "YINGZHI HUANG 个人作品集：AI 产品与开发者体验工程、多模态原型、生成式 AI 工作流设计与技术叙事。",
           },
           "loading": {
             en: "LOADING PORTFOLIO",
@@ -1186,20 +1199,20 @@
             zh: "作品集 / 2026",
           },
           "home.status": {
-            en: "Shanghai · Open to global opportunities",
-            zh: "上海 · 接受全球工作机会",
+            en: "Shanghai, China · Open to San Francisco relocation",
+            zh: "中国上海 · 可迁往旧金山",
           },
           "home.eyebrow": {
             en: "AI Product & Developer Experience Engineer · Multimodal Prototyping · Technical Storytelling",
             zh: "AI 产品与开发者体验工程 · 多模态原型 · 技术叙事",
           },
           "home.role": {
-            en: "AI Product Developer × Visual Storyteller",
-            zh: "AI 产品开发者 × 视觉叙事者",
+            en: "AI Product & Developer Experience Engineer",
+            zh: "AI 产品与开发者体验工程师",
           },
           "home.lede": {
-            en: "Product-minded AI builder combining seven years of visual storytelling with hands-on full-stack prototyping and generative AI workflow design. I turn complex multimodal capabilities into product experiences, reusable creative workflows, and technical narratives that make sense to non-technical audiences.",
-            zh: "我是一名以产品思维工作的 AI 产品开发者，也是一名拥有七年视觉叙事经验的影像创作者。我擅长把复杂的多模态模型能力，转化为可以被体验的产品原型、可复用的创作工作流，以及让非技术受众也能理解的技术叙事。",
+            en: "Product-minded AI builder combining seven years of visual storytelling with hands-on full-stack prototyping and generative AI workflow design. I turn ambiguous model capabilities into clear demos, reusable workflows, and technical narratives for creators, e-commerce teams, SaaS enterprises, and AI influencers.",
+            zh: "我是一名兼具产品思维与动手能力的 AI 构建者，将七年视觉叙事经验与全栈原型开发、生成式 AI 工作流设计结合起来。我擅长把边界模糊的模型能力转化为清晰的产品演示、可复用工作流，以及面向创作者、电商团队、SaaS 企业与 AI 影响力人群的技术叙事。",
           },
           "home.actions.aria": {
             en: "Portfolio and contact actions",
@@ -1230,11 +1243,11 @@
             zh: "年视觉叙事经验",
           },
           "home.stats.records": {
-            en: "Structured records / 16 knowledge databases",
-            zh: "条结构化记录 / 16 个知识库",
+            en: "Structured records across 16 databases",
+            zh: "条结构化记录，覆盖 16 个数据库",
           },
           "home.stats.views": {
-            en: "Average views per distributed video",
+            en: "Average viewership / video",
             zh: "单支分发视频平均播放量",
           },
           "section.huang": {
@@ -1354,8 +1367,8 @@
             zh: "作品",
           },
           "title.home": {
-            en: "YINGZHI HUANG | AI Product & Technical Storytelling",
-            zh: "YINGZHI HUANG｜AI 产品开发与技术叙事",
+            en: "YINGZHI HUANG | AI Product & Developer Experience Engineer",
+            zh: "YINGZHI HUANG｜AI 产品与开发者体验工程师",
           },
           "title.huang": {
             en: "GENIUSHUANG | AI Director Workstation Case Study",

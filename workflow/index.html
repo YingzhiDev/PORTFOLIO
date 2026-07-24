@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <meta name="color-scheme" content="dark">
   <meta name="description" content="Brand E-commerce Infinite Canvas Workflow — an offline portfolio case study recreated to demonstrate AI-directed creative production methods and interaction design.">
+  <link rel="icon" type="image/png" href="../LOGO.png">
   <title>Brand E-commerce Infinite Canvas Workflow</title>
   <style>
     :root {
@@ -137,18 +138,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 3px;
     }
     .stage-tab {
       height: 44px;
-      padding: 0 17px;
+      padding: 0 6px;
       border: 1px solid transparent;
       border-radius: 11px;
       color: #7f887f;
       background: transparent;
       cursor: pointer;
       white-space: nowrap;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 750;
     }
     .stage-tab:hover { color: #dce2dc; background: #252925; }
@@ -1466,6 +1467,23 @@
       .project-pill { min-width: 0; width: 190px; }
       .project-copy span, .stage-strip, .utility-btn span, .command-bar, .minimap { display: none; }
       .top-actions .plain-btn:not(.primary) { display: none; }
+      .floating-toolbar {
+        right: 8px;
+        left: 8px;
+        width: auto;
+        gap: 3px;
+        transform: none;
+      }
+      .tool-btn {
+        min-width: 30px;
+        width: 34px;
+        height: 42px;
+        flex: 1 1 34px;
+        font-size: 20px;
+      }
+      .tool-btn.accent { font-size: 26px; }
+      .tool-sep { display: none; }
+      .utility-bar { bottom: 86px; }
       .drawer { width: min(334px, calc(100vw - 28px)); }
       .inspector { width: min(326px, calc(100vw - 28px)); }
       .shortcut-grid, .tutorial-grid { grid-template-columns: 1fr; }
@@ -1484,16 +1502,16 @@
     <div class="project-pill">
       <div class="project-logo">W.</div>
       <div class="project-copy">
-        <b data-i18n="project.name">Brand E-commerce Infinite Canvas Workflow</b>
-        <span>OFFLINE CANVAS / PORTFOLIO</span>
+        <b data-i18n="project.shortName">Infinite Canvas</b>
+        <span data-i18n="top.canvasLabel">OFFLINE CANVAS / PORTFOLIO</span>
       </div>
     </div>
     <div class="top-sep"></div>
     <nav class="stage-strip" id="stageStrip" aria-label="Workflow stages" data-i18n-aria="aria.stages"></nav>
     <div class="top-actions">
       <div class="language-switch" role="group" aria-label="Language" data-i18n-aria="aria.language">
-        <button type="button" data-language="en" aria-pressed="true">EN</button>
-        <button type="button" data-language="zh" aria-pressed="false">中文</button>
+        <button type="button" data-language="en" lang="en" aria-label="Use English" data-i18n-aria="aria.languageEnglish" aria-pressed="true">EN</button>
+        <button type="button" data-language="zh" lang="zh-CN" aria-label="Use Chinese" data-i18n-aria="aria.languageChinese" aria-pressed="false">中文</button>
       </div>
       <span class="offline" data-i18n="top.offline">Offline demo · Autosaved</span>
       <button class="plain-btn ghost" id="resetBtn" data-i18n="action.reset">Reset</button>
@@ -1573,7 +1591,7 @@
     <div class="modal-card">
       <div class="modal-accent"></div>
       <div class="modal-head">
-        <div><small>CANVAS SHORTCUTS</small><h2 data-i18n="shortcut.title">Keyboard Shortcuts</h2></div>
+        <div><small data-i18n="shortcut.eyebrow">CANVAS SHORTCUTS</small><h2 data-i18n="shortcut.title">Keyboard Shortcuts</h2></div>
         <button class="icon-btn" data-close-modal="shortcutModal" aria-label="Close shortcuts" data-i18n-aria="aria.closeShortcuts">×</button>
       </div>
       <div class="modal-body">
@@ -1586,7 +1604,7 @@
     <div class="modal-card">
       <div class="modal-accent"></div>
       <div class="modal-head">
-        <div><small>OFFLINE WORKFLOW GUIDE</small><h2 data-i18n="guide.title">3-Minute Canvas Guide</h2></div>
+        <div><small data-i18n="guide.eyebrow">OFFLINE WORKFLOW GUIDE</small><h2 data-i18n="guide.title">3-Minute Canvas Guide</h2></div>
         <button class="icon-btn" data-close-modal="tutorialModal" aria-label="Close guide" data-i18n-aria="aria.closeTutorial">×</button>
       </div>
       <div class="modal-body">
@@ -1628,7 +1646,10 @@
         zh: "知名品牌电商无限画布工作流——为展示 AI 导演式创意生产方法与交互设计而独立复刻的离线作品集案例。"
       },
       "project.name": { en: "Brand E-commerce Infinite Canvas Workflow", zh: "知名品牌电商工作流" },
+      "project.shortName": { en: "Infinite Canvas", zh: "电商无限画布" },
       "aria.language": { en: "Language", zh: "语言" },
+      "aria.languageEnglish": { en: "Use English", zh: "切换为英文" },
+      "aria.languageChinese": { en: "Use Chinese", zh: "切换为中文" },
       "aria.stages": { en: "Workflow stages", zh: "流程阶段" },
       "aria.notice": { en: "Recreation and copyright notice", zh: "作品复刻与版权保护说明" },
       "aria.canvas": { en: "Infinite canvas", zh: "无限画布" },
@@ -1656,6 +1677,7 @@
       "aria.minimap": { en: "Minimap", zh: "小地图" },
       "aria.closeShortcuts": { en: "Close shortcuts", zh: "关闭快捷键" },
       "aria.closeTutorial": { en: "Close guide", zh: "关闭教程" },
+      "top.canvasLabel": { en: "OFFLINE CANVAS / PORTFOLIO", zh: "离线画布 / 作品集" },
       "top.offline": { en: "Offline demo · Autosaved", zh: "离线演示 · 自动保存" },
       "action.reset": { en: "Reset", zh: "重置" },
       "action.import": { en: "Import", zh: "导入" },
@@ -1687,6 +1709,7 @@
         zh: "先点击上游节点右侧端口，再点击下游节点左侧端口 · ESC 取消"
       },
       "guide.title": { en: "3-Minute Canvas Guide", zh: "3 分钟浏览指南" },
+      "guide.eyebrow": { en: "OFFLINE WORKFLOW GUIDE", zh: "离线工作流指南" },
       "guide.pan.title": { en: "Pan and Zoom", zh: "平移与缩放" },
       "guide.pan.copy": { en: "Drag the canvas to move; use the wheel to zoom around the pointer. Press 0 to fit the full workflow.", zh: "拖拽画布移动视野，滚轮围绕鼠标位置缩放；按 0 可立即查看全局。" },
       "guide.edit.title": { en: "Edit and Connect", zh: "编辑与连线" },
@@ -1700,6 +1723,7 @@
       "guide.tour.title": { en: "Case Study Tour", zh: "作品讲解" },
       "guide.tour.copy": { en: "Choose a stage or start Auto Tour to follow Brief → Assets → Direction → Generation → Finish → Delivery.", zh: "点击顶部阶段或“自动演示”，按需求→资产→编排→生成→精修→交付依次聚焦。" },
       "shortcut.title": { en: "Keyboard Shortcuts", zh: "快捷键" },
+      "shortcut.eyebrow": { en: "CANVAS SHORTCUTS", zh: "画布快捷键" },
       "confirm.eyebrow": { en: "CONFIRM ACTION", zh: "确认操作" }
     };
 
@@ -2215,6 +2239,69 @@
       }
     });
 
+    const CORE_NODE_ZH_PROMPTS = {
+      mood: "城市高架 / 日间硬光 / 粗粝胶片颗粒",
+      "shoe-green": "保持精确鞋型、荧光绿鞋面、白色泡棉鞋底与品牌标识位置。",
+      "shoe-dark": "保持黑色鞋面、反光标识与外底几何结构。",
+      talent: "亚洲男性城市跑者，精瘦运动体型，面部干净，人物身份保持一致。",
+      "female-role": "亚洲女性城市跑者，运动状态自然有力，呈现高端运动广告质感。",
+      wardrobe: "黑色轻量跑步短裤，弱化品牌标识，保留真实面料质感。",
+      "product-detail": "鞋体技术分层图：工程网布鞋面、支撑板、回弹泡棉与橡胶外底；保持层级对齐与真实比例。",
+      "asset-check": "生成前校验资产身份与产品几何结构的一致性。",
+      "prompt-main": "亚洲男性跑者位于巨大的混凝土高架桥下，极低机位跟拍；知名品牌荧光绿跑鞋作为视觉中心，黑色机能服装，日间硬光，电影级商业运动摄影，轻微运动模糊，材质真实，高端广告质感，4:5。",
+      "shot-list": "在跑者、鞋款与光线语言保持一致的前提下，规划六类商业镜头。",
+      "grid-prompt": "九宫格共九张照片：多角度微距特写、高架桥下环境静物，以及恰好两张上脚跑动近景；使用电影感日光与写实商业运动摄影风格。",
+      "video-prompt": "6 秒低机位跟拍。以外底触地开场，跟随跑者加速，最后用受控的升降镜头揭示环境；保持鞋款与人物身份一致。",
+      config: "批次 01 / 24 张图片 + 4 次视频测试",
+      "gen-hero": "从 A 批次中选出的主视觉跑步镜头。",
+      "gen-lace": "跑者在高架桥下系紧荧光绿跑鞋。",
+      "gen-detail": "脚掌触地瞬间的极低机位微距：定格橡胶纹路接触、泡棉压缩与沥青颗粒；产品清晰，动态自然。",
+      "gen-portrait": "黎明时分的跑后半身肖像；真实汗水、受控呼吸、暖色轮廓光与平静自信的状态。",
+      "gen-product": "混凝土高架桥下的荧光绿跑鞋静物；斜向日间硬光、冷灰材质环境与干净的商业质感。",
+      "gen-grid": "九宫格探索方案接触表。",
+      "motion-test": "6 秒隧道跟拍：脚跟进入画面，跑者在重复灯带下加速，摄影机以贴地机位完成超越。",
+      "batch-report": "汇总视觉缺陷并筛选表现最强的输出。",
+      review: "不通过原因：手部结构、外底变形。通过项：产品形态、动态、光线与裁切安全区。",
+      retouch: "保持构图不变，仅修正手部结构与外底纹路。",
+      "copy-layout": "使用粗体窄体字、荧光绿强调色与深色半透明文案区。",
+      approval: "已批准用于电商发布，最终源文件锁定。",
+      final: "最终批准的主视觉。",
+      social: "4:5 社交媒体裁切，突出女性跑者冲刺；保留右上文案空间与完整的荧光绿鞋款轮廓。",
+      "detail-page": "围绕干净的四层鞋体分解图构建长版电商科技模块。",
+      "social-video": "6 秒竖版剪辑：黎明爆发起跑、侧面跟拍加速，最后收束到干净的产品定格。",
+      delivery: "JPG / PNG / MP4 / 源文件 / 文案文件",
+      "reference-low-angle": "精确捕捉起跑瞬间的贴地侧面参考：一只脚离开沥青，长道路线条将视线引向前方。",
+      "reference-overpass": "雨后湿润的城市街道，清晨低角度侧光，鞋体长阴影与克制的冷暖对比。",
+      "reference-grid": "夜间天台跑步氛围：蓝紫色城市辉光、受控高光，荧光绿鞋款始终是最亮的产品视觉点。",
+      "original-green": "将这张干净侧面图作为几何基准；保持鞋头翘度、鞋领曲线、泡棉厚度与外底长度。",
+      "original-white": "参考精确的橡胶区域节奏、弯折槽与泡棉—外底接缝；避免生成不存在的纹路符号。",
+      "original-model-confirmed": "保持同一女性跑者身份、高步频姿态、束发造型与自然运动比例。",
+      "original-product-01": "参考接触阴影、混凝土质感与硬光边界；让鞋体真实落地，避免悬浮。",
+      "original-product-05": "使用克制的湿沥青反射、长侧影与冷色环境光，同时避免重复棚拍质感。",
+      "original-glasses": "跑后情绪参考：真实呼吸、汗水质感、专注眼神与温暖的日出轮廓光。",
+      "grid-high-12": "生成四张不重复的微距：网布纹理、鞋带孔、泡棉剖面与橡胶纹路；改变角度与高光方向。",
+      "grid-high-21": "建立三种明确不同的城市场景：日间硬光高架、雨后黎明街道与蓝紫霓虹天台；不要复用机位高度。",
+      "grid-high-22": "保持人物与鞋款一致的五拍动作链：系带、重心前倾、起跑、腾空冲刺、受控减速。",
+      "grid-high-31": "用不同景别呈现三种情绪：专注近景、爆发力侧面动作与平静的逆光恢复状态。",
+      "grid-high-32": "为 4:5、9:16、16:9 与 1:1 准备裁切安全构图；每种比例采用不同的负空间策略。",
+      "text-node-19": "严格生成九格：4 张产品微距 + 3 张环境静物 + 2 张上脚动作；每格必须改变主体尺度、角度或光线。",
+      "image-node-3-branch": "女性跑者在层叠高架桥下冲刺；紧凑步频、自然摆臂、完整露出荧光绿跑鞋，并在画面右侧保留文案空间。",
+      "image-node-6-detail": "写实鞋体分解图，四层结构准确对齐、厚度关系真实，不包含文字标签。",
+      "image-node-15-grid": "蓝紫色城市辉光中的夜间天台冲刺；保持可信肤色，并让荧光绿鞋款成为唯一高饱和视觉点。",
+      "video-node-15": "6 秒连续减速：最后一步采用低机位追拍，随后稳定为侧面视角，最后 1 秒停留在呼吸与鞋款上。",
+      "video-node-10": "8 秒匹配剪辑：系紧鞋带微距、重心转移、前掌压缩、爆发起跑；保持手部与鞋带连续性。",
+      "hd-output": "放大干净的鞋款侧面母版；保留清晰边缘、网布质感与泡棉渐变，避免过度锐化。",
+      "review-image-7": "检查热身动作的人体结构、鞋体是否真实落地、台阶透视与可用负空间；拒绝不自然的关节角度。",
+      "review-image-12": "对照锁定的产品参考，逐项比较纹路方向、弯折槽、泡棉压缩与接触阴影。",
+      "review-grid-high": "跨场景色彩审核：保持荧光绿在日间、雨后黎明与霓虹夜景中的色相稳定；统一黑位但不压平对比度。",
+      "review-video-copy": "审核从减速到停止的身体惯性、呼吸节奏与鞋款锁定；最后 12 帧必须稳定，可用于广告尾卡。",
+      "delivery-image-3": "交付 4:5 夜间天台裁切；上方保留文案空间，下方避开平台控件，并保持荧光绿鞋款清晰可见。",
+      "delivery-image-6": "用于透明背景的干净鞋款侧面交付图；边缘准确、无投射阴影、无版式文字。",
+      "delivery-video-2": "6 秒竖版剪辑：女性跑者起跑、贴地追鞋，并以干净的右上尾卡空间收束；产品在 0.5 秒内出现。",
+      "delivery-video-5": "10 秒横版隧道剪辑：远景入场、重复灯带跟拍、外底插入镜头与亮区出口收束；使用受控冷色调。",
+      "delivery-music": "8 秒节奏剪辑：第一拍系带、第二拍起跑、第三拍外底触地，最后用短暂的静音呼吸完成收束。"
+    };
+
     const EN_TERM = {
       "视觉资产": "Visual Asset", "文本理解": "Text Analysis", "图像生成模型": "Image Generation Model",
       "视频生成模型": "Video Generation Model", "局部重绘": "Inpainting", "视觉质检": "Visual QA",
@@ -2285,11 +2372,93 @@
       note: { en: "Note", zh: "便签" },
       group: { en: "Group", zh: "分组" }
     };
+    const ZH_STATUS = {
+      APPROVED: "已批准",
+      "8 REFS": "8 项参考",
+      TEXT: "文本",
+      LOCKED: "已锁定",
+      "12 OUTPUTS": "12 项输出",
+      "HERO COLOR": "主推色",
+      "ALT COLOR": "备选色",
+      "CAST A": "角色 A",
+      "CAST B": "角色 B",
+      "SKU W01": "SKU W01",
+      "TECH MAP": "技术图",
+      "PASS 6/6": "通过 6/6",
+      "V3.2 LOCKED": "V3.2 已锁定",
+      "6 SHOTS": "6 个镜头",
+      PROMPT: "提示词",
+      "VIDEO PROMPT": "视频提示词",
+      READY: "就绪",
+      SELECTED: "已选",
+      ALT: "备选",
+      "9 OUTPUTS": "9 项输出",
+      "00:06": "00:06",
+      DONE: "完成",
+      "PASS 4/6": "通过 4/6",
+      "FINAL V2": "最终版 V2",
+      V4: "V4",
+      DELIVERED: "已交付",
+      COMPLETE: "已完成",
+      "ANGLE REF": "角度参考",
+      "LIGHT REF": "光线参考",
+      "5 RULES": "5 项规则",
+      "6 VIEWS": "6 个视角",
+      "MOOD B": "氛围 B",
+      LAYOUT: "版式",
+      "SOURCE A": "源素材 A",
+      "SOURCE B": "源素材 B",
+      "CAST B LOCK": "角色 B 锁定",
+      "SOURCE C": "源素材 C",
+      "SOURCE D": "源素材 D",
+      "EMOTION REF": "情绪参考",
+      "4 MACROS": "4 张微距",
+      "3 SCENES": "3 个场景",
+      "5 BEATS": "5 个节拍",
+      "3 MOODS": "3 种情绪",
+      "4 CROPS": "4 种裁切",
+      "9 CELLS": "9 格",
+      "SELECTED B": "B 方案入选",
+      "TECH SELECT": "科技方案入选",
+      "ALT NIGHT": "夜景备选",
+      "00:08": "00:08",
+      "4K MASTER": "4K 母版",
+      "PASS 8.8": "通过 8.8",
+      "PASS 9.1": "通过 9.1",
+      "QC TEXT": "质检文本",
+      COMPARE: "对比",
+      "FRAME QC": "画面质检"
+    };
+    const localizeStatusToChinese = status => {
+      const value = String(status ?? "");
+      if (ZH_STATUS[value]) return ZH_STATUS[value];
+      if (/^RUNNING \d+%$/.test(value)) return value.replace("RUNNING", "运行中");
+      return value;
+    };
     const typeCopy = (type, language = currentLanguage) => NODE_TYPE_COPY[type]?.[language] || (language === "zh" ? "节点" : "Node");
     const localizeNode = (node, language = currentLanguage) => {
       const storedCopy = node.i18n?.[language];
-      if (storedCopy) return { ...node, ...storedCopy };
-      if (language === "zh") return node;
+      if (storedCopy) {
+        return {
+          ...node,
+          ...storedCopy,
+          status: language === "zh"
+            ? localizeStatusToChinese(storedCopy.status ?? node.status)
+            : storedCopy.status ?? node.status
+        };
+      }
+      if (language === "zh") {
+        return {
+          ...node,
+          ...(CORE_NODE_ZH_PROMPTS[node.id] ? { prompt: CORE_NODE_ZH_PROMPTS[node.id] } : {}),
+          model: node.model === "Brief"
+            ? "项目需求"
+            : node.model === "Reference"
+              ? "参考素材"
+              : node.model,
+          status: localizeStatusToChinese(node.status)
+        };
+      }
       const patch = CORE_NODE_EN[node.id] || {};
       const defaults = STAGE_DEFAULT_EN[Number(node.stage)] || STAGE_DEFAULT_EN[3];
       const prompt = patch.prompt ?? (!hasHan(node.prompt) && node.prompt ? node.prompt : defaults.prompt);
@@ -3135,10 +3304,10 @@
 
     function nodeMarkup(node) {
       const tags = (node.tags || []).map((tag, index) => `<span class="tag ${index === 0 ? "accent" : ""}">${escapeHTML(tag)}</span>`).join("");
-      const statusReady = /READY|SELECTED|APPROVED|LOCKED|PASS|DONE|FINAL|COMPLETE|DELIVERED/.test(node.status || "");
+      const statusReady = /READY|SELECTED|APPROVED|LOCKED|PASS|DONE|FINAL|COMPLETE|DELIVERED|就绪|已选|已批准|已锁定|通过|完成|最终|已交付/.test(node.status || "");
       let body = "";
       if (node.type === "note") {
-        body = `<div class="node-copy"><div class="node-kicker">CAMPAIGN BRIEF / ${String(node.stage).padStart(2, "0")}</div>
+        body = `<div class="node-copy"><div class="node-kicker">${bi("CAMPAIGN BRIEF", "项目需求")} / ${String(node.stage).padStart(2, "0")}</div>
           <h2>${escapeHTML(node.title).replace(" · ", "<br>")}</h2>
           <div class="node-description">${escapeHTML(node.description)}</div><div class="tags">${tags}</div></div>`;
       } else if (node.type === "image" || node.type === "video") {
@@ -3154,11 +3323,11 @@
           ${timeline}
           <div class="caption"><b>${escapeHTML(node.title)}</b><span>${escapeHTML(node.description)}</span><div class="tags">${tags}</div></div>`;
       } else if (node.type === "delivery") {
-        body = `<div class="node-copy"><div class="node-kicker">DELIVERY PACKAGE</div>
+        body = `<div class="node-copy"><div class="node-kicker">${bi("DELIVERY PACKAGE", "交付包")}</div>
           <div class="node-description">${escapeHTML(node.description).replace(/\n/g, "<br>")}</div>
           <div class="tags">${tags}</div><div class="node-meta"><span>${escapeHTML(node.prompt)}</span><span class="quality">100%</span></div></div>`;
       } else {
-        body = `<div class="node-copy"><div class="node-kicker">${node.type === "text" ? "PROMPT / CONTENT" : "WORKFLOW PROCESS"}</div>
+        body = `<div class="node-copy"><div class="node-kicker">${node.type === "text" ? bi("PROMPT / CONTENT", "提示词 / 内容") : bi("WORKFLOW PROCESS", "工作流处理")}</div>
           <div class="node-description">${escapeHTML(node.description)}</div>
           ${node.prompt ? `<div class="node-prompt" style="margin-top:12px">${escapeHTML(node.prompt)}</div>` : ""}
           <div class="tags">${tags}</div>
@@ -3340,7 +3509,7 @@
         return;
       }
       const node = localizeNode(sourceNode);
-      refs.inspectEyebrow.textContent = `NODE / ${node.type.toUpperCase()} / STAGE ${String(node.stage).padStart(2, "0")}`;
+      refs.inspectEyebrow.textContent = `${bi("NODE", "节点")} / ${titleFor(node.type).toUpperCase()} / ${bi("STAGE", "阶段")} ${String(node.stage).padStart(2, "0")}`;
       refs.inspectHeading.textContent = node.title;
       const connections = state.edges.filter(edge => edge.source === node.id || edge.target === node.id);
       const connectionMarkup = connections.length ? connections.map(edge => {
@@ -3680,7 +3849,9 @@
         if (node.i18n?.en) node.i18n.en.status = node.status;
         if (node.i18n?.zh) node.i18n.zh.status = node.status;
         const element = refs.nodesLayer.querySelector(`[data-node-id="${CSS.escape(node.id)}"] .node-status`);
-        if (element) element.textContent = node.status;
+        if (element) element.textContent = currentLanguage === "zh"
+          ? localizeStatusToChinese(node.status)
+          : node.status;
         if (progress >= 100) {
           clearInterval(timer);
           node.status = /FINAL|DELIVERED|COMPLETE/.test(originalStatus) ? originalStatus : "READY";
@@ -3734,7 +3905,7 @@
           `${ASSET_CATALOG.length} local static assets · Click to add to canvas`,
           `${ASSET_CATALOG.length} 项本地静态素材 · 点击加入画布`
         );
-        refs.drawerBody.innerHTML = `<div class="drawer-section"><div class="drawer-label">PROJECT ASSETS</div><div class="asset-grid">
+        refs.drawerBody.innerHTML = `<div class="drawer-section"><div class="drawer-label">${bi("PROJECT ASSETS", "项目素材")}</div><div class="asset-grid">
           ${ASSET_CATALOG.map(source => {
             const item = assetCopy(source);
             return `<button class="asset-card" data-add-asset="${source.key}"><img src="${ASSETS[source.key]}" alt="${escapeHTML(item.name)}"><div><b>${escapeHTML(item.name)}</b><span>${escapeHTML(item.category)}</span></div></button>`;
@@ -3754,9 +3925,9 @@
           { key: "portrait", name: "Runner Profile", desc: "Half-body / emotional reference" },
           { key: "shorts", name: "Black Performance Look", desc: "Wardrobe set / low saturation" }
         ];
-        refs.drawerBody.innerHTML = `<div class="drawer-section"><div class="drawer-label">LOCKED CHARACTERS</div><div class="asset-grid">
+        refs.drawerBody.innerHTML = `<div class="drawer-section"><div class="drawer-label">${bi("LOCKED CHARACTERS", "已锁定角色")}</div><div class="asset-grid">
           ${roles.map(item => `<button class="asset-card" data-add-role="${item.key}"><img src="${ASSETS[item.key]}" alt="${escapeHTML(item.name)}"><div><b>${escapeHTML(item.name)}</b><span>${escapeHTML(item.desc)}</span></div></button>`).join("")}
-        </div></div><div class="drawer-section"><div class="drawer-label">CONSISTENCY NOTES</div>
+        </div></div><div class="drawer-section"><div class="drawer-label">${bi("CONSISTENCY NOTES", "一致性说明")}</div>
           <div class="history-item current"><span class="history-dot"></span><span>${bi("All character assets are local static files. Clicking creates only a local node; nothing is uploaded and no online service is called.", "所有角色素材均为本地静态文件；点击只会创建本地节点，不会上传或调用在线服务。")}</span></div></div>`;
       } else if (kind === "history") {
         refs.drawerTitle.textContent = bi("History", "历史记录");
@@ -3778,11 +3949,11 @@
       } else {
         refs.drawerTitle.textContent = bi("Toolbox", "工具箱");
         refs.drawerSubtitle.textContent = bi("Insert an editable sub-workflow in one click", "一键插入可编辑子工作流");
-        refs.drawerBody.innerHTML = `<div class="drawer-section"><div class="drawer-label">WORKFLOW TEMPLATES</div>
+        refs.drawerBody.innerHTML = `<div class="drawer-section"><div class="drawer-label">${bi("WORKFLOW TEMPLATES", "工作流模板")}</div>
           <button class="template-card" data-template="image"><span class="template-icon">◇</span><div><b>${bi("Product Background Replacement", "商品图换背景")}</b><span>${bi("Product master → scene prompt → result", "商品母图 → 场景提示词 → 生成结果")}</span></div></button>
           <button class="template-card" data-template="video"><span class="template-icon">▶</span><div><b>${bi("First Frame to Video", "首帧生成视频")}</b><span>${bi("First-frame reference → motion prompt → 6s video", "首帧参考 → 动态提示词 → 6 秒视频")}</span></div></button>
           <button class="template-card" data-template="review"><span class="template-icon">✓</span><div><b>${bi("Product Consistency QA", "商品一致性质检")}</b><span>${bi("Candidate → automated check → pass / revise", "候选画面 → 自动检查 → 通过 / 待修")}</span></div></button>
-        </div><div class="drawer-section"><div class="drawer-label">CANVAS SUMMARY</div>
+        </div><div class="drawer-section"><div class="drawer-label">${bi("CANVAS SUMMARY", "画布摘要")}</div>
           <div class="history-item current"><span class="history-dot"></span><span>${bi(`${state.nodes.length} nodes · ${state.edges.length} connections · ${STAGES.length} stage groups`, `${state.nodes.length} 个节点 · ${state.edges.length} 条连线 · ${STAGES.length} 个阶段分组`)}</span></div>
           <div class="history-item"><span class="history-dot"></span><span>${bi("Create, drag, connect, duplicate, delete, and edit nodes; undo/redo and JSON import/export are supported.", "支持节点创建、拖拽、连接、复制、删除、参数编辑、撤销重做与 JSON 导入导出。")}</span></div>
         </div>`;
@@ -3794,7 +3965,7 @@
       const rect = button.getBoundingClientRect();
       refs.addPopover.style.left = `${rect.left - 105}px`;
       refs.addPopover.style.bottom = `${window.innerHeight - rect.top + 10}px`;
-      refs.addPopover.innerHTML = `<div class="popover-head">ADD NODE</div><div class="popover-grid">
+      refs.addPopover.innerHTML = `<div class="popover-head">${bi("ADD NODE", "添加节点")}</div><div class="popover-grid">
         <button class="create-kind" data-create-type="image"><i>◇</i><b>${bi("Image Node", "图片节点")}</b><span>${bi("Images and generated results", "图片与生成结果")}</span></button>
         <button class="create-kind" data-create-type="text"><i>T</i><b>${bi("Text Node", "文本节点")}</b><span>${bi("Prompts and analysis", "提示词与分析")}</span></button>
         <button class="create-kind" data-create-type="video"><i>▶</i><b>${bi("Video Node", "视频节点")}</b><span>${bi("Video previews and shots", "视频预览与镜头")}</span></button>

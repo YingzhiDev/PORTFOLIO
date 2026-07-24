@@ -7,6 +7,7 @@
     name="description"
     content="Selected technical storytelling across brand commercials, cultural and travel narratives, technology films, and AI-enabled production."
   />
+  <link rel="icon" type="image/png" href="../LOGO.png" />
   <title>Selected Technical Storytelling</title>
   <style>
     :root {
@@ -112,11 +113,17 @@
 
     .hero {
       min-height: min(602px, 64.4vh);
+      min-width: 0;
       display: grid;
       grid-template-columns: minmax(0, 0.8fr) minmax(480px, 1.2fr);
       align-items: center;
       gap: clamp(54px, 7vw, 112px);
       padding: 28px 0 32px;
+    }
+
+    .hero-text,
+    .hero-media {
+      min-width: 0;
     }
 
     .eyebrow,
@@ -605,9 +612,19 @@
       letter-spacing: -0.035em;
     }
 
+    html[lang="en"] .cream-ending-text {
+      width: 100%;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
     .ending-phrase {
       padding: 0 clamp(14px, 1.5vw, 24px);
       white-space: nowrap;
+    }
+
+    html[lang="en"] .ending-phrase {
+      min-width: 0;
+      white-space: normal;
     }
 
     .ending-phrase:first-child {
@@ -917,6 +934,27 @@
         font-size: clamp(48px, 10.5vw, 78px);
       }
 
+      html[lang="en"] h1 {
+        font-size: clamp(36px, 10vw, 44px);
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+      }
+
+      html[lang="en"] h1 span {
+        white-space: normal;
+      }
+
+      html[lang="en"] .eyebrow {
+        max-width: 235px;
+        align-items: flex-start;
+        line-height: 1.45;
+      }
+
+      html[lang="en"] .eyebrow::before {
+        flex: 0 0 34px;
+        margin-top: 0.65em;
+      }
+
       .hero-media {
         min-height: min(420px, 67vw);
         border-radius: 180px 180px 12px 12px;
@@ -1119,8 +1157,8 @@
 </head>
 <body>
   <div class="language-switch" role="group" aria-label="Language" data-i18n-aria="language.label">
-    <button type="button" data-language="en" aria-pressed="true">EN</button>
-    <button type="button" data-language="zh" aria-pressed="false">中文</button>
+    <button type="button" data-language="en" lang="en" aria-label="Use English" data-i18n-aria="language.english" aria-pressed="true">EN</button>
+    <button type="button" data-language="zh" lang="zh-CN" aria-label="Use Chinese" data-i18n-aria="language.chinese" aria-pressed="false">中文</button>
   </div>
 
   <main id="top">
@@ -1324,6 +1362,8 @@
         zh: "技术叙事精选：涵盖品牌广告、文旅叙事、科技影像与 AI 赋能的制作工作流。"
       },
       "language.label": { en: "Language", zh: "语言" },
+      "language.english": { en: "Use English", zh: "切换为英文" },
+      "language.chinese": { en: "Use Chinese", zh: "切换为中文" },
       "hero.eyebrow": {
         en: "Media Advertising → AI-Enabled Creativity",
         zh: "传媒广告 → AI 创意"
