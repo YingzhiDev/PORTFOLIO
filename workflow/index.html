@@ -173,6 +173,11 @@
       background: var(--accent);
       box-shadow: 0 0 12px rgba(212, 255, 72, .68);
     }
+    html[lang="en"] .offline,
+    html[lang="en"] #importBtn,
+    html[lang="en"] #exportBtn {
+      display: none;
+    }
     .plain-btn {
       height: 34px;
       display: inline-flex;
@@ -1465,6 +1470,10 @@
     }
     @media (max-width: 880px) {
       .project-pill { min-width: 0; width: 190px; }
+      html[lang="en"] .project-copy b {
+        font-size: 9.5px;
+        letter-spacing: 0;
+      }
       .project-copy span, .stage-strip, .utility-btn span, .command-bar, .minimap { display: none; }
       .top-actions .plain-btn:not(.primary) { display: none; }
       .floating-toolbar {
@@ -1502,7 +1511,7 @@
     <div class="project-pill">
       <div class="project-logo">W.</div>
       <div class="project-copy">
-        <b data-i18n="project.shortName">Infinite Canvas</b>
+        <b data-i18n="project.shortName">e-commerce workflow</b>
         <span data-i18n="top.canvasLabel">OFFLINE CANVAS / PORTFOLIO</span>
       </div>
     </div>
@@ -1646,7 +1655,7 @@
         zh: "知名品牌电商无限画布工作流——为展示 AI 导演式创意生产方法与交互设计而独立复刻的离线作品集案例。"
       },
       "project.name": { en: "Brand E-commerce Infinite Canvas Workflow", zh: "知名品牌电商工作流" },
-      "project.shortName": { en: "Infinite Canvas", zh: "电商无限画布" },
+      "project.shortName": { en: "e-commerce workflow", zh: "电商无限画布" },
       "aria.language": { en: "Language", zh: "语言" },
       "aria.languageEnglish": { en: "Use English", zh: "切换为英文" },
       "aria.languageChinese": { en: "Use Chinese", zh: "切换为中文" },

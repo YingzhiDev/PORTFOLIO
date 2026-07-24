@@ -2544,7 +2544,7 @@
         }
       }
     </style>
-    <link rel="stylesheet" href="assets/revision.css?v=20260724-en2" />
+    <link rel="stylesheet" href="assets/revision.css?v=20260724-en5" />
     <style>
       .language-switch {
         position: fixed;
@@ -2924,6 +2924,19 @@
               <div class="demo-stage">
                 <div class="demo-player">
                   <div class="demo-media" id="demoMedia">
+                    <video
+                      class="demo-video-backdrop"
+                      id="demoVideoBackdrop"
+                      src="assets/videos/01_Input_Prompt.mp4"
+                      poster="assets/ui/DIRECTOR.png"
+                      autoplay
+                      muted
+                      loop
+                      playsinline
+                      preload="metadata"
+                      tabindex="-1"
+                      aria-hidden="true"
+                    ></video>
                     <video
                       id="demoVideo"
                       src="assets/videos/01_Input_Prompt.mp4"
@@ -3845,6 +3858,7 @@
         const chapters = [...document.querySelectorAll(".chapter")];
         const chapterViewport = document.querySelector(".chapters");
         const demoVideo = document.getElementById("demoVideo");
+        const demoVideoBackdrop = document.getElementById("demoVideoBackdrop");
         const demoMedia = document.getElementById("demoMedia");
         const demoPlay = document.getElementById("demoPlay");
         const demoProgress = document.getElementById("demoProgress");
@@ -3987,6 +4001,23 @@
           demoTime.textContent = `${formatVideoTime(currentTime)} / ${formatVideoTime(duration)}`;
         };
 
+        const syncVideoBackdrop = () => {
+          if (!demoVideoBackdrop) return;
+          demoVideoBackdrop.playbackRate = demoVideo.playbackRate;
+          if (
+            Number.isFinite(demoVideo.currentTime)
+            && Number.isFinite(demoVideoBackdrop.currentTime)
+            && Math.abs(demoVideoBackdrop.currentTime - demoVideo.currentTime) > 0.18
+          ) {
+            demoVideoBackdrop.currentTime = demoVideo.currentTime;
+          }
+          if (demoVideo.paused || demoVideo.ended) {
+            demoVideoBackdrop.pause();
+          } else {
+            demoVideoBackdrop.play().catch(() => {});
+          }
+        };
+
         demoVideo.controls = false;
         demoPlay.addEventListener("click", () => {
           if (demoVideo.paused) demoVideo.play().catch(() => {});
@@ -4014,8 +4045,15 @@
           }
         });
         ["loadedmetadata", "durationchange", "timeupdate", "play", "pause", "volumechange"].forEach(
-          (eventName) => demoVideo.addEventListener(eventName, syncVideoControls),
+          (eventName) => demoVideo.addEventListener(eventName, () => {
+            syncVideoControls();
+            syncVideoBackdrop();
+          }),
         );
+        demoVideo.addEventListener("seeking", syncVideoBackdrop);
+        demoVideo.addEventListener("seeked", syncVideoBackdrop);
+        demoVideo.addEventListener("ratechange", syncVideoBackdrop);
+        demoVideoBackdrop?.addEventListener("canplay", syncVideoBackdrop);
         document.addEventListener("fullscreenchange", () => {
           demoFullscreen.textContent = document.fullscreenElement
             ? activeLookup("control.exitFullscreen")
@@ -4040,6 +4078,12 @@
             demoVideo.pause();
             demoVideo.src = tab.dataset.video;
             demoVideo.poster = tab.dataset.poster || "";
+            if (demoVideoBackdrop) {
+              demoVideoBackdrop.pause();
+              demoVideoBackdrop.src = tab.dataset.video;
+              demoVideoBackdrop.poster = tab.dataset.poster || "";
+              demoVideoBackdrop.load();
+            }
             renderActiveDemoCopy();
             demoProgress.value = "0";
             demoTime.textContent = "00:00 / 00:00";

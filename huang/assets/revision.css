@@ -23,7 +23,16 @@ html[lang="en"] .demo-tab b {
   line-height: 1.18;
 }
 
+html[lang="en"] .project-sidebar .summary {
+  display: none;
+}
+
 @media (min-width: 1041px) {
+  html[lang="en"] .project-sidebar .hero h1 {
+    font-size: 40px;
+    letter-spacing: -0.035em;
+  }
+
   html[lang="en"] .toc-list {
     width: max(100%, 780px);
     grid-template-columns: repeat(6, minmax(112px, 1fr));
@@ -1128,8 +1137,7 @@ html[lang="en"] .demo-tab b {
   }
 }
 
-/* Final media sizing and custom controls. All source videos are 640×480, so
-   the media well follows their native 4:3 ratio without letterboxing. */
+/* Final media sizing and custom controls. */
 .demo-player {
   height: auto;
   min-height: 0;
@@ -1154,6 +1162,30 @@ html[lang="en"] .demo-tab b {
   object-fit: cover;
   background: transparent;
   cursor: pointer;
+}
+
+.demo-player .demo-video-backdrop {
+  display: none;
+}
+
+html[lang="en"] .demo-video-backdrop {
+  position: absolute;
+  z-index: 1;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
+  display: block;
+  object-fit: cover;
+  filter: blur(28px) saturate(1.08) brightness(0.66);
+  opacity: 0.82;
+  pointer-events: none;
+  transform: scale(1.06);
+}
+
+html[lang="en"] #demoVideo {
+  position: relative;
+  z-index: 2;
+  object-fit: contain;
 }
 
 .demo-caption {
@@ -1233,6 +1265,10 @@ html[lang="en"] .demo-tab b {
 
 .demo-media:fullscreen video {
   object-fit: contain;
+}
+
+html[lang="en"] .demo-media:fullscreen .demo-video-backdrop {
+  object-fit: cover;
 }
 
 /* Ensure the comparison hierarchy remains stronger than the legacy desktop
