@@ -1,0 +1,1568 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="YINGZHI HUANG portfolio: AI product engineering, multimodal prototyping, and selected technical storytelling."
+    />
+    <meta name="theme-color" content="#f4e8d4" />
+    <link rel="icon" type="image/png" href="./LOGO.png" />
+    <title>YINGZHI HUANG | AI Product &amp; Technical Storytelling</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --canvas: #f4e8d4;
+        --paper: #f8efdf;
+        --ink: #1a2c26;
+        --forest: #2b4a3f;
+        --amber: #c68a4a;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        font-family:
+          Inter, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui,
+          sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-snap-type: y proximity;
+        scrollbar-width: none;
+        overscroll-behavior-y: none;
+        background: var(--canvas);
+      }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        -ms-overflow-style: none;
+        overscroll-behavior-y: none;
+        background: var(--canvas);
+      }
+
+      html::-webkit-scrollbar,
+      body::-webkit-scrollbar {
+        display: none;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .piece {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        height: 100svh;
+        height: 100dvh;
+        overflow: hidden;
+        scroll-snap-align: start;
+        scroll-snap-stop: normal;
+      }
+
+      .piece::before {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        color: rgba(248, 239, 223, 0.68);
+        background: var(--ink);
+        font-size: 11px;
+        font-weight: 750;
+        letter-spacing: 0.16em;
+        content: var(--loading-label, "LOADING PORTFOLIO");
+        place-items: center;
+      }
+
+      #huang,
+      #video-works {
+        background: var(--canvas);
+      }
+
+      #huang::before,
+      #video-works::before {
+        color: rgba(26, 44, 38, 0.55);
+        background: var(--canvas);
+      }
+
+      .piece iframe {
+        position: relative;
+        z-index: 1;
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: transparent;
+      }
+
+      #workflow:not(.is-interactive) iframe {
+        pointer-events: none;
+      }
+
+      .workflow-gate {
+        position: absolute;
+        z-index: 3;
+        inset: 0;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        color: var(--ink);
+        background: transparent;
+        cursor: pointer;
+        touch-action: pan-y;
+        transition:
+          opacity 180ms ease,
+          visibility 180ms ease;
+      }
+
+      .workflow-gate:focus-visible {
+        outline: 2px solid var(--amber);
+        outline-offset: -5px;
+      }
+
+      #workflow.is-interactive .workflow-gate {
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .workflow-exit {
+        position: absolute;
+        z-index: 4;
+        top: 92px;
+        right: 24px;
+        min-height: 38px;
+        align-items: center;
+        gap: 8px;
+        padding: 0 14px;
+        border: 1px solid rgba(248, 239, 223, 0.24);
+        border-radius: 999px;
+        color: var(--paper);
+        background: rgba(26, 44, 38, 0.9);
+        box-shadow: 0 12px 30px rgba(7, 18, 14, 0.26);
+        cursor: pointer;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        backdrop-filter: blur(12px);
+      }
+
+      .workflow-exit:not([hidden]) {
+        display: inline-flex;
+      }
+
+      .workflow-exit:hover,
+      .workflow-exit:focus-visible {
+        color: var(--ink);
+        background: var(--amber);
+        outline: none;
+      }
+
+      .workflow-exit kbd {
+        padding: 2px 5px;
+        border: 1px solid currentColor;
+        border-radius: 5px;
+        font: inherit;
+        opacity: 0.72;
+      }
+
+      .home {
+        display: grid;
+        color: var(--ink);
+        background:
+          var(--canvas) url("./WALLPAPER.png") center center / cover no-repeat;
+      }
+
+      .home::before {
+        z-index: 0;
+        display: block;
+        background:
+          linear-gradient(
+            90deg,
+            rgba(248, 239, 223, 0.98) 0%,
+            rgba(248, 239, 223, 0.94) 36%,
+            rgba(248, 239, 223, 0.54) 55%,
+            rgba(248, 239, 223, 0.04) 76%
+          ),
+          linear-gradient(180deg, rgba(26, 44, 38, 0.04), rgba(26, 44, 38, 0.14));
+        content: "";
+      }
+
+      .home__inner {
+        position: relative;
+        z-index: 1;
+        width: min(1440px, calc(100% - clamp(48px, 7vw, 112px)));
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        padding: clamp(24px, 4vh, 42px) 0 clamp(22px, 3.5vh, 36px);
+      }
+
+      .home__top,
+      .home__brand,
+      .home__actions,
+      .home__bottom {
+        display: flex;
+        align-items: center;
+      }
+
+      .home__top {
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .home__brand {
+        gap: 13px;
+      }
+
+      .home__logo {
+        width: 52px;
+        height: 52px;
+        overflow: hidden;
+        flex: 0 0 auto;
+        border: 1px solid rgba(198, 138, 74, 0.62);
+        border-radius: 16px;
+        background: #070907;
+        box-shadow: 0 12px 28px rgba(26, 44, 38, 0.18);
+      }
+
+      .home__logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 55%;
+        transform: scale(1.06);
+      }
+
+      .home__brand-copy {
+        display: grid;
+        gap: 4px;
+        line-height: 1;
+      }
+
+      .home__brand-copy strong {
+        font-size: 16px;
+        font-weight: 900;
+        letter-spacing: 0.15em;
+      }
+
+      .home__brand-copy span,
+      .home__status {
+        color: rgba(26, 44, 38, 0.56);
+        font-size: 10px;
+        font-weight: 750;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .home__status {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 10px 14px;
+        border: 1px solid rgba(26, 44, 38, 0.12);
+        border-radius: 999px;
+        background: rgba(248, 239, 223, 0.58);
+        backdrop-filter: blur(12px);
+        font-size: 9px;
+      }
+
+      .home__status::before {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--amber);
+        box-shadow: 0 0 0 5px rgba(198, 138, 74, 0.12);
+        content: "";
+      }
+
+      .home__hero {
+        min-height: 0;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        padding: clamp(24px, 5vh, 56px) 0;
+      }
+
+      .home__content {
+        width: min(1080px, 74vw);
+      }
+
+      .home__eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0 0 18px;
+        color: var(--forest);
+        font-size: 10px;
+        font-weight: 850;
+        letter-spacing: 0.17em;
+        text-transform: uppercase;
+      }
+
+      .home__eyebrow::before {
+        width: 30px;
+        height: 1px;
+        background: var(--amber);
+        content: "";
+      }
+
+      .home h1 {
+        display: flex;
+        align-items: baseline;
+        gap: clamp(18px, 2vw, 34px);
+        margin: 0;
+        font-size: clamp(44px, 5vw, 76px);
+        font-weight: 850;
+        letter-spacing: -0.075em;
+        line-height: 0.9;
+        white-space: nowrap;
+      }
+
+      .home h1 span {
+        display: block;
+      }
+
+      .home h1 .home__name-en {
+        color: rgba(26, 44, 38, 0.72);
+        font-size: 1em;
+        font-weight: 850;
+        letter-spacing: -0.065em;
+        line-height: inherit;
+      }
+
+      .home__role {
+        margin: 24px 0 0;
+        color: var(--forest);
+        font-size: clamp(17px, 1.5vw, 22px);
+        font-weight: 750;
+        letter-spacing: -0.02em;
+      }
+
+      .home__lede {
+        max-width: 650px;
+        margin: 14px 0 0;
+        color: rgba(26, 44, 38, 0.68);
+        font-size: clamp(14px, 1.12vw, 17px);
+        line-height: 1.78;
+      }
+
+      .home__actions {
+        max-width: 980px;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 20px;
+      }
+
+      .home__button {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        padding: 0 16px;
+        color: var(--ink);
+        border: 1px solid rgba(26, 44, 38, 0.24);
+        border-radius: 999px;
+        background: rgba(248, 239, 223, 0.44);
+        font-size: 10.5px;
+        font-weight: 850;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        white-space: nowrap;
+        backdrop-filter: blur(10px);
+        transition:
+          color 180ms ease,
+          background 180ms ease,
+          border-color 180ms ease,
+          transform 180ms ease;
+      }
+
+      .home__button:hover,
+      .home__button:focus-visible {
+        outline: none;
+        transform: translateY(-2px);
+      }
+
+      .home__button--primary {
+        color: var(--paper);
+        border-color: var(--ink);
+        background: var(--ink);
+        box-shadow: 0 12px 28px rgba(26, 44, 38, 0.2);
+      }
+
+      .home__button--primary:hover,
+      .home__button--primary:focus-visible {
+        background: var(--forest);
+      }
+
+      .home__button--highlight {
+        border-color: rgba(198, 138, 74, 0.72);
+        background: rgba(198, 138, 74, 0.16);
+        box-shadow: 0 10px 24px rgba(198, 138, 74, 0.12);
+      }
+
+      .home__button--highlight:hover,
+      .home__button--highlight:focus-visible {
+        border-color: var(--amber);
+        background: rgba(198, 138, 74, 0.3);
+      }
+
+      .home__bottom {
+        justify-content: flex-start;
+        gap: 28px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(26, 44, 38, 0.16);
+      }
+
+      .home__stats {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        gap: clamp(24px, 4vw, 64px);
+      }
+
+      .home__stat {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: baseline;
+        gap: 8px;
+      }
+
+      .home__stat strong {
+        color: var(--ink);
+        font-size: clamp(20px, 2vw, 30px);
+        font-weight: 850;
+        letter-spacing: -0.055em;
+      }
+
+      .home__stat span {
+        max-width: 112px;
+        color: rgba(26, 44, 38, 0.56);
+        font-size: 9px;
+        font-weight: 750;
+        letter-spacing: 0.08em;
+        line-height: 1.4;
+        text-transform: uppercase;
+      }
+
+      .dock {
+        --dock-bg: rgba(248, 239, 223, 0.9);
+        --dock-border: rgba(26, 44, 38, 0.14);
+        --dock-fg: rgba(26, 44, 38, 0.56);
+        --dock-hover: rgba(26, 44, 38, 0.08);
+        --dock-active-bg: var(--ink);
+        --dock-active-fg: var(--paper);
+        position: fixed;
+        z-index: 1000;
+        top: 50%;
+        right: 18px;
+        width: 54px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        padding: 6px;
+        color: var(--dock-fg);
+        border: 1px solid var(--dock-border);
+        border-radius: 28px;
+        background: var(--dock-bg);
+        box-shadow:
+          0 18px 48px rgba(26, 44, 38, 0.2),
+          0 2px 8px rgba(26, 44, 38, 0.08);
+        backdrop-filter: blur(22px) saturate(1.18);
+        transform: translateY(-50%);
+        transition:
+          color 220ms ease,
+          border-color 220ms ease,
+          background 220ms ease,
+          box-shadow 220ms ease;
+      }
+
+      .dock[data-piece="home"],
+      .dock[data-piece="workflow"] {
+        --dock-bg: rgba(26, 44, 38, 0.88);
+        --dock-border: rgba(248, 239, 223, 0.18);
+        --dock-fg: rgba(248, 239, 223, 0.58);
+        --dock-hover: rgba(248, 239, 223, 0.1);
+        --dock-active-bg: var(--amber);
+        --dock-active-fg: var(--ink);
+        box-shadow:
+          0 18px 48px rgba(7, 18, 14, 0.34),
+          0 2px 8px rgba(7, 18, 14, 0.18);
+      }
+
+      .dock__nav {
+        display: grid;
+        width: 100%;
+        gap: 5px;
+      }
+
+      .dock__language {
+        width: 40px;
+        display: grid;
+        overflow: hidden;
+        flex: 0 0 auto;
+        border: 1px solid currentColor;
+        border-radius: 15px;
+        opacity: 0.88;
+      }
+
+      .dock__language button {
+        width: 100%;
+        height: 24px;
+        padding: 0;
+        color: var(--dock-fg);
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+        font-size: 8px;
+        font-weight: 850;
+        letter-spacing: 0.04em;
+        transition:
+          color 180ms ease,
+          background 180ms ease;
+      }
+
+      .dock__language button + button {
+        border-top: 1px solid currentColor;
+      }
+
+      .dock__language button:hover,
+      .dock__language button:focus-visible {
+        color: inherit;
+        background: var(--dock-hover);
+        outline: none;
+      }
+
+      .dock__language button.is-active {
+        color: var(--dock-active-fg);
+        background: var(--dock-active-bg);
+      }
+
+      .dock__link,
+      .dock__standalone,
+      .dock__toggle {
+        display: grid;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        color: var(--dock-fg);
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+        font: inherit;
+        font-size: 10px;
+        font-weight: 850;
+        line-height: 1;
+        text-decoration: none;
+        transition:
+          color 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease,
+          transform 180ms ease;
+        place-items: center;
+      }
+
+      .dock__link:hover,
+      .dock__link:focus-visible,
+      .dock__standalone:hover,
+      .dock__standalone:focus-visible,
+      .dock__toggle:hover,
+      .dock__toggle:focus-visible {
+        color: inherit;
+        background: var(--dock-hover);
+        outline: none;
+        transform: scale(1.04);
+      }
+
+      .dock__link[aria-current="true"] {
+        color: var(--dock-active-fg);
+        background: var(--dock-active-bg);
+        box-shadow: 0 5px 16px rgba(26, 44, 38, 0.18);
+      }
+
+      .dock__standalone {
+        flex: 0 0 auto;
+        margin-top: 4px;
+        color: var(--dock-fg);
+        background: var(--dock-hover);
+        font-size: 16px;
+      }
+
+      .dock__standalone.is-hidden {
+        display: none;
+      }
+
+      .dock__toggle {
+        display: none;
+      }
+
+      .dock__link::after,
+      .dock__standalone::after {
+        position: absolute;
+        top: 50%;
+        right: calc(100% + 14px);
+        padding: 8px 11px;
+        color: var(--paper);
+        border-radius: 999px;
+        background: rgba(26, 44, 38, 0.94);
+        box-shadow: 0 8px 24px rgba(7, 18, 14, 0.18);
+        content: attr(data-label);
+        font-size: 10px;
+        font-weight: 750;
+        letter-spacing: 0.04em;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(6px, -50%);
+        transition:
+          opacity 160ms ease,
+          transform 160ms ease;
+        white-space: nowrap;
+      }
+
+      .dock__link:hover::after,
+      .dock__link:focus-visible::after,
+      .dock__standalone:hover::after,
+      .dock__standalone:focus-visible::after {
+        opacity: 1;
+        transform: translate(0, -50%);
+      }
+
+      @media (max-width: 1199px) {
+        .dock {
+          top: auto;
+          right: 12px;
+          bottom: 12px;
+          left: 12px;
+          width: auto;
+          height: 58px;
+          flex-direction: row;
+          gap: 7px;
+          padding: 7px;
+          border: 1px solid rgba(248, 239, 223, 0.18);
+          border-radius: 20px;
+          box-shadow: 0 16px 42px rgba(7, 18, 14, 0.28);
+          transform: none;
+          transition:
+            left 240ms var(--ease),
+            width 240ms var(--ease),
+            background 180ms ease;
+        }
+
+        .dock__nav {
+          display: flex;
+          flex: 1;
+          justify-content: center;
+          gap: 7px;
+          margin: 0;
+        }
+
+        .dock__language {
+          width: 72px;
+          height: 42px;
+          grid-template-columns: repeat(2, 1fr);
+          border-radius: 14px;
+        }
+
+        .dock__language button {
+          height: 40px;
+        }
+
+        .dock__language button + button {
+          border-top: 0;
+          border-left: 1px solid currentColor;
+        }
+
+        .dock__link,
+        .dock__standalone,
+        .dock__toggle {
+          width: 42px;
+          height: 42px;
+          border-radius: 14px;
+        }
+
+        .dock__standalone {
+          font-size: 16px;
+        }
+
+        .dock__toggle {
+          display: grid;
+          flex: 0 0 auto;
+          color: var(--dock-fg);
+        }
+
+        .dock.is-collapsed {
+          left: auto;
+          width: 58px;
+        }
+
+        .dock.is-collapsed .dock__nav,
+        .dock.is-collapsed .dock__standalone,
+        .dock.is-collapsed .dock__language {
+          display: none;
+        }
+
+        .dock.is-collapsed .dock__toggle {
+          color: var(--dock-active-fg);
+          background: var(--dock-active-bg);
+        }
+
+        .dock__link::after,
+        .dock__standalone::after {
+          display: none;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .workflow-exit {
+          top: 82px;
+          right: 14px;
+        }
+
+        .home {
+          background-position: 62% center;
+        }
+
+        .home::before {
+          background:
+            linear-gradient(
+              90deg,
+              rgba(248, 239, 223, 0.96),
+              rgba(248, 239, 223, 0.82)
+            ),
+            linear-gradient(180deg, rgba(248, 239, 223, 0.22), rgba(26, 44, 38, 0.16));
+        }
+
+        .home__inner {
+          width: calc(100% - 40px);
+          padding: 20px 0 max(86px, calc(env(safe-area-inset-bottom) + 76px));
+        }
+
+        .home__status {
+          display: none;
+        }
+
+        .home__logo {
+          width: 46px;
+          height: 46px;
+          border-radius: 14px;
+        }
+
+        .home__brand-copy strong {
+          font-size: 14px;
+        }
+
+        .home__brand-copy span {
+          font-size: 9px;
+        }
+
+        .home__hero {
+          padding: 22px 0 18px;
+        }
+
+        .home__content {
+          width: 100%;
+        }
+
+        .home__eyebrow {
+          max-width: 100%;
+          margin-bottom: 15px;
+          font-size: 8px;
+          line-height: 1.5;
+        }
+
+        .home h1 {
+          gap: 10px;
+          font-size: clamp(23px, 7vw, 38px);
+        }
+
+        .home__role {
+          margin-top: 18px;
+          font-size: 17px;
+        }
+
+        .home__lede {
+          margin-top: 10px;
+          font-size: 13px;
+          line-height: 1.68;
+        }
+
+        .home__actions {
+          gap: 8px;
+          margin-top: 18px;
+        }
+
+        .home__button {
+          min-height: 44px;
+          gap: 8px;
+          padding: 0 13px;
+          font-size: 9.5px;
+        }
+
+        .home__bottom {
+          padding-top: 12px;
+        }
+
+        .home__stats {
+          width: 100%;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
+        }
+
+        .home__stat {
+          display: block;
+        }
+
+        .home__stat strong,
+        .home__stat span {
+          display: block;
+        }
+
+        .home__stat strong {
+          font-size: 18px;
+        }
+
+        .home__stat span {
+          margin-top: 3px;
+          font-size: 7px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .dock {
+          right: 8px;
+          bottom: max(8px, env(safe-area-inset-bottom));
+          left: 8px;
+        }
+
+        .dock__standalone {
+          display: none;
+        }
+      }
+
+      @media (max-height: 680px) {
+        .home__hero {
+          padding: 14px 0;
+        }
+
+        .home__lede {
+          line-height: 1.58;
+        }
+      }
+
+      @media (max-height: 580px) {
+        .home__bottom {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="piece home" id="home" aria-labelledby="home-title">
+        <div class="home__inner">
+          <header class="home__top">
+            <div class="home__brand">
+              <div class="home__logo">
+                <img src="./LOGO.png" alt="" />
+              </div>
+              <div class="home__brand-copy">
+                <strong>HUANG</strong>
+                <span data-i18n="home.brand">Portfolio / 2026</span>
+              </div>
+            </div>
+            <div class="home__status" data-i18n="home.status">
+              Shanghai · Open to global opportunities
+            </div>
+          </header>
+
+          <div class="home__hero">
+            <div class="home__content">
+              <p class="home__eyebrow" data-i18n="home.eyebrow">
+                AI Product &amp; Developer Experience Engineer · Multimodal Prototyping ·
+                Technical Storytelling
+              </p>
+              <h1 id="home-title">
+                <span lang="zh-CN">黄赢之</span>
+                <span class="home__name-en" lang="en">YINGZHI HUANG</span>
+              </h1>
+              <p class="home__role" data-i18n="home.role">
+                AI Product Developer × Visual Storyteller
+              </p>
+              <p class="home__lede" data-i18n="home.lede">
+                Product-minded AI builder combining seven years of visual storytelling with
+                hands-on full-stack prototyping and generative AI workflow design. I turn
+                complex multimodal capabilities into product experiences, reusable creative
+                workflows, and technical narratives that make sense to non-technical audiences.
+              </p>
+              <div
+                class="home__actions"
+                aria-label="Portfolio and contact actions"
+                data-i18n-aria="home.actions.aria"
+              >
+                <a
+                  class="home__button home__button--primary"
+                  href="#huang"
+                  data-target="huang"
+                >
+                  <span data-i18n="cta.selected">View Selected Work</span>
+                  <span aria-hidden="true">↓</span>
+                </a>
+                <a
+                  class="home__button home__button--highlight"
+                  href="https://github.com/YingzhiDev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span data-i18n="cta.github">View GitHub</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <a
+                  class="home__button"
+                  href="./HUANG_RESUME.docx"
+                  download="HUANG_RESUME.docx"
+                >
+                  <span data-i18n="cta.resume">Download Resume</span>
+                  <span aria-hidden="true">↓</span>
+                </a>
+                <a class="home__button" href="mailto:simonhuang0502@gmail.com">
+                  <span data-i18n="cta.email">Email Me</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <footer class="home__bottom">
+            <div
+              class="home__stats"
+              aria-label="Career highlights"
+              data-i18n-aria="home.stats.aria"
+            >
+              <div class="home__stat">
+                <strong>7</strong><span data-i18n="home.stats.years">Years of visual storytelling</span>
+              </div>
+              <div class="home__stat">
+                <strong>55,941</strong><span data-i18n="home.stats.records">Structured records / 16 knowledge databases</span>
+              </div>
+              <div class="home__stat">
+                <strong>1.2M+</strong><span data-i18n="home.stats.views">Average views per distributed video</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+
+      <section
+        class="piece"
+        id="huang"
+        aria-label="GENIUSHUANG AI Director Workstation case study"
+        data-i18n-aria="section.huang"
+      >
+        <iframe
+          src="./huang/index.html"
+          title="GENIUSHUANG AI Director Workstation case study"
+          data-i18n-title="frame.huang"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </section>
+
+      <section
+        class="piece workflow-piece"
+        id="workflow"
+        aria-label="Brand e-commerce infinite canvas workflow case study"
+        data-i18n-aria="section.workflow"
+      >
+        <iframe
+          id="workflowFrame"
+          src="./workflow/index.html"
+          title="Brand e-commerce infinite canvas workflow"
+          data-i18n-title="frame.workflow"
+          loading="lazy"
+          allow="fullscreen"
+          allowfullscreen
+          tabindex="-1"
+          aria-hidden="true"
+        ></iframe>
+        <button
+          class="workflow-gate"
+          id="workflowGate"
+          type="button"
+          aria-controls="workflowFrame"
+          aria-label="Click to enter the interactive workflow canvas"
+          data-i18n-aria="workflow.enter"
+        ></button>
+        <button
+          class="workflow-exit"
+          id="workflowExit"
+          type="button"
+          aria-label="Exit the workflow canvas and restore page scrolling"
+          data-i18n-aria="workflow.exit.aria"
+          hidden
+        >
+          <span data-i18n="workflow.exit">Exit canvas</span> <kbd>Esc</kbd>
+        </button>
+      </section>
+
+      <section
+        class="piece"
+        id="video-works"
+        aria-label="Selected Technical Storytelling"
+        data-i18n-aria="section.video"
+      >
+        <iframe
+          src="./video-works/index.html"
+          title="Selected Technical Storytelling"
+          data-i18n-title="frame.video"
+          loading="lazy"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </section>
+    </main>
+
+    <aside
+      class="dock"
+      id="portfolioDock"
+      data-piece="home"
+      aria-label="Portfolio navigation"
+      data-i18n-aria="dock.aria"
+    >
+      <div
+        class="dock__language"
+        role="group"
+        aria-label="Language"
+        data-i18n-aria="language.selector"
+      >
+        <button
+          type="button"
+          data-language="en"
+          aria-label="Use English"
+          data-i18n-aria="language.english"
+          aria-pressed="true"
+        >
+          EN
+        </button>
+        <button
+          type="button"
+          data-language="zh"
+          aria-label="Use Chinese"
+          data-i18n-aria="language.chinese"
+          aria-pressed="false"
+        >
+          中
+        </button>
+      </div>
+      <nav class="dock__nav" aria-label="Select a section" data-i18n-aria="dock.select">
+        <a
+          class="dock__link"
+          href="#home"
+          data-target="home"
+          data-label="About"
+          data-i18n-label="dock.home.label"
+          aria-label="Return to the introduction"
+          data-i18n-aria="dock.home.aria"
+          aria-current="true"
+          title="About"
+          data-i18n-title="dock.home.label"
+        >
+          H
+        </a>
+        <a
+          class="dock__link"
+          href="#huang"
+          data-target="huang"
+          data-label="AI Director Workstation"
+          data-i18n-label="dock.huang.label"
+          aria-label="View case study one: AI Director Workstation"
+          data-i18n-aria="dock.huang.aria"
+          aria-current="false"
+          title="AI Director Workstation"
+          data-i18n-title="dock.huang.label"
+        >
+          01
+        </a>
+        <a
+          class="dock__link"
+          href="#workflow"
+          data-target="workflow"
+          data-label="E-commerce Workflow"
+          data-i18n-label="dock.workflow.label"
+          aria-label="View case study two: brand e-commerce infinite canvas workflow"
+          data-i18n-aria="dock.workflow.aria"
+          aria-current="false"
+          title="Brand e-commerce workflow"
+          data-i18n-title="dock.workflow.label"
+        >
+          02
+        </a>
+        <a
+          class="dock__link"
+          href="#video-works"
+          data-target="video-works"
+          data-label="Selected Technical Storytelling"
+          data-i18n-label="dock.video.label"
+          aria-label="View case study three: Selected Technical Storytelling"
+          data-i18n-aria="dock.video.aria"
+          aria-current="false"
+          title="Selected Technical Storytelling"
+          data-i18n-title="dock.video.label"
+        >
+          03
+        </a>
+      </nav>
+
+      <a
+        class="dock__standalone is-hidden"
+        id="standaloneLink"
+        href="./huang/index.html"
+        data-label="Open separately"
+        data-i18n-label="dock.open.label"
+        target="_blank"
+        rel="noopener"
+        aria-hidden="true"
+        aria-label="Open the current case study in a new window"
+        data-i18n-aria="dock.open.aria"
+        tabindex="-1"
+        title="Open the current case study separately"
+        data-i18n-title="dock.open.title"
+      >
+        ↗
+      </a>
+      <button
+        class="dock__toggle"
+        id="dockToggle"
+        type="button"
+        aria-expanded="true"
+        aria-label="Collapse portfolio navigation"
+        title="Collapse or expand portfolio navigation"
+      >
+        ×
+      </button>
+    </aside>
+
+    <script src="./assets/portfolio-i18n.js"></script>
+    <script>
+      (() => {
+        const translations = {
+          "meta.description": {
+            en: "YINGZHI HUANG portfolio: AI product engineering, multimodal prototyping, and selected technical storytelling.",
+            zh: "YINGZHI HUANG 个人作品集：AI 产品开发、多模态原型与技术叙事精选。",
+          },
+          "loading": {
+            en: "LOADING PORTFOLIO",
+            zh: "正在载入作品集",
+          },
+          "home.brand": {
+            en: "Portfolio / 2026",
+            zh: "作品集 / 2026",
+          },
+          "home.status": {
+            en: "Shanghai · Open to global opportunities",
+            zh: "上海 · 接受全球工作机会",
+          },
+          "home.eyebrow": {
+            en: "AI Product & Developer Experience Engineer · Multimodal Prototyping · Technical Storytelling",
+            zh: "AI 产品与开发者体验工程 · 多模态原型 · 技术叙事",
+          },
+          "home.role": {
+            en: "AI Product Developer × Visual Storyteller",
+            zh: "AI 产品开发者 × 视觉叙事者",
+          },
+          "home.lede": {
+            en: "Product-minded AI builder combining seven years of visual storytelling with hands-on full-stack prototyping and generative AI workflow design. I turn complex multimodal capabilities into product experiences, reusable creative workflows, and technical narratives that make sense to non-technical audiences.",
+            zh: "我是一名以产品思维工作的 AI 产品开发者，也是一名拥有七年视觉叙事经验的影像创作者。我擅长把复杂的多模态模型能力，转化为可以被体验的产品原型、可复用的创作工作流，以及让非技术受众也能理解的技术叙事。",
+          },
+          "home.actions.aria": {
+            en: "Portfolio and contact actions",
+            zh: "作品集与联系操作",
+          },
+          "cta.selected": {
+            en: "View Selected Work",
+            zh: "浏览精选作品",
+          },
+          "cta.github": {
+            en: "View GitHub",
+            zh: "访问 GitHub",
+          },
+          "cta.resume": {
+            en: "Download Resume",
+            zh: "下载简历",
+          },
+          "cta.email": {
+            en: "Email Me",
+            zh: "邮件联系",
+          },
+          "home.stats.aria": {
+            en: "Career highlights",
+            zh: "职业亮点",
+          },
+          "home.stats.years": {
+            en: "Years of visual storytelling",
+            zh: "年视觉叙事经验",
+          },
+          "home.stats.records": {
+            en: "Structured records / 16 knowledge databases",
+            zh: "条结构化记录 / 16 个知识库",
+          },
+          "home.stats.views": {
+            en: "Average views per distributed video",
+            zh: "单支分发视频平均播放量",
+          },
+          "section.huang": {
+            en: "GENIUSHUANG AI Director Workstation case study",
+            zh: "GENIUSHUANG AI 导演工作站案例",
+          },
+          "frame.huang": {
+            en: "GENIUSHUANG AI Director Workstation case study",
+            zh: "GENIUSHUANG AI 导演工作站作品集",
+          },
+          "section.workflow": {
+            en: "Brand e-commerce infinite canvas workflow case study",
+            zh: "电商广告无限画布工作流作品",
+          },
+          "frame.workflow": {
+            en: "Brand e-commerce infinite canvas workflow",
+            zh: "电商广告无限画布工作流",
+          },
+          "workflow.enter": {
+            en: "Click to enter the interactive workflow canvas",
+            zh: "点击进入工作流画布交互",
+          },
+          "workflow.exit.aria": {
+            en: "Exit the workflow canvas and restore page scrolling",
+            zh: "退出工作流画布交互并恢复页面滚动",
+          },
+          "workflow.exit": {
+            en: "Exit canvas",
+            zh: "退出画布交互",
+          },
+          "section.video": {
+            en: "Selected Technical Storytelling",
+            zh: "Selected Technical Storytelling 技术叙事精选",
+          },
+          "frame.video": {
+            en: "Selected Technical Storytelling",
+            zh: "Selected Technical Storytelling｜技术叙事精选",
+          },
+          "dock.aria": {
+            en: "Portfolio navigation",
+            zh: "作品集页面切换器",
+          },
+          "dock.select": {
+            en: "Select a section",
+            zh: "选择作品或页面",
+          },
+          "language.selector": {
+            en: "Language",
+            zh: "语言",
+          },
+          "language.english": {
+            en: "Use English",
+            zh: "切换为英文",
+          },
+          "language.chinese": {
+            en: "Use Chinese",
+            zh: "使用中文",
+          },
+          "dock.home.label": {
+            en: "About",
+            zh: "关于我",
+          },
+          "dock.home.aria": {
+            en: "Return to the introduction",
+            zh: "返回个人首页",
+          },
+          "dock.huang.label": {
+            en: "AI Director Workstation",
+            zh: "AI 导演工作站",
+          },
+          "dock.huang.aria": {
+            en: "View case study one: AI Director Workstation",
+            zh: "查看第一件作品：AI 导演工作站",
+          },
+          "dock.workflow.label": {
+            en: "E-commerce Workflow",
+            zh: "电商广告工作流",
+          },
+          "dock.workflow.aria": {
+            en: "View case study two: brand e-commerce infinite canvas workflow",
+            zh: "查看第二件作品：电商广告无限画布工作流",
+          },
+          "dock.video.label": {
+            en: "Selected Technical Storytelling",
+            zh: "技术叙事精选",
+          },
+          "dock.video.aria": {
+            en: "View case study three: Selected Technical Storytelling",
+            zh: "查看第三件作品：Selected Technical Storytelling 技术叙事精选",
+          },
+          "dock.open.label": {
+            en: "Open separately",
+            zh: "单独打开",
+          },
+          "dock.open.aria": {
+            en: "Open the current case study in a new window",
+            zh: "在新窗口单独打开当前作品",
+          },
+          "dock.open.title": {
+            en: "Open the current case study separately",
+            zh: "单独打开当前作品",
+          },
+          "dock.collapse": {
+            en: "Collapse portfolio navigation",
+            zh: "收起作品切换器",
+          },
+          "dock.expand": {
+            en: "Expand portfolio navigation",
+            zh: "展开作品切换器",
+          },
+          "dock.toggle.title": {
+            en: "Collapse or expand portfolio navigation",
+            zh: "收起或展开作品切换器",
+          },
+          "dock.works": {
+            en: "Work",
+            zh: "作品",
+          },
+          "title.home": {
+            en: "YINGZHI HUANG | AI Product & Technical Storytelling",
+            zh: "YINGZHI HUANG｜AI 产品开发与技术叙事",
+          },
+          "title.huang": {
+            en: "GENIUSHUANG | AI Director Workstation Case Study",
+            zh: "GENIUSHUANG｜AI 导演工作站作品集",
+          },
+          "title.workflow": {
+            en: "Brand E-commerce Infinite Canvas Workflow | YINGZHI HUANG",
+            zh: "电商广告无限画布工作流｜YINGZHI HUANG",
+          },
+          "title.video": {
+            en: "Selected Technical Storytelling | YINGZHI HUANG",
+            zh: "技术叙事精选｜YINGZHI HUANG",
+          },
+        };
+
+        const dock = document.getElementById("portfolioDock");
+        const dockToggle = document.getElementById("dockToggle");
+        const standaloneLink = document.getElementById("standaloneLink");
+        const workflowPiece = document.getElementById("workflow");
+        const workflowFrame = document.getElementById("workflowFrame");
+        const workflowGate = document.getElementById("workflowGate");
+        const workflowExit = document.getElementById("workflowExit");
+        const pieces = [...document.querySelectorAll(".piece")];
+        const targetLinks = [...document.querySelectorAll("[data-target]")];
+        const navLinks = [...document.querySelectorAll(".dock__link")];
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        );
+        let i18n;
+        let activePieceId = "home";
+        const translate = (key) => (
+          i18n?.t(key) ?? translations[key]?.en ?? key
+        );
+
+        const pieceMeta = {
+          home: {
+            href: null,
+            titleKey: "title.home",
+          },
+          huang: {
+            href: "./huang/index.html",
+            titleKey: "title.huang",
+          },
+          workflow: {
+            href: "./workflow/index.html",
+            titleKey: "title.workflow",
+          },
+          "video-works": {
+            href: "./video-works/index.html",
+            titleKey: "title.video",
+          },
+        };
+
+        let workflowInteractive = false;
+
+        const setWorkflowInteractive = (enabled, returnFocus = false) => {
+          workflowInteractive = enabled;
+          workflowPiece.classList.toggle("is-interactive", enabled);
+          workflowGate.setAttribute("aria-hidden", String(enabled));
+          workflowGate.tabIndex = enabled ? -1 : 0;
+          workflowFrame.tabIndex = enabled ? 0 : -1;
+          workflowFrame.setAttribute("aria-hidden", String(!enabled));
+          workflowExit.hidden = !enabled;
+
+          if (enabled) {
+            requestAnimationFrame(() => workflowFrame.focus({ preventScroll: true }));
+          } else if (returnFocus) {
+            workflowFrame.blur();
+            requestAnimationFrame(() => workflowGate.focus({ preventScroll: true }));
+          } else {
+            workflowFrame.blur();
+          }
+        };
+
+        const setActivePiece = (id, updateAddress = true) => {
+          const meta = pieceMeta[id];
+          if (!meta) return;
+          activePieceId = id;
+
+          if (id !== "workflow" && workflowInteractive) {
+            setWorkflowInteractive(false);
+          }
+
+          navLinks.forEach((link) => {
+            link.setAttribute("aria-current", String(link.dataset.target === id));
+          });
+          dock.dataset.piece = id;
+          const hasStandalonePage = Boolean(meta.href);
+          standaloneLink.classList.toggle("is-hidden", !hasStandalonePage);
+          standaloneLink.setAttribute("aria-hidden", String(!hasStandalonePage));
+          standaloneLink.tabIndex = hasStandalonePage ? 0 : -1;
+          if (hasStandalonePage) standaloneLink.href = meta.href;
+
+          pieces.forEach((piece) => {
+            if (piece.id === id) return;
+            piece
+              .querySelector("iframe")
+              ?.contentWindow?.postMessage("portfolio:pause", "*");
+          });
+
+          document.title = translate(meta.titleKey);
+
+          if (updateAddress && location.hash !== `#${id}`) {
+            history.replaceState(null, "", `#${id}`);
+          }
+        };
+
+        const showPiece = (id) => {
+          const target = document.getElementById(id);
+          if (!target) return;
+          target.scrollIntoView({
+            behavior: prefersReducedMotion.matches ? "auto" : "smooth",
+            block: "start",
+          });
+          setActivePiece(id);
+        };
+
+        targetLinks.forEach((link) => {
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            showPiece(link.dataset.target);
+          });
+        });
+
+        workflowGate.addEventListener("click", () => {
+          setWorkflowInteractive(true);
+        });
+
+        workflowExit.addEventListener("click", () => {
+          setWorkflowInteractive(false, true);
+        });
+
+        window.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && workflowInteractive) {
+            setWorkflowInteractive(false, true);
+          }
+        });
+
+        window.addEventListener("message", (event) => {
+          if (
+            event.source === workflowFrame.contentWindow &&
+            event.data === "portfolio:workflow-exit" &&
+            workflowInteractive
+          ) {
+            setWorkflowInteractive(false, true);
+          }
+        });
+
+        const updateDockToggleLanguage = (lookup = translate) => {
+          const collapsed = dock.classList.contains("is-collapsed");
+          dockToggle.setAttribute(
+            "aria-label",
+            lookup(collapsed ? "dock.expand" : "dock.collapse"),
+          );
+          dockToggle.setAttribute("title", lookup("dock.toggle.title"));
+          dockToggle.textContent = collapsed ? lookup("dock.works") : "×";
+        };
+
+        dockToggle.addEventListener("click", () => {
+          const collapsed = dock.classList.toggle("is-collapsed");
+          dockToggle.setAttribute("aria-expanded", String(!collapsed));
+          updateDockToggleLanguage();
+        });
+
+        if ("IntersectionObserver" in window) {
+          const visibility = new Map();
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                visibility.set(entry.target.id, entry.intersectionRatio);
+              });
+
+              const active = pieces
+                .map((piece) => ({
+                  id: piece.id,
+                  ratio: visibility.get(piece.id) || 0,
+                }))
+                .sort((a, b) => b.ratio - a.ratio)[0];
+
+              if (active?.ratio > 0.35) setActivePiece(active.id);
+            },
+            { threshold: [0.2, 0.35, 0.5, 0.75] },
+          );
+          pieces.forEach((piece) => observer.observe(piece));
+        }
+
+        i18n = window.PortfolioI18n.createController({
+          translations,
+          description: "meta.description",
+          broadcastFrames: true,
+          onChange: (_language, lookup) => {
+            document.documentElement.style.setProperty(
+              "--loading-label",
+              `"${lookup("loading").replace(/"/g, '\\"')}"`,
+            );
+            updateDockToggleLanguage(lookup);
+            document.title = lookup(pieceMeta[activePieceId].titleKey);
+          },
+        });
+
+        const initialId = location.hash.slice(1);
+        if (pieceMeta[initialId]) {
+          requestAnimationFrame(() => showPiece(initialId));
+        } else {
+          setActivePiece("home", false);
+        }
+      })();
+    </script>
+  </body>
+</html>

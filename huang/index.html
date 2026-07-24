@@ -1,0 +1,4122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="GENIUSHUANG product case study: product context, ownership, user research, core workflow, technical architecture, and verified outcomes."
+    />
+    <title>GENIUSHUANG | AI Director Workstation</title>
+    <style>
+      :root {
+        /* Tokens sampled from the live HUANG Director product. */
+        --canvas: #f4e8d4;
+        --surface: #f8efdf;
+        --surface-strong: #ebd8b9;
+        --ink: #1a2c26;
+        --muted: #66716b;
+        --line: rgba(26, 44, 38, 0.16);
+        --deep: #1a2c26;
+        --accent: #c68a4a;
+        --accent-dark: #9d692f;
+        --sage: #2b4a3f;
+        --sage-pale: #dce2d9;
+        --blue: #2b4a3f;
+        --blue-pale: #dce2d9;
+        --rose: #c68a4a;
+        --rose-pale: #f0dfbf;
+        --sand: #b38f5e;
+        --sand-pale: #ebd8b9;
+        --white: #f8efdf;
+        --shadow-action: rgba(26, 44, 38, 0.16) 0 10px 28px 0;
+        --shadow-panel:
+          rgba(26, 44, 38, 0.1) 0 24px 70px 0,
+          rgba(26, 44, 38, 0.05) 0 4px 16px 0;
+        --page-max-width: 1240px;
+        --section-gap: 80px;
+        --element-gap: 20px;
+        --radius-lg: 28px;
+        --radius-md: 20px;
+        --radius-sm: 12px;
+        --sans: Inter, "PingFang SC", "Microsoft YaHei", "Noto Sans SC",
+          system-ui, sans-serif;
+        --serif: Inter, "PingFang SC", "Microsoft YaHei", "Noto Sans SC",
+          system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 96px;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--canvas);
+        font-family: var(--sans);
+        font-size: 16px;
+        line-height: 1.72;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        color: inherit;
+        font: inherit;
+      }
+
+      ::selection {
+        color: var(--white);
+        background: var(--accent);
+      }
+
+      .skip-link {
+        position: fixed;
+        z-index: 200;
+        top: 12px;
+        left: 12px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        color: var(--white);
+        background: var(--deep);
+        transform: translateY(-160%);
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .container {
+        width: min(var(--page-max-width), calc(100% - 48px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        z-index: 100;
+        top: 0;
+        border-bottom: 1px solid rgba(217, 203, 187, 0.9);
+        background: rgba(245, 238, 227, 0.91);
+        backdrop-filter: blur(16px);
+      }
+
+      .nav {
+        display: flex;
+        min-height: 72px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        border-radius: var(--radius-sm);
+        color: var(--surface);
+        background: var(--deep);
+        font-size: 13px;
+        font-weight: 750;
+        letter-spacing: -0.04em;
+        place-items: center;
+      }
+
+      .brand-copy {
+        display: grid;
+        line-height: 1.15;
+      }
+
+      .brand-copy strong {
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-decoration: underline;
+        text-decoration-color: var(--accent);
+        text-decoration-thickness: 3px;
+        text-underline-offset: 6px;
+      }
+
+      .brand-copy span {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .nav-note {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 46px;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 20px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        background: transparent;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 750;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease,
+          border-color 0.2s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .button-primary {
+        border-color: var(--accent);
+        color: var(--white);
+        background: var(--accent);
+        box-shadow: var(--shadow-action);
+      }
+
+      .button-primary:hover {
+        border-color: var(--accent-dark);
+        background: var(--accent-dark);
+      }
+
+      .hero {
+        padding: 96px 0 52px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 0.94fr 1.06fr;
+        align-items: center;
+        gap: 64px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--accent);
+        font-size: 11px;
+        font-weight: 750;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 34px;
+        height: 1px;
+        background: currentColor;
+        content: "";
+      }
+
+      .hero h1 {
+        margin: 22px 0 22px;
+        font-family: var(--serif);
+        font-size: clamp(54px, 7vw, 96px);
+        font-weight: 600;
+        letter-spacing: -0.055em;
+        line-height: 0.98;
+      }
+
+      .hero h1 span {
+        display: block;
+        margin-top: 16px;
+        color: var(--accent);
+        font-family: var(--sans);
+        font-size: 0.42em;
+        font-weight: 650;
+        letter-spacing: -0.03em;
+        line-height: 1.08;
+      }
+
+      .hero-copy {
+        max-width: 620px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 30px;
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        margin-top: 28px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .hero-meta b {
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      .product-frame {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: var(--surface);
+      }
+
+      .frame-bar {
+        display: flex;
+        height: 44px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+        border-bottom: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+      }
+
+      .frame-dots {
+        display: flex;
+        gap: 5px;
+      }
+
+      .frame-dots i {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--line);
+      }
+
+      .live {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: var(--deep);
+        font-weight: 750;
+      }
+
+      .live::before {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--sage);
+        content: "";
+      }
+
+      .frame-image {
+        aspect-ratio: 16 / 10.5;
+        overflow: hidden;
+        background: var(--surface-strong);
+      }
+
+      .frame-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+      }
+
+      .summary {
+        padding: 30px 0 72px;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--surface);
+      }
+
+      .summary-item {
+        padding: 22px 24px;
+        border-right: 1px solid var(--line);
+      }
+
+      .summary-item:last-child {
+        border-right: 0;
+      }
+
+      .summary-item strong {
+        display: block;
+        font-family: var(--serif);
+        font-size: 27px;
+        letter-spacing: -0.04em;
+        line-height: 1.15;
+      }
+
+      .summary-item span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .case-layout {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        align-items: start;
+        gap: 64px;
+      }
+
+      .toc {
+        position: sticky;
+        top: 100px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: rgba(255, 250, 242, 0.8);
+        backdrop-filter: blur(14px);
+      }
+
+      .toc-title {
+        margin: 0 0 13px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 750;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .toc-list {
+        display: grid;
+        gap: 4px;
+      }
+
+      .toc a {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 8px;
+        padding: 9px 10px;
+        border-left: 2px solid transparent;
+        border-radius: 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.4;
+        transition:
+          color 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .toc a span:first-child {
+        font-size: 10px;
+        font-weight: 750;
+      }
+
+      .toc a:hover,
+      .toc a.active {
+        color: var(--ink);
+        border-left-color: var(--accent);
+        background: rgba(236, 212, 198, 0.62);
+      }
+
+      .chapters {
+        min-width: 0;
+      }
+
+      .chapter {
+        padding: 88px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .chapter:first-child {
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      .chapter-head {
+        display: grid;
+        grid-template-columns: 66px 1fr;
+        gap: 22px;
+        margin-bottom: 40px;
+      }
+
+      .chapter-number {
+        display: grid;
+        width: 56px;
+        height: 36px;
+        border-radius: var(--radius-sm);
+        color: var(--white);
+        background: var(--accent);
+        font-size: 11px;
+        font-weight: 800;
+        place-items: center;
+      }
+
+      .chapter h2 {
+        margin: 0;
+        font-family: var(--serif);
+        font-size: clamp(40px, 5vw, 64px);
+        font-weight: 600;
+        letter-spacing: -0.05em;
+        line-height: 1.02;
+      }
+
+      .chapter-intro {
+        max-width: 760px;
+        margin: 12px 0 0;
+        color: var(--muted);
+      }
+
+      .subsection {
+        margin-top: 46px;
+      }
+
+      .subsection:first-of-type {
+        margin-top: 0;
+      }
+
+      .subsection-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .subsection-head::before {
+        width: 28px;
+        height: 1px;
+        border-radius: 0;
+        background: var(--accent);
+        content: "";
+      }
+
+      .subsection h3 {
+        margin: 0;
+        font-size: 21px;
+        font-weight: 720;
+        letter-spacing: -0.02em;
+      }
+
+      .facts {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--surface);
+      }
+
+      .fact {
+        display: grid;
+        grid-template-columns: 106px 1fr;
+        gap: 14px;
+        padding: 20px 22px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .fact:nth-child(even) {
+        border-right: 0;
+      }
+
+      .fact:nth-last-child(-n + 2) {
+        border-bottom: 0;
+      }
+
+      .fact dt {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .fact dd {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 650;
+      }
+
+      .note {
+        display: grid;
+        grid-template-columns: 124px 1fr;
+        gap: 22px;
+        margin-top: 18px;
+        padding: 22px;
+        border-left: 2px solid var(--accent);
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        background: var(--sage-pale);
+      }
+
+      .note b {
+        font-size: 13px;
+      }
+
+      .note p {
+        margin: 0;
+        color: #705b50;
+        font-size: 13px;
+      }
+
+      .responsibilities {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .responsibility {
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--surface);
+      }
+
+      .responsibility small {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--blue);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .responsibility h3 {
+        margin: 0 0 7px;
+        font-size: 16px;
+      }
+
+      .responsibility p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .audience-callout {
+        padding: 26px;
+        border-radius: var(--radius-md);
+        background: var(--blue-pale);
+      }
+
+      .audience-callout b {
+        display: block;
+        margin-bottom: 8px;
+        color: #715749;
+        font-size: 13px;
+      }
+
+      .audience-callout p {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.65;
+      }
+
+      .numbered-list {
+        display: grid;
+        gap: 10px;
+        counter-reset: item;
+      }
+
+      .numbered-item {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 16px;
+        align-items: start;
+        padding: 17px 18px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        background: var(--surface);
+        counter-increment: item;
+      }
+
+      .numbered-item::before {
+        display: grid;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        color: var(--deep);
+        background: var(--surface-strong);
+        content: counter(item, decimal-leading-zero);
+        font-size: 10px;
+        font-weight: 800;
+        place-items: center;
+      }
+
+      .numbered-item p {
+        margin: 3px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .pain-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .pain {
+        padding: 21px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--surface);
+      }
+
+      .pain h4 {
+        margin: 0 0 8px;
+        font-size: 15px;
+      }
+
+      .pain p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .signal-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+
+      .signal {
+        min-height: 140px;
+        padding: 19px;
+        border-radius: var(--radius-md);
+        background: var(--sand-pale);
+      }
+
+      .signal strong {
+        display: block;
+        color: #7f5d47;
+        font-family: var(--serif);
+        font-size: 26px;
+        letter-spacing: -0.04em;
+      }
+
+      .signal span {
+        display: block;
+        margin-top: 8px;
+        color: #78695d;
+        font-size: 12px;
+      }
+
+      .workflow-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      .workflow-step {
+        position: relative;
+        min-height: 180px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--surface);
+      }
+
+      .workflow-step small {
+        color: var(--sage);
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .workflow-step h4 {
+        margin: 14px 0 8px;
+        font-size: 16px;
+      }
+
+      .workflow-step p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .workspace-list {
+        display: grid;
+        gap: 16px;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: 1.08fr 0.92fr;
+        overflow: hidden;
+        min-height: 340px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: var(--surface);
+      }
+
+      .workspace:nth-child(even) {
+        grid-template-columns: 0.92fr 1.08fr;
+      }
+
+      .workspace:nth-child(even) .workspace-image {
+        order: 2;
+      }
+
+      .workspace-image {
+        min-height: 340px;
+        overflow: hidden;
+        background: var(--surface-strong);
+      }
+
+      .workspace-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+      }
+
+      .workspace-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 34px;
+      }
+
+      .workspace-copy small {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+      }
+
+      .workspace-copy h4 {
+        margin: 12px 0 10px;
+        font-size: 23px;
+        letter-spacing: -0.03em;
+      }
+
+      .workspace-copy p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 20px;
+      }
+
+      .tag {
+        padding: 0;
+        border-radius: 0;
+        color: var(--accent);
+        background: transparent;
+        font-size: 10px;
+        font-weight: 750;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .knowledge {
+        overflow: hidden;
+        border: 1px solid #d9b9aa;
+        border-radius: var(--radius-lg);
+        background: var(--rose-pale);
+      }
+
+      .knowledge-head {
+        padding: 30px;
+        border-bottom: 1px solid #d9b9aa;
+      }
+
+      .knowledge-head .subsection-head {
+        margin-bottom: 12px;
+      }
+
+      .knowledge-head .subsection-head::before {
+        background: var(--rose);
+      }
+
+      .knowledge-head p {
+        max-width: 720px;
+        margin: 0;
+        color: #76584f;
+        font-size: 14px;
+      }
+
+      .comparison {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: #d9b9aa;
+      }
+
+      .compare {
+        padding: 25px;
+        background: rgba(255, 250, 242, 0.68);
+      }
+
+      .compare.accent {
+        color: var(--white);
+        background: var(--deep);
+      }
+
+      .compare small {
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+      }
+
+      .compare h4 {
+        margin: 11px 0 7px;
+        font-size: 18px;
+      }
+
+      .compare p {
+        margin: 0;
+        color: #76584f;
+        font-size: 12px;
+      }
+
+      .compare.accent p {
+        color: #ead8cf;
+      }
+
+      .knowledge-body {
+        padding: 30px;
+      }
+
+      .knowledge-flow {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+      }
+
+      .knowledge-node {
+        position: relative;
+        padding: 16px 13px;
+        border: 1px solid rgba(139, 80, 62, 0.24);
+        border-radius: var(--radius-sm);
+        background: rgba(255, 250, 242, 0.5);
+      }
+
+      .knowledge-node:not(:last-child)::after {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        right: -9px;
+        color: var(--accent);
+        content: "›";
+        font-size: 18px;
+        transform: translateY(-50%);
+      }
+
+      .knowledge-node b {
+        display: block;
+        margin-bottom: 7px;
+        color: #754d41;
+        font-size: 11px;
+      }
+
+      .knowledge-node span {
+        color: #80665d;
+        font-size: 10px;
+        line-height: 1.5;
+      }
+
+      .knowledge-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 9px;
+        margin-top: 18px;
+      }
+
+      .knowledge-stat {
+        padding: 17px;
+        border-radius: var(--radius-sm);
+        background: rgba(255, 250, 242, 0.62);
+      }
+
+      .knowledge-stat strong {
+        display: block;
+        color: #754d41;
+        font-family: var(--serif);
+        font-size: 23px;
+        letter-spacing: -0.04em;
+      }
+
+      .knowledge-stat span {
+        color: #80665d;
+        font-size: 10px;
+      }
+
+      .decision-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .decision {
+        padding: 19px;
+        border-radius: var(--radius-md);
+        background: var(--sage-pale);
+      }
+
+      .decision b {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 13px;
+      }
+
+      .decision p {
+        margin: 0;
+        color: #76584f;
+        font-size: 12px;
+      }
+
+      .architecture {
+        display: grid;
+        gap: 9px;
+      }
+
+      .architecture-row {
+        display: grid;
+        grid-template-columns: 44px 190px 1fr;
+        gap: 16px;
+        align-items: center;
+        padding: 16px 18px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        background: var(--surface);
+      }
+
+      .architecture-row span:first-child {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        color: #76584f;
+        background: var(--blue-pale);
+        font-size: 10px;
+        font-weight: 800;
+        place-items: center;
+      }
+
+      .architecture-row b {
+        font-size: 13px;
+      }
+
+      .architecture-row p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .stack-groups {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .stack-group {
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--surface);
+      }
+
+      .stack-group b {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 12px;
+      }
+
+      .stack-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+
+      .stack-pills span {
+        padding: 6px 9px;
+        border-radius: 7px;
+        color: var(--muted);
+        background: var(--surface-strong);
+        font-size: 10px;
+      }
+
+      .result-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+
+      .result {
+        min-height: 155px;
+        padding: 21px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--surface);
+      }
+
+      .result strong {
+        display: block;
+        color: var(--blue);
+        font-family: var(--serif);
+        font-size: 28px;
+        letter-spacing: -0.04em;
+      }
+
+      .result b {
+        display: block;
+        margin-top: 5px;
+        font-size: 12px;
+      }
+
+      .result span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .iteration-list {
+        display: grid;
+        gap: 9px;
+      }
+
+      .iteration {
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        gap: 20px;
+        padding: 17px 19px;
+        border-radius: var(--radius-sm);
+        background: var(--sand-pale);
+      }
+
+      .iteration b {
+        font-size: 12px;
+      }
+
+      .iteration p {
+        margin: 0;
+        color: #78695d;
+        font-size: 12px;
+      }
+
+      .audit-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .audit {
+        padding: 22px;
+        border-radius: var(--radius-md);
+        color: var(--white);
+        background: var(--deep);
+      }
+
+      .audit strong {
+        display: block;
+        color: #efd4c6;
+        font-family: var(--serif);
+        font-size: 25px;
+        letter-spacing: -0.04em;
+      }
+
+      .audit b {
+        display: block;
+        margin: 8px 0 4px;
+        font-size: 12px;
+      }
+
+      .audit span {
+        color: #d7c4b9;
+        font-size: 10px;
+      }
+
+      .method-note {
+        margin-top: 18px;
+        padding: 20px;
+        border: 1px dashed #bda995;
+        border-radius: var(--radius-sm);
+        color: var(--muted);
+        background: rgba(255, 250, 242, 0.5);
+        font-size: 11px;
+      }
+
+      .closing {
+        position: relative;
+        padding: 72px 0;
+        color: var(--white);
+        background: var(--deep);
+      }
+
+      .closing::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 10px;
+        background: var(--accent);
+        content: "";
+      }
+
+      .closing-grid {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 40px;
+      }
+
+      .closing h2 {
+        margin: 0 0 12px;
+        font-family: var(--serif);
+        font-size: 48px;
+        font-weight: 600;
+        letter-spacing: -0.05em;
+        line-height: 1;
+      }
+
+      .closing p {
+        max-width: 680px;
+        margin: 0;
+        color: #d9c7bd;
+        font-size: 14px;
+      }
+
+      .closing .button-primary {
+        border-color: var(--surface);
+        color: var(--deep);
+        background: var(--surface);
+        box-shadow: none;
+      }
+
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(248, 247, 243, 0.2);
+        color: #bca99e;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+      }
+
+      dialog {
+        width: min(1280px, calc(100% - 32px));
+        max-width: none;
+        padding: 0;
+        border: 0;
+        border-radius: var(--radius-md);
+        background: var(--surface);
+        box-shadow: 0 30px 90px rgba(48, 35, 30, 0.3);
+      }
+
+      dialog::backdrop {
+        background: rgba(48, 35, 30, 0.78);
+        backdrop-filter: blur(5px);
+      }
+
+      .dialog-bar {
+        display: flex;
+        min-height: 54px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px 0 20px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .dialog-bar span {
+        font-size: 12px;
+        font-weight: 750;
+      }
+
+      .dialog-close {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: transparent;
+        cursor: pointer;
+        place-items: center;
+      }
+
+      .dialog-media {
+        max-height: calc(100vh - 90px);
+        overflow: auto;
+      }
+
+      .dialog-media img {
+        width: 100%;
+        height: auto;
+      }
+
+      .clickable-shot {
+        position: relative;
+        cursor: zoom-in;
+      }
+
+      .clickable-shot::after {
+        position: absolute;
+        right: 14px;
+        bottom: 14px;
+        padding: 7px 10px;
+        border-radius: var(--radius-sm);
+        color: var(--white);
+        background: rgba(48, 35, 30, 0.9);
+        content: attr(data-zoom-label);
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      @media (max-width: 1040px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 42px;
+        }
+
+        .hero-copy {
+          max-width: 760px;
+        }
+
+        .case-layout {
+          grid-template-columns: 1fr;
+          gap: 26px;
+        }
+
+        .toc {
+          position: sticky;
+          z-index: 80;
+          top: 72px;
+          overflow-x: auto;
+          padding: 10px;
+          border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+          white-space: nowrap;
+        }
+
+        .toc-title {
+          display: none;
+        }
+
+        .toc-list {
+          display: flex;
+          width: max-content;
+        }
+
+        .toc a {
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .summary-grid,
+        .signal-grid,
+        .result-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .summary-item:nth-child(2),
+        .signal:nth-child(2),
+        .result:nth-child(2) {
+          border-right: 0;
+        }
+
+        .summary-item:nth-child(-n + 2) {
+          border-bottom: 1px solid var(--line);
+        }
+
+        .knowledge-flow {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .knowledge-node::after {
+          display: none;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .container {
+          width: min(100% - 28px, var(--page-max-width));
+        }
+
+        .nav {
+          min-height: 64px;
+        }
+
+        .brand-copy span,
+        .nav-note {
+          display: none;
+        }
+
+        .nav-actions .button {
+          min-height: 38px;
+          padding: 0 13px;
+          font-size: 11px;
+        }
+
+        .hero {
+          padding-top: 58px;
+        }
+
+        .hero h1 {
+          font-size: 52px;
+        }
+
+        .hero h1 span {
+          font-size: 0.58em;
+        }
+
+        .summary-grid,
+        .facts,
+        .responsibilities,
+        .pain-grid,
+        .workflow-grid,
+        .comparison,
+        .decision-grid,
+        .stack-groups,
+        .result-grid,
+        .audit-grid,
+        .knowledge-stats {
+          grid-template-columns: 1fr;
+        }
+
+        .summary-item,
+        .fact {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .summary-item:last-child,
+        .fact:last-child {
+          border-bottom: 0;
+        }
+
+        .fact:nth-last-child(2) {
+          border-bottom: 1px solid var(--line);
+        }
+
+        .chapter {
+          padding: 68px 0;
+        }
+
+        .chapter-head {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+
+        .chapter h2 {
+          font-size: 40px;
+        }
+
+        .note {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .signal-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .signal {
+          min-height: 125px;
+        }
+
+        .workspace,
+        .workspace:nth-child(even) {
+          grid-template-columns: 1fr;
+        }
+
+        .workspace:nth-child(even) .workspace-image {
+          order: 0;
+        }
+
+        .workspace-image {
+          min-height: 260px;
+        }
+
+        .knowledge-flow {
+          grid-template-columns: 1fr;
+        }
+
+        .architecture-row {
+          grid-template-columns: 40px 1fr;
+          gap: 10px;
+        }
+
+        .architecture-row p {
+          grid-column: 2;
+        }
+
+        .iteration {
+          grid-template-columns: 1fr;
+          gap: 7px;
+        }
+
+        .closing-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      /* Fixed-height project viewer: one portfolio slot, six internal pages. */
+      @media screen {
+        html,
+        body {
+          height: 100%;
+          overflow: hidden;
+        }
+
+        body::before {
+          position: fixed;
+          z-index: -1;
+          inset: 0;
+          background-image:
+            linear-gradient(rgba(26, 44, 38, 0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(26, 44, 38, 0.025) 1px, transparent 1px);
+          background-size: 32px 32px;
+          content: "";
+          pointer-events: none;
+        }
+
+        .topbar {
+          position: relative;
+          height: 64px;
+          border-bottom-color: var(--line);
+          background: rgba(244, 232, 212, 0.9);
+        }
+
+        .topbar .container {
+          width: 100%;
+          max-width: none;
+          padding: 0 24px;
+        }
+
+        .nav {
+          min-height: 64px;
+        }
+
+        .brand-mark {
+          width: 40px;
+          height: 40px;
+          border: 1px solid rgba(244, 232, 212, 0.72);
+          border-radius: 999px;
+          outline: 1px solid rgba(26, 44, 38, 0.18);
+          outline-offset: 3px;
+        }
+
+        .brand-copy strong {
+          text-decoration: none;
+        }
+
+        .button {
+          min-height: 42px;
+          padding: 0 18px;
+          border-color: var(--line);
+          border-radius: 999px;
+          font-size: 10px;
+          letter-spacing: 0.1em;
+        }
+
+        .button-primary {
+          border-color: var(--deep);
+          color: var(--canvas);
+          background: var(--deep);
+          box-shadow: var(--shadow-action);
+        }
+
+        .button-primary:hover {
+          border-color: var(--sage);
+          background: var(--sage);
+        }
+
+        #main {
+          display: grid;
+          grid-template-rows: auto auto minmax(0, 1fr);
+          grid-template-columns: clamp(310px, 27vw, 380px) minmax(0, 1fr);
+          height: calc(100svh - 64px);
+          min-height: 0;
+          overflow: hidden;
+        }
+
+        .hero {
+          grid-row: 1;
+          grid-column: 1;
+          min-height: 0;
+          padding: 24px 24px 12px;
+          overflow: hidden;
+        }
+
+        .hero .container,
+        .summary .container {
+          width: 100%;
+        }
+
+        .hero-grid {
+          display: block;
+        }
+
+        .eyebrow {
+          color: var(--accent);
+          font-size: 9px;
+          letter-spacing: 0.16em;
+        }
+
+        .eyebrow::before {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+        }
+
+        .hero h1 {
+          margin: 12px 0 10px;
+          color: var(--ink);
+          font-family: var(--sans);
+          font-size: clamp(30px, 2.55vw, 38px);
+          font-weight: 850;
+          letter-spacing: -0.055em;
+          line-height: 0.98;
+        }
+
+        .hero h1 span {
+          margin-top: 8px;
+          color: var(--sage);
+          font-size: 0.45em;
+          font-weight: 600;
+          letter-spacing: -0.02em;
+        }
+
+        .hero-copy {
+          display: -webkit-box;
+          margin: 0;
+          overflow: hidden;
+          color: rgba(26, 44, 38, 0.66);
+          font-size: 11px;
+          line-height: 1.58;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 4;
+        }
+
+        .hero-actions {
+          gap: 8px;
+          margin-top: 14px;
+        }
+
+        .hero-actions .button:not(.button-primary) {
+          display: none;
+        }
+
+        .hero-meta {
+          gap: 5px 12px;
+          margin-top: 12px;
+          font-size: 9px;
+          line-height: 1.35;
+        }
+
+        .product-frame {
+          margin-top: 16px;
+          border-color: var(--line);
+          border-radius: 22px;
+          background: rgba(248, 239, 223, 0.78);
+          box-shadow: var(--shadow-panel);
+          backdrop-filter: blur(18px);
+        }
+
+        .frame-bar {
+          height: 30px;
+          padding: 0 12px;
+          font-size: 8px;
+        }
+
+        .frame-image {
+          aspect-ratio: 16 / 8.6;
+        }
+
+        .summary {
+          grid-row: 2;
+          grid-column: 1;
+          padding: 0 24px 14px;
+        }
+
+        .summary-grid {
+          grid-template-columns: repeat(2, 1fr);
+          border-color: var(--line);
+          border-radius: 18px;
+          background: rgba(248, 239, 223, 0.72);
+          backdrop-filter: blur(14px);
+        }
+
+        .summary-item {
+          min-width: 0;
+          padding: 10px 12px;
+          border-color: var(--line);
+        }
+
+        .summary-item:nth-child(2) {
+          border-right: 0;
+        }
+
+        .summary-item:nth-child(-n + 2) {
+          border-bottom: 1px solid var(--line);
+        }
+
+        .summary-item strong {
+          color: var(--ink);
+          font-family: var(--sans);
+          font-size: 18px;
+          font-weight: 800;
+        }
+
+        .summary-item span {
+          margin-top: 4px;
+          font-size: 8px;
+          line-height: 1.4;
+        }
+
+        .case-layout {
+          display: contents;
+        }
+
+        .toc {
+          position: relative;
+          grid-row: 3;
+          grid-column: 1;
+          align-self: stretch;
+          min-height: 0;
+          margin: 0 24px 24px;
+          padding: 14px;
+          overflow-x: hidden;
+          overflow-y: auto;
+          border-color: var(--line);
+          border-radius: 18px;
+          background: rgba(248, 239, 223, 0.7);
+          backdrop-filter: blur(14px);
+          scrollbar-color: var(--accent) transparent;
+          scrollbar-width: thin;
+          top: auto;
+        }
+
+        .toc-title {
+          margin: 0 0 10px 7px;
+          color: rgba(26, 44, 38, 0.48);
+          font-size: 8px;
+          letter-spacing: 0.16em;
+        }
+
+        .toc-list {
+          position: relative;
+          gap: 3px;
+        }
+
+        .toc-list::before {
+          position: absolute;
+          top: 17px;
+          bottom: 17px;
+          left: 20px;
+          width: 1px;
+          background: rgba(26, 44, 38, 0.16);
+          content: "";
+        }
+
+        .toc a {
+          position: relative;
+          z-index: 1;
+          grid-template-columns: 28px 1fr;
+          align-items: center;
+          gap: 9px;
+          padding: 7px 9px 7px 6px;
+          border: 0;
+          border-radius: 999px;
+          color: rgba(26, 44, 38, 0.58);
+          background: transparent;
+          font-size: 10px;
+        }
+
+        .toc a span:first-child {
+          display: grid;
+          width: 28px;
+          height: 28px;
+          border: 1px solid rgba(26, 44, 38, 0.2);
+          border-radius: 50%;
+          background: var(--surface);
+          font-size: 8px;
+          place-items: center;
+        }
+
+        .toc a:hover {
+          border-left: 0;
+          color: var(--ink);
+          background: rgba(43, 74, 63, 0.08);
+        }
+
+        .toc a.active {
+          border-left: 0;
+          color: var(--canvas);
+          background: var(--deep);
+        }
+
+        .toc a.active span:first-child {
+          border-color: var(--accent);
+          color: var(--ink);
+          background: var(--accent);
+        }
+
+        .chapters {
+          grid-row: 1 / 4;
+          grid-column: 2;
+          min-width: 0;
+          min-height: 0;
+          height: 100%;
+          overflow-x: hidden;
+          overflow-y: auto;
+          border-left: 1px solid var(--line);
+          background: rgba(248, 239, 223, 0.44);
+          scroll-behavior: smooth;
+          scroll-snap-type: y mandatory;
+          scrollbar-color: var(--accent) transparent;
+          scrollbar-width: thin;
+        }
+
+        .chapter {
+          position: relative;
+          height: 100%;
+          min-height: 100%;
+          padding: 44px clamp(34px, 5vw, 78px) 54px;
+          overflow-x: hidden;
+          overflow-y: auto;
+          border-top: 0;
+          background: rgba(248, 239, 223, 0.62);
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
+          scrollbar-color: rgba(198, 138, 74, 0.78) transparent;
+          scrollbar-gutter: stable;
+          scrollbar-width: thin;
+        }
+
+        .chapter:nth-child(even) {
+          background: rgba(244, 232, 212, 0.76);
+        }
+
+        .chapter:first-child {
+          padding-top: 44px;
+        }
+
+        .chapter-head {
+          grid-template-columns: 52px 1fr;
+          gap: 18px;
+          margin-bottom: 30px;
+        }
+
+        .chapter-number {
+          width: 46px;
+          height: 30px;
+          border-radius: 999px;
+          color: var(--ink);
+          background: var(--accent) !important;
+          font-size: 9px;
+          letter-spacing: 0.08em;
+        }
+
+        .chapter h2 {
+          color: var(--ink);
+          font-family: var(--sans);
+          font-size: clamp(38px, 4vw, 58px);
+          font-weight: 800;
+          letter-spacing: -0.055em;
+          line-height: 0.98;
+        }
+
+        .chapter-intro {
+          max-width: 760px;
+          margin-top: 10px;
+          color: rgba(26, 44, 38, 0.58);
+          font-size: 13px;
+        }
+
+        .subsection {
+          margin-top: 34px;
+        }
+
+        .subsection-head::before {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: var(--accent);
+        }
+
+        .subsection h3 {
+          font-size: 18px;
+          font-weight: 700;
+        }
+
+        .facts,
+        .responsibility,
+        .numbered-item,
+        .pain,
+        .workflow-step,
+        .workspace,
+        .stack-group,
+        .result,
+        .architecture-row {
+          border-color: var(--line);
+          background: rgba(248, 239, 223, 0.78);
+        }
+
+        .facts,
+        .workspace,
+        .knowledge {
+          box-shadow: var(--shadow-panel);
+          backdrop-filter: blur(18px);
+        }
+
+        .note {
+          border-left-color: var(--accent);
+          background: rgba(198, 138, 74, 0.14);
+        }
+
+        .note p,
+        .audience-callout b,
+        .signal strong,
+        .signal span,
+        .decision p,
+        .iteration p,
+        .knowledge-head p,
+        .compare p,
+        .knowledge-node b,
+        .knowledge-node span,
+        .knowledge-stat strong,
+        .knowledge-stat span,
+        .architecture-row span:first-child {
+          color: var(--muted);
+        }
+
+        .audience-callout,
+        .decision {
+          background: rgba(43, 74, 63, 0.1);
+        }
+
+        .signal,
+        .iteration {
+          background: rgba(198, 138, 74, 0.14);
+        }
+
+        .signal strong,
+        .result strong,
+        .knowledge-stat strong,
+        .audit strong {
+          color: var(--sage);
+          font-family: var(--sans);
+          font-weight: 800;
+        }
+
+        .knowledge {
+          border-color: var(--line);
+          background: rgba(240, 223, 191, 0.74);
+        }
+
+        .knowledge-head,
+        .comparison {
+          border-color: var(--line);
+        }
+
+        .comparison {
+          background: var(--line);
+        }
+
+        .compare {
+          background: rgba(248, 239, 223, 0.76);
+        }
+
+        .compare.accent {
+          color: var(--canvas);
+          background: var(--sage);
+        }
+
+        .compare.accent p {
+          color: rgba(244, 232, 212, 0.78);
+        }
+
+        .knowledge-node,
+        .knowledge-stat {
+          border-color: var(--line);
+          background: rgba(248, 239, 223, 0.72);
+        }
+
+        .knowledge-node:not(:last-child)::after {
+          color: var(--accent);
+        }
+
+        .audit {
+          color: var(--canvas);
+          background: var(--deep);
+        }
+
+        .audit strong,
+        .audit span {
+          color: var(--canvas);
+        }
+
+        .method-note {
+          border-color: rgba(26, 44, 38, 0.28);
+          background: rgba(248, 239, 223, 0.66);
+        }
+
+        .clickable-shot::after {
+          border-radius: 999px;
+          color: var(--canvas);
+          background: rgba(26, 44, 38, 0.88);
+        }
+
+        .closing {
+          display: none;
+        }
+      }
+
+      @media screen and (max-height: 820px) and (min-width: 1041px) {
+        .product-frame {
+          display: none;
+        }
+
+        .hero-copy {
+          -webkit-line-clamp: 3;
+        }
+      }
+
+      @media screen and (max-height: 680px) and (min-width: 1041px) {
+        .hero-copy,
+        .hero-meta {
+          display: none;
+        }
+
+        .summary-item {
+          padding-block: 7px;
+        }
+      }
+
+      @media screen and (max-width: 1040px) {
+        #main {
+          grid-template-rows: 58px minmax(0, 1fr);
+          grid-template-columns: 1fr;
+        }
+
+        .hero,
+        .summary {
+          display: none;
+        }
+
+        .toc {
+          grid-row: 1;
+          grid-column: 1;
+          width: 100%;
+          margin: 0;
+          padding: 10px 14px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          border-width: 0 0 1px;
+          border-radius: 0;
+          white-space: nowrap;
+        }
+
+        .toc-title,
+        .toc-list::before {
+          display: none;
+        }
+
+        .toc-list {
+          display: flex;
+          width: max-content;
+        }
+
+        .toc a {
+          display: inline-grid;
+          grid-template-columns: 24px auto;
+          padding: 5px 10px 5px 5px;
+        }
+
+        .toc a span:first-child {
+          width: 24px;
+          height: 24px;
+        }
+
+        .chapters {
+          grid-row: 2;
+          grid-column: 1;
+          border-top: 0;
+          border-left: 0;
+        }
+
+        .chapter,
+        .chapter:first-child {
+          padding: 30px 22px 44px;
+        }
+
+        .chapter h2 {
+          font-size: clamp(34px, 7vw, 46px);
+        }
+      }
+
+      /* Horizontal chapter rail above the right-side project canvas. */
+      @media screen {
+        #main {
+          grid-template-rows: minmax(0, 1fr);
+          grid-template-columns: clamp(310px, 27vw, 380px) minmax(0, 1fr);
+        }
+
+        .project-sidebar {
+          grid-row: 1;
+          grid-column: 1;
+          min-height: 0;
+          height: 100%;
+          overflow-x: hidden;
+          overflow-y: auto;
+          border-right: 1px solid var(--line);
+          scrollbar-color: var(--accent) transparent;
+          scrollbar-width: thin;
+        }
+
+        .case-layout {
+          display: grid;
+          grid-row: 1;
+          grid-column: 2;
+          grid-template-rows: 66px minmax(0, 1fr);
+          grid-template-columns: minmax(0, 1fr);
+          min-width: 0;
+          min-height: 0;
+        }
+
+        .hero,
+        .summary {
+          grid-row: auto;
+          grid-column: auto;
+        }
+
+        .toc {
+          position: relative;
+          grid-row: 1;
+          grid-column: 1;
+          width: 100%;
+          min-height: 0;
+          margin: 0;
+          padding: 12px 20px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          border-width: 0 0 1px;
+          border-radius: 0;
+          background: rgba(248, 239, 223, 0.78);
+          white-space: nowrap;
+          top: auto;
+        }
+
+        .toc-title,
+        .toc-list::before {
+          display: none;
+        }
+
+        .toc-list {
+          display: grid;
+          grid-template-columns: repeat(6, minmax(118px, 1fr));
+          width: max(100%, 780px);
+          gap: 6px;
+        }
+
+        .toc a {
+          display: grid;
+          grid-template-columns: 26px minmax(0, 1fr);
+          align-items: center;
+          gap: 7px;
+          min-width: 0;
+          padding: 7px 10px 7px 7px;
+          border: 0;
+          border-radius: 999px;
+          font-size: 9px;
+        }
+
+        .toc a span:first-child {
+          width: 26px;
+          height: 26px;
+        }
+
+        .toc a span:last-child {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .chapters {
+          grid-row: 2;
+          grid-column: 1;
+          border-left: 0;
+        }
+
+        .media-intro {
+          max-width: 760px;
+          margin: -8px 0 18px;
+          color: rgba(26, 44, 38, 0.58);
+          font-size: 12px;
+          line-height: 1.7;
+        }
+
+        .demo-stage,
+        .ui-gallery {
+          overflow: hidden;
+          border: 1px solid var(--line);
+          border-radius: var(--radius-lg);
+          background: rgba(248, 239, 223, 0.82);
+          box-shadow: var(--shadow-panel);
+          backdrop-filter: blur(18px);
+        }
+
+        .demo-player {
+          display: grid;
+          grid-template-columns: minmax(0, 1.45fr) minmax(230px, 0.55fr);
+          min-height: 360px;
+          background: var(--deep);
+        }
+
+        .demo-player video {
+          display: block;
+          width: 100%;
+          height: 100%;
+          min-height: 360px;
+          max-height: 520px;
+          object-fit: contain;
+          background: #0c0f0e;
+        }
+
+        .demo-caption {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 30px;
+          color: var(--canvas);
+          border-left: 1px solid rgba(244, 232, 212, 0.14);
+        }
+
+        .demo-caption small {
+          color: var(--accent);
+          font-size: 9px;
+          font-weight: 750;
+          letter-spacing: 0.14em;
+        }
+
+        .demo-caption h4 {
+          margin: 14px 0 10px;
+          font-size: 25px;
+          letter-spacing: -0.035em;
+          line-height: 1.1;
+        }
+
+        .demo-caption p {
+          margin: 0;
+          color: rgba(244, 232, 212, 0.7);
+          font-size: 12px;
+          line-height: 1.7;
+        }
+
+        .demo-caption span {
+          align-self: flex-start;
+          margin-top: 24px;
+          padding: 6px 9px;
+          border: 1px solid rgba(244, 232, 212, 0.2);
+          border-radius: 999px;
+          color: rgba(244, 232, 212, 0.62);
+          font-size: 9px;
+          letter-spacing: 0.08em;
+        }
+
+        .demo-switcher {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 1px;
+          padding: 1px;
+          background: var(--line);
+        }
+
+        .demo-tab {
+          display: grid;
+          grid-template-columns: 24px minmax(0, 1fr) auto;
+          align-items: center;
+          gap: 8px;
+          min-height: 58px;
+          padding: 9px 11px;
+          border: 0;
+          color: rgba(26, 44, 38, 0.62);
+          background: var(--surface);
+          cursor: pointer;
+          text-align: left;
+          transition:
+            color 0.2s ease,
+            background 0.2s ease;
+        }
+
+        .demo-tab span {
+          display: grid;
+          width: 24px;
+          height: 24px;
+          border: 1px solid rgba(26, 44, 38, 0.18);
+          border-radius: 50%;
+          font-size: 8px;
+          place-items: center;
+        }
+
+        .demo-tab b {
+          overflow: hidden;
+          font-size: 10px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .demo-tab small {
+          font-size: 8px;
+        }
+
+        .demo-tab:hover {
+          color: var(--ink);
+          background: var(--surface-strong);
+        }
+
+        .demo-tab.active {
+          color: var(--canvas);
+          background: var(--sage);
+        }
+
+        .demo-tab.active span {
+          border-color: var(--accent);
+          color: var(--ink);
+          background: var(--accent);
+        }
+
+        .ui-gallery {
+          display: grid;
+          grid-template-rows: minmax(360px, auto) auto;
+          grid-template-columns: minmax(0, 1fr) minmax(230px, 0.34fr);
+        }
+
+        .ui-feature {
+          position: relative;
+          grid-row: 1;
+          grid-column: 1;
+          min-width: 0;
+          min-height: 360px;
+          padding: 0;
+          overflow: hidden;
+          border: 0;
+          border-right: 1px solid var(--line);
+          background: var(--canvas);
+          cursor: zoom-in;
+        }
+
+        .ui-feature img {
+          width: 100%;
+          height: 100%;
+          max-height: 540px;
+          object-fit: contain;
+          object-position: center top;
+        }
+
+        .ui-gallery-copy {
+          display: flex;
+          grid-row: 1;
+          grid-column: 2;
+          flex-direction: column;
+          justify-content: center;
+          padding: 28px;
+        }
+
+        .ui-gallery-copy small {
+          color: var(--accent-dark);
+          font-size: 9px;
+          font-weight: 750;
+          letter-spacing: 0.14em;
+        }
+
+        .ui-gallery-copy h4 {
+          margin: 14px 0 9px;
+          color: var(--ink);
+          font-size: 23px;
+          letter-spacing: -0.035em;
+          line-height: 1.12;
+        }
+
+        .ui-gallery-copy p {
+          margin: 0;
+          color: var(--muted);
+          font-size: 12px;
+          line-height: 1.7;
+        }
+
+        .ui-thumbs {
+          display: grid;
+          grid-row: 2;
+          grid-column: 1 / 3;
+          grid-template-columns: repeat(7, minmax(108px, 1fr));
+          gap: 1px;
+          overflow-x: auto;
+          background: var(--line);
+          scrollbar-color: var(--accent) transparent;
+          scrollbar-width: thin;
+        }
+
+        .ui-thumb {
+          min-width: 108px;
+          padding: 7px;
+          border: 0;
+          color: rgba(26, 44, 38, 0.58);
+          background: var(--surface);
+          cursor: pointer;
+          text-align: left;
+        }
+
+        .ui-thumb img {
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          border: 1px solid rgba(26, 44, 38, 0.1);
+          border-radius: 8px;
+          object-fit: cover;
+          object-position: top center;
+        }
+
+        .ui-thumb span {
+          display: block;
+          margin-top: 6px;
+          overflow: hidden;
+          font-size: 9px;
+          font-weight: 700;
+          text-align: center;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .ui-thumb:hover,
+        .ui-thumb.active {
+          color: var(--ink);
+          background: var(--surface-strong);
+        }
+
+        .ui-thumb.active img {
+          border-color: var(--accent);
+          box-shadow: 0 0 0 2px rgba(198, 138, 74, 0.24);
+        }
+      }
+
+      @media screen and (max-width: 1040px) {
+        #main {
+          grid-template-rows: minmax(0, 1fr);
+          grid-template-columns: 1fr;
+        }
+
+        .project-sidebar {
+          display: none;
+        }
+
+        .case-layout {
+          grid-row: 1;
+          grid-column: 1;
+          grid-template-rows: 58px minmax(0, 1fr);
+        }
+
+        .toc {
+          padding: 8px 14px;
+        }
+      }
+
+      @media screen and (max-width: 760px) {
+        .demo-player,
+        .ui-gallery {
+          grid-template-columns: 1fr;
+        }
+
+        .demo-player video {
+          min-height: 0;
+          aspect-ratio: 4 / 3;
+        }
+
+        .demo-caption {
+          padding: 22px;
+          border-top: 1px solid rgba(244, 232, 212, 0.14);
+          border-left: 0;
+        }
+
+        .demo-switcher {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .ui-feature,
+        .ui-gallery-copy {
+          grid-column: 1;
+        }
+
+        .ui-feature {
+          grid-row: 1;
+          min-height: 250px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .ui-gallery-copy {
+          grid-row: 2;
+        }
+
+        .ui-thumbs {
+          grid-row: 3;
+          grid-column: 1;
+        }
+      }
+
+      @media print {
+        @page {
+          margin: 12mm;
+          size: A4;
+        }
+
+        body {
+          color: #111;
+          background: #fff;
+          font-size: 10pt;
+        }
+
+        .topbar,
+        .toc,
+        .hero-actions,
+        .clickable-shot::after,
+        dialog {
+          display: none !important;
+        }
+
+        .container {
+          width: 100%;
+        }
+
+        .hero,
+        .chapter,
+        .closing {
+          padding: 18mm 0;
+          color: #111;
+          background: #fff;
+          break-inside: avoid;
+        }
+
+        .case-layout {
+          display: block;
+        }
+
+        .product-frame,
+        .summary-grid,
+        .workspace,
+        .knowledge,
+        .result,
+        .audit {
+          box-shadow: none;
+          break-inside: avoid;
+        }
+
+        .audit {
+          color: #111;
+          background: #eee;
+        }
+
+        .audit strong,
+        .audit span,
+        .closing p {
+          color: #333;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="assets/revision.css" />
+    <style>
+      .language-switch {
+        position: fixed;
+        z-index: 190;
+        top: 18px;
+        right: 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        padding: 4px;
+        border: 1px solid rgba(26, 44, 38, 0.18);
+        border-radius: 999px;
+        background: rgba(248, 239, 223, 0.92);
+        box-shadow: 0 8px 24px rgba(26, 44, 38, 0.12);
+        backdrop-filter: blur(14px);
+      }
+
+      .language-switch button {
+        min-width: 42px;
+        min-height: 32px;
+        padding: 0 10px;
+        border: 0;
+        border-radius: 999px;
+        color: var(--muted);
+        background: transparent;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+      }
+
+      .language-switch button.is-active {
+        color: var(--surface);
+        background: var(--deep);
+      }
+
+      .portfolio-embedded .language-switch {
+        display: none;
+      }
+
+      @media (max-width: 720px) {
+        .language-switch {
+          top: 10px;
+          right: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <div class="language-switch" role="group" aria-label="Language" data-i18n-aria="language.aria">
+      <button type="button" data-language="en" aria-pressed="true">EN</button>
+      <button type="button" data-language="zh" aria-pressed="false">中文</button>
+    </div>
+
+    <main id="main">
+      <div class="project-sidebar">
+        <section class="hero" id="top">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Product case study · 2026</span>
+            <h1>
+              GENIUSHUANG
+              <span>AI Director Workstation</span>
+            </h1>
+            <p class="hero-copy">
+              A full-stack multimodal workspace for AI film pre-production. It turns ideas,
+              scripts, references, and reusable assets into structured video prompts, image
+              prompts, and screenplay plans—improving cinematic expression and content
+              accuracy in downstream generation.
+            </p>
+            <div class="hero-actions">
+              <a
+                class="button button-primary"
+                href="https://www.geniushuang.cn"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open Live Product ↗
+              </a>
+              <a class="button" href="#project">Read the Case Study ↓</a>
+            </div>
+            <div class="hero-meta">
+              <span><b>Role</b> Independent Builder</span>
+              <span><b>Timeline</b> May—Jul 2026</span>
+              <span><b>Status</b> v1.0 · Actively maintained</span>
+            </div>
+          </div>
+
+          <figure class="product-frame">
+            <div class="frame-bar">
+              <span class="frame-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>www.geniushuang.cn</span>
+              <span class="live">ONLINE</span>
+            </div>
+            <button
+              class="frame-image clickable-shot"
+              data-shot="assets/ui/DIRECTOR.png"
+              data-title="GENIUSHUANG Director Workstation home screen"
+              data-title-key="shot.home.title"
+              data-zoom-label="Enlarge"
+              aria-label="Enlarge the GENIUSHUANG home screen"
+              data-i18n-aria="shot.home.aria"
+              style="width: 100%; padding: 0; border: 0"
+            >
+              <img
+                src="assets/ui/DIRECTOR.png"
+                alt="GENIUSHUANG Director Workstation home screen with creative input, reference upload, duration, and generation controls"
+                data-i18n-alt="shot.home.alt"
+              />
+            </button>
+          </figure>
+        </div>
+        </section>
+
+        <section class="summary" aria-label="Project summary" data-i18n-aria="summary.aria">
+          <div class="container summary-grid">
+          <div class="summary-item">
+            <strong>0 → 1</strong>
+            <span>Defined, designed, built, evaluated, and shipped independently</span>
+          </div>
+          <div class="summary-item">
+            <strong>16</strong>
+            <span>structured prompt knowledge bases</span>
+          </div>
+          <div class="summary-item">
+            <strong>201</strong>
+            <span>completed creative interactions in 14 days</span>
+          </div>
+          <div class="summary-item">
+            <strong>4.92 / 5</strong>
+            <span>deterministic evaluation on fixed cases</span>
+          </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="case-layout">
+        <aside class="toc" aria-label="Case study contents" data-i18n-aria="toc.aria">
+          <p class="toc-title">Contents</p>
+          <nav class="toc-list">
+            <a href="#project"><span>01</span><span>Project Overview</span></a>
+            <a href="#responsibility"><span>02</span><span>My Ownership</span></a>
+            <a href="#users"><span>03</span><span>Users &amp; Problem</span></a>
+            <a href="#workflow"><span>04</span><span>Core Workflow</span></a>
+            <a href="#technology"><span>05</span><span>Technical Architecture</span></a>
+            <a href="#results"><span>06</span><span>Verified Outcomes</span></a>
+          </nav>
+        </aside>
+
+        <div class="chapters">
+          <section class="chapter" id="project">
+            <header class="chapter-head">
+              <span class="chapter-number">01</span>
+              <div>
+                <h2>Project Overview</h2>
+              </div>
+            </header>
+
+            <dl class="facts">
+              <div class="fact">
+                <dt>Product name</dt>
+                <dd>GENIUSHUANG</dd>
+              </div>
+              <div class="fact">
+                <dt>Product category</dt>
+                <dd>Full-stack Multimodal AI Director Workstation</dd>
+              </div>
+              <div class="fact">
+                <dt>Current version</dt>
+                <dd>v1.0</dd>
+              </div>
+              <div class="fact">
+                <dt>Development</dt>
+                <dd>May—Jul 2026, with ongoing maintenance and feature development</dd>
+              </div>
+              <div class="fact">
+                <dt>My role</dt>
+                <dd>Independent Builder</dd>
+              </div>
+              <div class="fact">
+                <dt>Live product</dt>
+                <dd>www.geniushuang.cn</dd>
+              </div>
+            </dl>
+
+            <div class="note">
+              <b>Product boundary</b>
+              <p>
+                The product interprets creative intent and scripts, organizes reference
+                material, retrieves structured knowledge, and generates prompts and revised
+                screenplays. It does not generate images or video directly, nor does it
+                automatically invoke external video-generation models.
+              </p>
+            </div>
+          </section>
+
+          <section class="chapter" id="responsibility">
+            <header class="chapter-head">
+              <span class="chapter-number" style="background: var(--blue-pale)">02</span>
+              <div>
+                <h2>My Ownership</h2>
+                <p class="chapter-intro">
+                  As the independent builder, I owned the complete path from problem
+                  definition and user-flow design to full-stack implementation, evaluation,
+                  and launch.
+                </p>
+              </div>
+            </header>
+
+            <div class="responsibilities">
+              <article class="responsibility">
+                <small>01 / Product</small>
+                <h3>Product definition</h3>
+                <p>Structured video prompting, image prompting, and screenwriting as distinct workspaces that still flow into one another.</p>
+              </article>
+              <article class="responsibility">
+                <small>02 / Experience</small>
+                <h3>User experience</h3>
+                <p>Designed idea input, text and image references, terminology rewriting, asset reuse, streaming output, iterative refinement, and bilingual UX.</p>
+              </article>
+              <article class="responsibility">
+                <small>03 / Full-stack</small>
+                <h3>Full-stack development</h3>
+                <p>Built the interface, server endpoints, and model gateway with Next.js, React, TypeScript, and Route Handlers.</p>
+              </article>
+              <article class="responsibility">
+                <small>04 / AI Workflow</small>
+                <h3>AI workflow</h3>
+                <p>Implemented retrieval-intent routing, structured knowledge retrieval, a prompt compiler, and structured output protocols.</p>
+              </article>
+              <article class="responsibility">
+                <small>05 / Knowledge</small>
+                <h3>Knowledge engineering</h3>
+                <p>Built 16 knowledge databases with 55,941 runtime records and 6,149 high-priority calibration overlays.</p>
+              </article>
+              <article class="responsibility">
+                <small>06 / Data</small>
+                <h3>Data &amp; persistence</h3>
+                <p>Implemented dual persistence across local JSON / file storage and Supabase Postgres / Storage.</p>
+              </article>
+              <article class="responsibility">
+                <small>07 / Evaluation</small>
+                <h3>Evaluation &amp; reliability</h3>
+                <p>Added input validation, connectivity tests, timeout and retry handling, model invocation, output-schema checks, and runtime evaluation.</p>
+              </article>
+              <article class="responsibility">
+                <small>08 / Ship</small>
+                <h3>Launch &amp; iteration</h3>
+                <p>Shipped the product, analyzed live usage, and refined its structure around user feedback, invocation anomalies, and failures.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="chapter" id="users">
+            <header class="chapter-head">
+              <span class="chapter-number" style="background: var(--sand-pale)">03</span>
+              <div>
+                <h2>Users &amp; Problem</h2>
+                <p class="chapter-intro">
+                  The target audience, their original way of working, and the core problems
+                  that made this product worth building.
+                </p>
+              </div>
+            </header>
+
+            <section class="subsection">
+              <div class="subsection-head"><h3>Target users</h3></div>
+              <div class="audience-callout">
+                <b>Teams that publish continuously but lack a systematic cinematic prompting workflow</b>
+                <p>
+                  Built for AI creators, short-form video operators, e-commerce creators,
+                  MCN directors, and small brand-content teams—from a one-line idea to an
+                  executable film plan.
+                </p>
+              </div>
+            </section>
+
+            <section class="subsection friction-section">
+              <div class="subsection-head"><h3>How users worked before</h3></div>
+              <div class="numbered-list">
+                <article class="numbered-item">
+                  <p>Start with a vague idea, then repeatedly add shots, style, characters, locations, and negative constraints across several chat windows.</p>
+                </article>
+                <article class="numbered-item">
+                  <p>Learn from or copy the structure of other creators’ long prompts, then manually rewrite it for each project.</p>
+                </article>
+                <article class="numbered-item">
+                  <p>Keep reference images, character definitions, and location rules scattered across local files and generation platforms.</p>
+                </article>
+                <article class="numbered-item">
+                  <p>When results fail, keep adding adjectives or restart—without knowing whether the real issue is framing, motion, continuity, model fit, or prompt structure.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="subsection pain-section">
+              <div class="subsection-head"><h3>Core pain points</h3></div>
+              <div class="pain-grid">
+                <article class="pain">
+                  <h4>Professional-language barrier</h4>
+                  <p>Users know they want a “cinematic” result, but may not be able to specify shot size, focal length, composition, camera movement, lighting, color, emotional rhythm, or action causality.</p>
+                </article>
+                <article class="pain">
+                  <h4>Cognitive and time cost</h4>
+                  <p>Long prompts demand extensive reading, decomposition, and trial and error—too slow for real production cadence.</p>
+                </article>
+                <article class="pain">
+                  <h4>Ambiguous intent</h4>
+                  <p>Short descriptions such as “premium” or “cinematic” allow many visual interpretations, so direct model input often produces generic results.</p>
+                </article>
+                <article class="pain">
+                  <h4>Continuity drift</h4>
+                  <p>When characters, locations, props, references, and versions are scattered, identity and visual rules drift across generations.</p>
+                </article>
+                <article class="pain">
+                  <h4>Unstructured correction</h4>
+                  <p>When a shot fails, users struggle to determine whether to change the subject, action, camera, lighting, style constraints, or negative prompt.</p>
+                </article>
+                <article class="pain pain-conclusion">
+                  <h4>Problem statement</h4>
+                  <p>Users do not simply need “longer prompts.” They need a directing workflow that organizes professional judgment, supports low-cost revisions, and controls failure risk.</p>
+                </article>
+              </div>
+            </section>
+          </section>
+
+          <section class="chapter" id="workflow">
+            <header class="chapter-head">
+              <span class="chapter-number" style="background: var(--rose-pale)">04</span>
+              <div>
+                <h2>Core Workflow</h2>
+                <p class="chapter-intro">
+                  From an initial idea to executable output, including product features,
+                  structured knowledge, and the decisions behind the system.
+                </p>
+              </div>
+            </header>
+
+            <section class="subsection">
+              <div class="subsection-head"><h3>From idea to executable output</h3></div>
+              <div class="workflow-grid">
+                <article class="workflow-step">
+                  <small>01</small>
+                  <h4>Add the idea and context</h4>
+                  <p>Enter an idea, script, storyboard, or task brief; upload references and reuse characters, locations, and props through named @assets.</p>
+                </article>
+                <article class="workflow-step">
+                  <small>02</small>
+                  <h4>Choose the task</h4>
+                  <p>Open the video-directing, image-prompting, or screenwriting workflow, then set language, duration, and creative direction.</p>
+                </article>
+                <article class="workflow-step">
+                  <small>03</small>
+                  <h4>Generate structurally</h4>
+                  <p>Infer retrieval intent, call relevant knowledge, and compile context; batch tasks can be decomposed into up to 10 items per run.</p>
+                </article>
+                <article class="workflow-step">
+                  <small>04</small>
+                  <h4>Review and revise</h4>
+                  <p>Review output by style, assets, shot content, and risk controls; cancel, edit, continue directing, or regenerate as needed.</p>
+                </article>
+                <article class="workflow-step">
+                  <small>05</small>
+                  <h4>Save and reuse</h4>
+                  <p>Recall previous sessions, save reusable assets, and carry them into future tasks.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="subsection">
+              <div class="subsection-head"><h3>Product feature walkthrough</h3></div>
+              <p class="media-intro">
+                A continuous walkthrough from idea input and structured output to
+                screenwriting, asset memory, and external generation validation. Select a
+                step below to switch the lightweight MP4 demo.
+              </p>
+              <div class="demo-stage">
+                <div class="demo-player">
+                  <div class="demo-media" id="demoMedia">
+                    <video
+                      id="demoVideo"
+                      src="assets/videos/01_Input_Prompt.mp4"
+                      poster="assets/ui/DIRECTOR.png"
+                      width="640"
+                      height="480"
+                      autoplay
+                      muted
+                      loop
+                      playsinline
+                      preload="metadata"
+                      aria-label="GENIUSHUANG product feature demo"
+                      data-i18n-aria="demo.video.aria"
+                    ></video>
+                    <div class="demo-controls" aria-label="Video playback controls" data-i18n-aria="demo.controls.aria">
+                      <button id="demoPlay" type="button" aria-label="Play or pause video" data-i18n-aria="demo.play.aria">Pause</button>
+                      <input
+                        id="demoProgress"
+                        type="range"
+                        min="0"
+                        max="100"
+                        step="0.1"
+                        value="0"
+                        aria-label="Video playback progress"
+                        data-i18n-aria="demo.progress.aria"
+                      />
+                      <span id="demoTime">00:00 / 00:00</span>
+                      <button id="demoMute" type="button" aria-label="Toggle video sound" data-i18n-aria="demo.mute.aria">Enable sound</button>
+                      <button id="demoFullscreen" type="button" aria-label="Toggle fullscreen playback" data-i18n-aria="demo.fullscreen.aria">Fullscreen</button>
+                    </div>
+                  </div>
+                  <div class="demo-caption" aria-live="polite">
+                    <small id="demoKicker">FLOW 01 / INPUT</small>
+                    <h4 id="demoTitle">Add an idea and references</h4>
+                    <p id="demoDescription">
+                      Start with a one-line idea, then set language and duration and add
+                      reference material to establish context for structured generation.
+                    </p>
+                    <span id="demoDuration">MP4 · 5.6s</span>
+                  </div>
+                </div>
+
+                <div class="demo-switcher" role="tablist" aria-label="Choose a product feature demo" data-i18n-aria="demo.switcher.aria">
+                  <button
+                    class="demo-tab active"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                    data-video="assets/videos/01_Input_Prompt.mp4"
+                    data-poster="assets/ui/DIRECTOR.png"
+                    data-kicker="FLOW 01 / INPUT"
+                    data-title="Add an idea and references"
+                    data-title-key="demo.1.title"
+                    data-description="Start with a one-line idea, then set language and duration and add reference material to establish context for structured generation."
+                    data-description-key="demo.1.description"
+                    data-duration="MP4 · 5.6s"
+                  >
+                    <span>01</span><b>Idea input</b><small>5.6s</small>
+                  </button>
+                  <button
+                    class="demo-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-video="assets/videos/02_Prompt_Output.mp4"
+                    data-poster="assets/ui/VIDEO_OUTPUT.png"
+                    data-kicker="FLOW 02 / OUTPUT"
+                    data-title="Generate structured prompts"
+                    data-title-key="demo.2.title"
+                    data-description="The model creates editable, film-grade prompt proposals organized by style, assets, shot content, action causality, and risk controls."
+                    data-description-key="demo.2.description"
+                    data-duration="MP4 · 9.5s"
+                  >
+                    <span>02</span><b>Prompt output</b><small>9.5s</small>
+                  </button>
+                  <button
+                    class="demo-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-video="assets/videos/04_film_generation.mp4"
+                    data-poster="assets/ui/VIDEO_OUTPUT.png"
+                    data-kicker="VALIDATION 03 / FILM-GRADE"
+                    data-title="Validate film-grade generation"
+                    data-title-key="demo.3.title"
+                    data-description="Use GENIUSHUANG’s structured prompts on an external generation platform to validate cinematic quality, action logic, and visual consistency."
+                    data-description-key="demo.3.description"
+                    data-duration="MP4 · 15.0s"
+                  >
+                    <span>03</span><b>Film-grade result</b><small>15.0s</small>
+                  </button>
+                  <button
+                    class="demo-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-video="assets/videos/05_write_script.mp4"
+                    data-poster="assets/ui/WRITER.png"
+                    data-kicker="FLOW 04 / SCREENWRITING"
+                    data-title="Develop an idea into a screenplay"
+                    data-title-key="demo.4.title"
+                    data-description="Develop a story idea into a structured screenplay plan with characters, conflict, scenes, and dialogue."
+                    data-description-key="demo.4.description"
+                    data-duration="MP4 · 14.9s"
+                  >
+                    <span>04</span><b>Write screenplay</b><small>14.9s</small>
+                  </button>
+                  <button
+                    class="demo-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-video="assets/videos/06_optimize_script.mp4"
+                    data-poster="assets/ui/SCRIPT_OUTPUT.png"
+                    data-kicker="FLOW 05 / SCRIPT REVIEW"
+                    data-title="Diagnose and improve a screenplay"
+                    data-title-key="demo.5.title"
+                    data-description="Identify issues in structure, character motivation, scene progression, and dialogue; show the rationale and generate an improved screenplay."
+                    data-description-key="demo.5.description"
+                    data-duration="MP4 · 18.4s"
+                  >
+                    <span>05</span><b>Improve screenplay</b><small>18.4s</small>
+                  </button>
+                  <button
+                    class="demo-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-video="assets/videos/07_save_asset.mp4"
+                    data-poster="assets/ui/SAVED_ASSET.png"
+                    data-kicker="FLOW 06 / ASSET MEMORY"
+                    data-title="Save reusable assets"
+                    data-title-key="demo.6.title"
+                    data-description="Save character, location, or prop definitions as named assets that provide continuity memory for later tasks."
+                    data-description-key="demo.6.description"
+                    data-duration="MP4 · 27.1s"
+                  >
+                    <span>06</span><b>Save assets</b><small>27.1s</small>
+                  </button>
+                  <button
+                    class="demo-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-video="assets/videos/07_use_asset.mp4"
+                    data-poster="assets/ui/SAVED_ASSET.png"
+                    data-kicker="FLOW 07 / ASSET REUSE"
+                    data-title="Reuse assets to preserve continuity"
+                    data-title-key="demo.7.title"
+                    data-description="Insert existing assets by name in a new task to reduce drift in character identity, appearance, and world rules."
+                    data-description-key="demo.7.description"
+                    data-duration="MP4 · 16.6s"
+                  >
+                    <span>07</span><b>Reuse assets</b><small>16.6s</small>
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <section class="subsection" id="ui-overview">
+              <div class="subsection-head"><h3>Product interface overview</h3></div>
+              <div class="ui-gallery">
+                <button
+                  class="ui-feature clickable-shot"
+                  id="uiFeature"
+                  type="button"
+                  data-shot="assets/ui/DIRECTOR.png"
+                  data-title="Director workstation"
+                  data-title-key="ui.1.title"
+                  data-zoom-label="Enlarge"
+                  aria-label="Enlarge the Director workstation"
+                  data-i18n-aria="ui.feature.aria"
+                >
+                  <img
+                    id="uiFeatureImage"
+                    src="assets/ui/DIRECTOR.png"
+                    alt="Full GENIUSHUANG Director workstation interface"
+                    data-i18n-alt="ui.feature.alt"
+                  />
+                </button>
+                <div class="ui-gallery-copy" aria-live="polite">
+                  <small id="uiGalleryKicker">SCREEN 01 / DIRECTOR</small>
+                  <h4 id="uiGalleryTitle">Director workstation</h4>
+                  <p id="uiGalleryDescription">
+                    Add an idea, reference files, language, and duration, then enter the
+                    image- or video-prompt workflow.
+                  </p>
+                </div>
+                <div class="ui-thumbs" role="tablist" aria-label="Choose a product interface" data-i18n-aria="ui.thumbs.aria">
+                  <button
+                    class="ui-thumb active"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                    data-image="assets/ui/DIRECTOR.png"
+                    data-kicker="SCREEN 01 / DIRECTOR"
+                    data-title="Director workstation"
+                    data-title-key="ui.1.title"
+                    data-description="Add an idea, reference files, language, and duration, then enter the image- or video-prompt workflow."
+                    data-description-key="ui.1.description"
+                  >
+                    <img src="assets/ui/DIRECTOR.png" alt="" loading="lazy" /><span>Director</span>
+                  </button>
+                  <button
+                    class="ui-thumb"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-image="assets/ui/WRITER.png"
+                    data-kicker="SCREEN 02 / WRITER"
+                    data-title="Screenwriting workstation"
+                    data-title-key="ui.2.title"
+                    data-description="Generate a new screenplay around story structure, characters, scenes, and dialogue—or systematically improve an existing text."
+                    data-description-key="ui.2.description"
+                  >
+                    <img src="assets/ui/WRITER.png" alt="" loading="lazy" /><span>Writer</span>
+                  </button>
+                  <button
+                    class="ui-thumb"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-image="assets/ui/VIDEO_OUTPUT.png"
+                    data-kicker="SCREEN 03 / VIDEO PROMPT"
+                    data-title="Video prompt proposal"
+                    data-title-key="ui.3.title"
+                    data-description="Organize film-grade video prompts around style locks, asset locks, shot content, action causality, and risk controls."
+                    data-description-key="ui.3.description"
+                  >
+                    <img src="assets/ui/VIDEO_OUTPUT.png" alt="" loading="lazy" /><span>Video output</span>
+                  </button>
+                  <button
+                    class="ui-thumb"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-image="assets/ui/IMAGE_OUTPUT.png"
+                    data-kicker="SCREEN 04 / IMAGE PROMPT"
+                    data-title="Image prompt proposal"
+                    data-title-key="ui.4.title"
+                    data-description="Produce positive prompts, negative prompts, and asset bindings, with the option to save definitions for future reuse."
+                    data-description-key="ui.4.description"
+                  >
+                    <img src="assets/ui/IMAGE_OUTPUT.png" alt="" loading="lazy" /><span>Image output</span>
+                  </button>
+                  <button
+                    class="ui-thumb"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-image="assets/ui/SCRIPT_OUTPUT.png"
+                    data-kicker="SCREEN 05 / SCRIPT REVIEW"
+                    data-title="Screenplay diagnosis and improvement"
+                    data-title-key="ui.5.title"
+                    data-description="Show issues, evidence, and priorities before delivering a structured rewrite—rather than merely polishing the surface."
+                    data-description-key="ui.5.description"
+                  >
+                    <img src="assets/ui/SCRIPT_OUTPUT.png" alt="" loading="lazy" /><span>Script output</span>
+                  </button>
+                  <button
+                    class="ui-thumb"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-image="assets/ui/SAVED_ASSET.png"
+                    data-kicker="SCREEN 06 / ASSET MEMORY"
+                    data-title="Save and recall assets"
+                    data-title-key="ui.6.title"
+                    data-description="Save characters, locations, and props as named assets, then edit or insert them into new generation tasks."
+                    data-description-key="ui.6.description"
+                  >
+                    <img src="assets/ui/SAVED_ASSET.png" alt="" loading="lazy" /><span>Asset system</span>
+                  </button>
+                  <button
+                    class="ui-thumb"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    data-image="assets/ui/HISTORY.png"
+                    data-kicker="SCREEN 07 / HISTORY"
+                    data-title="History and cross-workflow reuse"
+                    data-title-key="ui.7.title"
+                    data-description="Keep user input and generated results, then copy or send existing content back to the Director workstation for further work."
+                    data-description-key="ui.7.description"
+                  >
+                    <img src="assets/ui/HISTORY.png" alt="" loading="lazy" /><span>History</span>
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <section class="subsection knowledge">
+              <div class="knowledge-head">
+                <div class="subsection-head"><h3>Structured knowledge engineering</h3></div>
+                <p>
+                  GENIUSHUANG is more than a fixed template. I turned years of film judgment,
+                  creative methods, reference cases, and high-quality outputs into a
+                  structured prompting knowledge system.
+                </p>
+              </div>
+
+              <div class="comparison">
+                <article class="compare">
+                  <small>COMMON APPROACH</small>
+                  <h4>Skills / Templates</h4>
+                  <p>Easy to deploy, but often limited to fixed fields and generic wording. Flexibility and accuracy degrade across genres, styles, shot goals, and failure correction.</p>
+                </article>
+                <article class="compare accent">
+                  <small>GENIUSHUANG</small>
+                  <h4>Structured knowledge + dynamic retrieval</h4>
+                  <p>Infer user intent first, retrieve knowledge related to the task, genre, style, and failure risk, then let the prompt compiler assemble a controlled context.</p>
+                </article>
+              </div>
+
+              <div class="knowledge-body">
+                <div class="knowledge-flow" aria-label="Knowledge engineering pipeline" data-i18n-aria="knowledge.flow.aria">
+                  <div class="knowledge-node">
+                    <b>Experience &amp; knowledge</b>
+                    <span>Film-domain expertise and high-quality prompts from real production</span>
+                  </div>
+                  <div class="knowledge-node">
+                    <b>Cleaning &amp; deduplication</b>
+                    <span>Normalize multi-source data and resolve duplicate content</span>
+                  </div>
+                  <div class="knowledge-node">
+                    <b>Structured labeling</b>
+                    <span>Unify fields, score quality, and complete missing content</span>
+                  </div>
+                  <div class="knowledge-node">
+                    <b>Calibration &amp; reinforcement</b>
+                    <span>Use high-accuracy examples to strengthen other datasets</span>
+                  </div>
+                  <div class="knowledge-node">
+                    <b>Intent retrieval</b>
+                    <span>Select knowledge dynamically and compile a controlled context</span>
+                  </div>
+                </div>
+
+                <div class="knowledge-stats">
+                  <div class="knowledge-stat">
+                    <strong>1 + 15</strong>
+                    <span>output-framework core database + specialist databases</span>
+                  </div>
+                  <div class="knowledge-stat">
+                    <strong>55,941</strong>
+                    <span>structured runtime records</span>
+                  </div>
+                  <div class="knowledge-stat">
+                    <strong>6,149</strong>
+                    <span>high-priority calibration overlays</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="subsection">
+              <div class="subsection-head"><h3>Key product decisions</h3></div>
+              <div class="decision-grid">
+                <article class="decision">
+                  <b>Build a workflow, not a template</b>
+                  <p>Encode professional judgment in structured modules so users see an executable plan first, then revise it module by module.</p>
+                </article>
+                <article class="decision">
+                  <b>Treat continuity as a first-class capability</b>
+                  <p>Reference files, named assets, and history work together to preserve character, location, and prop rules.</p>
+                </article>
+                <article class="decision">
+                  <b>Keep generation controllable</b>
+                  <p>SSE streaming, cancellation, continued direction, and editing reduce waiting and rework.</p>
+                </article>
+                <article class="decision">
+                  <b>Support both short and long input</b>
+                  <p>Handle one-line generation as well as long screenplays, shot lists, and batch tasks.</p>
+                </article>
+              </div>
+            </section>
+          </section>
+
+          <section class="chapter technology-chapter" id="technology">
+            <header class="chapter-head">
+              <span class="chapter-number" style="background: var(--blue-pale)">05</span>
+              <div>
+                <h2>Technical Architecture</h2>
+                <p class="chapter-intro">
+                  How data moves from user input through knowledge retrieval, the model
+                  gateway, structural validation, and persistence—and the stack behind it.
+                </p>
+              </div>
+            </header>
+
+            <section class="subsection">
+              <div class="subsection-head"><h3>Technology stack</h3></div>
+              <div class="stack-groups">
+                <article class="stack-group">
+                  <b>Frontend</b>
+                  <div class="stack-pills">
+                    <span>Next.js 16</span>
+                    <span>React 19</span>
+                    <span>TypeScript</span>
+                    <span>Tailwind CSS 4</span>
+                  </div>
+                </article>
+                <article class="stack-group">
+                  <b>Backend &amp; streaming</b>
+                  <div class="stack-pills">
+                    <span>Route Handlers</span>
+                    <span>Server-Sent Events</span>
+                    <span>Request lifecycle control</span>
+                  </div>
+                </article>
+                <article class="stack-group">
+                  <b>Model interface</b>
+                  <div class="stack-pills">
+                    <span>OpenAI-compatible API</span>
+                    <span>Configurable model gateway</span>
+                    <span>Fallback</span>
+                  </div>
+                </article>
+                <article class="stack-group">
+                  <b>Data &amp; quality assurance</b>
+                  <div class="stack-pills">
+                    <span>Supabase Postgres</span>
+                    <span>Private Storage</span>
+                    <span>Local JSON</span>
+                    <span>Smoke Test</span>
+                    <span>Schema validation</span>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section class="subsection">
+              <div class="subsection-head"><h3>System architecture</h3></div>
+              <div class="architecture">
+                <article class="architecture-row">
+                  <span>01</span>
+                  <b>User input</b>
+                  <p>Ideas, screenplays, reference files, and named assets.</p>
+                </article>
+                <article class="architecture-row">
+                  <span>02</span>
+                  <b>Next.js / React workspace</b>
+                  <p>Manages task state, attachments, history, assets, and the bilingual interface.</p>
+                </article>
+                <article class="architecture-row">
+                  <span>03</span>
+                  <b>Route Handlers</b>
+                  <p>Handles input validation, rate limiting, file policies, and request lifecycle control.</p>
+                </article>
+                <article class="architecture-row">
+                  <span>04</span>
+                  <b>Retrieval &amp; compilation</b>
+                  <p>The retrieval-intent module selects relevant knowledge; the prompt compiler assembles controlled context and structural protocols.</p>
+                </article>
+                <article class="architecture-row">
+                  <span>05</span>
+                  <b>Model gateway</b>
+                  <p>OpenAI-compatible Chat Completions with connectivity testing, timeouts, cancellation, retries, and model fallback.</p>
+                </article>
+                <article class="architecture-row">
+                  <span>06</span>
+                  <b>SSE &amp; structural checks</b>
+                  <p>Streams results to the frontend and verifies that critical modules and batch items are complete.</p>
+                </article>
+                <article class="architecture-row">
+                  <span>07</span>
+                  <b>Dual persistence</b>
+                  <p>Local JSON / file storage supports development and offline fallback; Supabase supports production deployment.</p>
+                </article>
+              </div>
+            </section>
+          </section>
+
+          <section class="chapter" id="results">
+            <header class="chapter-head">
+              <span class="chapter-number" style="background: var(--sand-pale)">06</span>
+              <div>
+                <h2>Verified Outcomes</h2>
+                <p class="chapter-intro">
+                  Live usage, iteration driven by user signals, engineering evidence, and
+                  the methodology behind every metric.
+                </p>
+              </div>
+            </header>
+
+            <section class="subsection">
+              <div class="subsection-head"><h3>Live usage outcomes</h3></div>
+              <div class="result-grid">
+                <article class="result">
+                  <strong>201</strong>
+                  <b>completed creative interactions</b>
+                  <span>14-day window, excluding legacy shared scopes and explicit test records</span>
+                </article>
+                <article class="result">
+                  <strong>139</strong>
+                  <b>custom-content submissions</b>
+                  <span>Across 38 anonymous network scopes and 116 deduplicated needs</span>
+                </article>
+                <article class="result">
+                  <strong>55.9%</strong>
+                  <b>submitted custom content</b>
+                  <span>38 of 68 anonymous scopes moved beyond the default examples</span>
+                </article>
+                <article class="result">
+                  <strong>47.1%</strong>
+                  <b>interacted at least twice</b>
+                  <span>Evidence of repeat actions, but not equivalent to user retention</span>
+                </article>
+              </div>
+            </section>
+
+            <section class="subsection">
+              <div class="subsection-head"><h3>Iteration driven by user signals</h3></div>
+              <div class="iteration-list">
+                <article class="iteration">
+                  <b>Continuity &amp; assets</b>
+                  <p>24.1% of deduplicated needs explicitly mentioned references or consistency, validating @asset references, reference files, and history reuse as core-path features.</p>
+                </article>
+                <article class="iteration">
+                  <b>Revision &amp; failure control</b>
+                  <p>Revision / redo requests and negative constraints each represented 17.2%, supporting edit, cancel, regenerate, and risk-control modules.</p>
+                </article>
+                <article class="iteration">
+                  <b>Batch structure</b>
+                  <p>Historical batch retry failures led to batch detection, itemized output, schema validation, and repair retries.</p>
+                </article>
+                <article class="iteration">
+                  <b>Entry-point priority</b>
+                  <p>Image prompting represented 52.5% of custom interactions, making it the clearest high-frequency entry point.</p>
+                </article>
+              </div>
+            </section>
+
+            <section class="subsection">
+              <div class="subsection-head"><h3>Engineering &amp; evaluation evidence</h3></div>
+              <div class="audit-grid">
+                <article class="audit">
+                  <strong>25 / 25</strong>
+                  <b>connectivity checks</b>
+                  <span>All passed · 0 failures · 0 warnings</span>
+                </article>
+                <article class="audit">
+                  <strong>H0 / M0 / L0</strong>
+                  <b>database audit</b>
+                  <span>0 high-, medium-, or low-severity runtime issues</span>
+                </article>
+                <article class="audit">
+                  <strong>4.92 / 5</strong>
+                  <b>deterministic quality score</b>
+                  <span>3 fixed English cases across video, image, and screenwriting workflows</span>
+                </article>
+              </div>
+            </section>
+
+            <section class="subsection">
+              <div class="subsection-head"><h3>Measurement notes</h3></div>
+              <div class="method-note">
+                Anonymous network scopes are server-side hashes of IP addresses, not unique
+                people or accounts. The 47.1% figure indicates repeat interaction within the
+                observation window, not retention. The 4.92/5 score is a lightweight,
+                deterministic rule-based evaluation on fixed outputs—not a user rating,
+                third-party score, or live model-quality metric.
+              </div>
+            </section>
+          </section>
+        </div>
+      </div>
+
+      <section class="closing">
+        <div class="container">
+          <div class="closing-grid">
+            <div>
+              <h2>GENIUSHUANG</h2>
+              <p>
+                From problem definition and knowledge engineering to full-stack delivery
+                and live-usage validation, this is a 0→1 AI product I built and continue to
+                maintain independently.
+              </p>
+            </div>
+            <a
+              class="button button-primary"
+              href="https://www.geniushuang.cn"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Experience the Live Product ↗
+            </a>
+          </div>
+          <footer class="footer">
+            <span>GENIUSHUANG © 2026</span>
+            <span>PRODUCT CASE STUDY · BILINGUAL</span>
+          </footer>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="shotDialog" aria-labelledby="shotTitle">
+      <div class="dialog-bar">
+        <span id="shotTitle">Product screenshot</span>
+        <button class="dialog-close" id="shotClose" aria-label="Close" data-i18n-aria="dialog.close.aria">×</button>
+      </div>
+      <div class="dialog-media">
+        <img id="shotImage" src="" alt="" />
+      </div>
+    </dialog>
+
+    <script src="../assets/portfolio-i18n.js"></script>
+    <script>
+      (() => {
+        const translations = {};
+        const addCopy = (key, en, zh) => {
+          translations[key] = { en, zh };
+        };
+        [
+          ["Skip to main content", "跳到主要内容"],
+          ["Product case study · 2026", "产品案例研究 · 2026"],
+          ["AI Director Workstation", "AI 影视前期创作工作站"],
+          [
+            "A full-stack multimodal workspace for AI film pre-production. It turns ideas, scripts, references, and reusable assets into structured video prompts, image prompts, and screenplay plans—improving cinematic expression and content accuracy in downstream generation.",
+            "一款面向 AI 影视前期创作的全栈多模态工作站，将创意、剧本、参考文件和可复用资产转化为结构化的视频提示词、图片提示词与剧本方案，使后续生成更具电影级表达与内容准确度。",
+          ],
+          ["Open Live Product ↗", "打开线上产品 ↗"],
+          ["Read the Case Study ↓", "按文档顺序阅读 ↓"],
+          ["Role", "角色"],
+          ["Independent Builder", "独立构建者"],
+          ["Timeline", "周期"],
+          ["May—Jul 2026", "2026.05—2026.07"],
+          ["Status", "状态"],
+          ["v1.0 · Actively maintained", "v1.0 · 持续维护"],
+          ["ONLINE", "在线"],
+          ["Defined, designed, built, evaluated, and shipped independently", "独立完成定义、设计、开发、评测与上线"],
+          ["structured prompt knowledge bases", "个结构化提示词知识库"],
+          ["completed creative interactions in 14 days", "次 14 天现网创作交互"],
+          ["deterministic evaluation on fixed cases", "固定案例确定性规则评测"],
+          ["Contents", "文档目录"],
+          ["Project Overview", "项目基本信息"],
+          ["My Ownership", "我的实际职责"],
+          ["Users & Problem", "用户层面"],
+          ["Core Workflow", "核心工作流"],
+          ["Technical Architecture", "技术事实"],
+          ["Verified Outcomes", "可验证结果和数据"],
+          ["Product name", "正式名称"],
+          ["Product category", "英文副标题"],
+          ["Full-stack Multimodal AI Director Workstation", "全栈多模态 AI 导演工作站"],
+          ["Current version", "当前版本"],
+          ["Development", "开发时间"],
+          ["May—Jul 2026, with ongoing maintenance and feature development", "2026.05—2026.07，此后持续维护并添加新功能"],
+          ["My role", "个人角色"],
+          ["Live product", "线上产品"],
+          ["Product boundary", "产品边界"],
+          [
+            "The product interprets creative intent and scripts, organizes reference material, retrieves structured knowledge, and generates prompts and revised screenplays. It does not generate images or video directly, nor does it automatically invoke external video-generation models.",
+            "产品负责理解创作意图与剧本、组织参考材料、调用结构化知识库，并生成提示词与优化后的剧本；它不直接生成图片或视频，也不会自动调用外部视频生成模型。",
+          ],
+          [
+            "As the independent builder, I owned the complete path from problem definition and user-flow design to full-stack implementation, evaluation, and launch.",
+            "作为独立构建者，我独立完成了从问题定义、用户工作流设计到全栈实现、评测和上线的完整过程。",
+          ],
+          ["Product definition", "产品定义"],
+          ["01 / Product", "01 / 产品"],
+          ["Structured video prompting, image prompting, and screenwriting as distinct workspaces that still flow into one another.", "将视频提示词、图片提示词和编剧任务组织成独立但可连续流转的工作区。"],
+          ["User experience", "用户体验"],
+          ["02 / Experience", "02 / 体验"],
+          ["Designed idea input, text and image references, terminology rewriting, asset reuse, streaming output, iterative refinement, and bilingual UX.", "设计创意输入、文本与图片参考、术语改写、资产调用、流式输出、二次优化和双语体验。"],
+          ["Full-stack development", "全栈开发"],
+          ["03 / Full-stack", "03 / 全栈"],
+          ["Built the interface, server endpoints, and model gateway with Next.js, React, TypeScript, and Route Handlers.", "使用 Next.js、React、TypeScript 和 Route Handlers 完成界面、服务端接口与模型网关。"],
+          ["AI workflow", "AI 工作流"],
+          ["04 / AI Workflow", "04 / AI 工作流"],
+          ["Implemented retrieval-intent routing, structured knowledge retrieval, a prompt compiler, and structured output protocols.", "实现检索意图判断、结构化知识库调用、提示词编译器和结构化输出协议。"],
+          ["Knowledge engineering", "知识库工程"],
+          ["05 / Knowledge", "05 / 知识库"],
+          ["Built 16 knowledge databases with 55,941 runtime records and 6,149 high-priority calibration overlays.", "整合并训练 16 个知识库、55,941 条运行时数据与 6,149 条高权重校准覆盖层。"],
+          ["Data & persistence", "数据与持久化"],
+          ["06 / Data", "06 / 数据"],
+          ["Implemented dual persistence across local JSON / file storage and Supabase Postgres / Storage.", "实现本地 JSON / 文件系统与 Supabase Postgres / Storage 的双持久化方案。"],
+          ["Evaluation & reliability", "评测与可靠性"],
+          ["07 / Evaluation", "07 / 评测"],
+          ["Added input validation, connectivity tests, timeout and retry handling, model invocation, output-schema checks, and runtime evaluation.", "实现输入验证、连接测试、超时与重试、模型调用、输出结构检查和运行时评测。"],
+          ["Launch & iteration", "发布与迭代"],
+          ["08 / Ship", "08 / 发布"],
+          ["Shipped the product, analyzed live usage, and refined its structure around user feedback, invocation anomalies, and failures.", "完成上线、真实使用数据分析，并依据用户反馈、调用异常与失败优化产品结构。"],
+          ["The target audience, their original way of working, and the core problems that made this product worth building.", "从目标用户、原始工作模式到核心痛点，说明为什么要做这款产品。"],
+          ["Target users", "目标用户"],
+          ["Teams that publish continuously but lack a systematic cinematic prompting workflow", "持续生产内容，但缺少系统性影视提示词能力"],
+          ["Built for AI creators, short-form video operators, e-commerce creators, MCN directors, and small brand-content teams—from a one-line idea to an executable film plan.", "面向 AI Creator、短视频运营、电商创作者、MCN 编导与品牌内容小团队，服务从一句创意到可执行影视方案的前期过程。"],
+          ["How users worked before", "用户原始工作模式"],
+          ["Start with a vague idea, then repeatedly add shots, style, characters, locations, and negative constraints across several chat windows.", "先用一句模糊想法开始，在多个聊天窗口中反复补充镜头、风格、人物、场景和负面约束。"],
+          ["Learn from or copy the structure of other creators’ long prompts, then manually rewrite it for each project.", "从其他创作者的长提示词中学习或复制结构，再手动改写为自己的内容。"],
+          ["Keep reference images, character definitions, and location rules scattered across local files and generation platforms.", "把参考图、人物设定与场景设定分散保存在本地文件或不同生成平台中。"],
+          ["When results fail, keep adding adjectives or restart—without knowing whether the real issue is framing, motion, continuity, model fit, or prompt structure.", "结果不理想时继续叠加形容词或重新开始，难以判断问题来自镜头、动作、连续性、模型适配还是提示词结构。"],
+          ["Core pain points", "最核心痛点"],
+          ["Professional-language barrier", "专业语言门槛"],
+          ["Users know they want a “cinematic” result, but may not be able to specify shot size, focal length, composition, camera movement, lighting, color, emotional rhythm, or action causality.", "知道“想要有电影感”，却不一定能明确景别、焦段、构图、运镜、灯光、色彩、情绪节奏与动作因果。"],
+          ["Cognitive and time cost", "认知与时间成本"],
+          ["Long prompts demand extensive reading, decomposition, and trial and error—too slow for real production cadence.", "长提示词需要大量阅读、拆解和反复试错，学习成本与内容生产节奏不匹配。"],
+          ["Ambiguous intent", "意图模糊"],
+          ["Short descriptions such as “premium” or “cinematic” allow many visual interpretations, so direct model input often produces generic results.", "“高级感”“电影感”等短描述存在多种视觉解释，直接交给模型容易得到泛化结果。"],
+          ["Continuity drift", "连续性容易丢失"],
+          ["When characters, locations, props, references, and versions are scattered, identity and visual rules drift across generations.", "人物、场景、道具、参考图和版本关系分散后，多轮生成中的身份与视觉规则容易漂移。"],
+          ["Unstructured correction", "修正缺少结构"],
+          ["When a shot fails, users struggle to determine whether to change the subject, action, camera, lighting, style constraints, or negative prompt.", "画面失败时，用户很难快速定位应修改主体、动作、镜头、灯光、风格约束还是负面提示。"],
+          ["Problem statement", "问题结论"],
+          ["Users do not simply need “longer prompts.” They need a directing workflow that organizes professional judgment, supports low-cost revisions, and controls failure risk.", "用户需要的不是单纯“更长的提示词”，而是组织专业判断、支持低成本修改并控制失败风险的导演工作流。"],
+          ["From an initial idea to executable output, including product features, structured knowledge, and the decisions behind the system.", "展示从创意到可执行输出、产品功能、结构化知识库与关键产品决策。"],
+          ["From idea to executable output", "从创意到可执行输出"],
+          ["Add the idea and context", "输入创意与上下文"],
+          ["Enter an idea, script, storyboard, or task brief; upload references and reuse characters, locations, and props through named @assets.", "输入创意、剧本、分镜或任务描述；上传参考文件，并通过 @资产名复用人物、场景与道具。"],
+          ["Choose the task", "选择任务"],
+          ["Open the video-directing, image-prompting, or screenwriting workflow, then set language, duration, and creative direction.", "进入视频导演、图片提示词或编剧工作流，设置语言、时长与方向。"],
+          ["Generate structurally", "结构化生成"],
+          ["Infer retrieval intent, call relevant knowledge, and compile context; batch tasks can be decomposed into up to 10 items per run.", "判断检索意图、调用相关知识并编译上下文；批量任务单次最多拆分 10 条。"],
+          ["Review and revise", "检查与修改"],
+          ["Review output by style, assets, shot content, and risk controls; cancel, edit, continue directing, or regenerate as needed.", "按风格、资产、镜头内容和风险控制输出；支持取消、编辑、继续指导与再生成。"],
+          ["Save and reuse", "保存与复用"],
+          ["Recall previous sessions, save reusable assets, and carry them into future tasks.", "历史记录可以重新调用，资产可保存并在后续任务中继续使用。"],
+          ["Product feature walkthrough", "产品功能演示"],
+          ["A continuous walkthrough from idea input and structured output to screenwriting, asset memory, and external generation validation. Select a step below to switch the lightweight MP4 demo.", "用连续操作展示从创意输入、结构化输出到剧本、资产与外部生成验证的完整路径。视频使用轻量 MP4，点击下方步骤即可切换。"],
+          ["Pause", "暂停"],
+          ["Enable sound", "开启声音"],
+          ["Fullscreen", "全屏"],
+          ["Idea input", "输入创意"],
+          ["Prompt output", "提示词输出"],
+          ["Film-grade result", "电影级生成"],
+          ["Write screenplay", "生成剧本"],
+          ["Improve screenplay", "优化剧本"],
+          ["Save assets", "保存资产"],
+          ["Reuse assets", "调用资产"],
+          ["FLOW 01 / INPUT", "流程 01 / 输入"],
+          ["FLOW 02 / OUTPUT", "流程 02 / 输出"],
+          ["VALIDATION 03 / FILM-GRADE", "验证 03 / 电影级生成"],
+          ["FLOW 04 / SCREENWRITING", "流程 04 / 剧本生成"],
+          ["FLOW 05 / SCRIPT REVIEW", "流程 05 / 剧本诊断"],
+          ["FLOW 06 / ASSET MEMORY", "流程 06 / 资产记忆"],
+          ["FLOW 07 / ASSET REUSE", "流程 07 / 资产复用"],
+          ["Product interface overview", "产品界面全景"],
+          ["Director workstation", "导演工作台"],
+          ["Add an idea, reference files, language, and duration, then enter the image- or video-prompt workflow.", "输入创意、参考文件、语言与时长，并进入图片提示词或视频提示词工作流。"],
+          ["Director", "导演入口"],
+          ["Writer", "编剧入口"],
+          ["Video output", "视频输出"],
+          ["Image output", "图片输出"],
+          ["Script output", "剧本输出"],
+          ["Asset system", "资产系统"],
+          ["History", "历史记录"],
+          ["SCREEN 01 / DIRECTOR", "界面 01 / 导演工作台"],
+          ["SCREEN 02 / WRITER", "界面 02 / 编剧工作台"],
+          ["SCREEN 03 / VIDEO PROMPT", "界面 03 / 视频提示词"],
+          ["SCREEN 04 / IMAGE PROMPT", "界面 04 / 图片提示词"],
+          ["SCREEN 05 / SCRIPT REVIEW", "界面 05 / 剧本诊断"],
+          ["SCREEN 06 / ASSET MEMORY", "界面 06 / 资产记忆"],
+          ["SCREEN 07 / HISTORY", "界面 07 / 历史记录"],
+          ["Structured knowledge engineering", "结构化知识库搭建"],
+          ["GENIUSHUANG is more than a fixed template. I turned years of film judgment, creative methods, reference cases, and high-quality outputs into a structured prompting knowledge system.", "GENIUSHUANG 的核心并不只是固定模板。我把工作经历中积累的影视判断、创作方法、参考案例与优质产出整合为结构化提示词知识库。"],
+          ["COMMON APPROACH", "常见方案"],
+          ["Skills / Templates", "技能 / 模板"],
+          ["Easy to deploy, but often limited to fixed fields and generic wording. Flexibility and accuracy degrade across genres, styles, shot goals, and failure correction.", "部署简单，但容易停留在固定字段和通用措辞；面对不同题材、风格、镜头目标与失败修正时，灵活性和准确性有限。"],
+          ["Structured knowledge + dynamic retrieval", "结构化知识库 + 动态检索"],
+          ["Infer user intent first, retrieve knowledge related to the task, genre, style, and failure risk, then let the prompt compiler assemble a controlled context.", "先判断用户意图，再检索任务、题材、风格与失败风险相关知识，由提示词编译器组合成受控上下文。"],
+          ["Experience & knowledge", "经验与知识"],
+          ["Film-domain expertise and high-quality prompts from real production", "电影领域知识与一线优质提示词实例"],
+          ["Cleaning & deduplication", "清洗与去重"],
+          ["Normalize multi-source data and resolve duplicate content", "多源数据标准化与重复内容处理"],
+          ["Structured labeling", "结构化标注"],
+          ["Unify fields, score quality, and complete missing content", "字段统一、质量评分与内容补全"],
+          ["Calibration & reinforcement", "校准与强化"],
+          ["Use high-accuracy examples to strengthen other datasets", "以高准确实例强化其他数据集"],
+          ["Intent retrieval", "意图检索"],
+          ["Select knowledge dynamically and compile a controlled context", "动态选择知识并编译受控上下文"],
+          ["output-framework core database + specialist databases", "输出框架主知识库 + 专项子数据库"],
+          ["structured runtime records", "条结构化运行时数据"],
+          ["high-priority calibration overlays", "条高优先级校准覆盖层"],
+          ["Key product decisions", "关键产品决策"],
+          ["Build a workflow, not a template", "卖“工作流”，不卖“模板”"],
+          ["Encode professional judgment in structured modules so users see an executable plan first, then revise it module by module.", "用结构化模块承载专业判断，让用户先看到可执行方案，再按模块修改。"],
+          ["Treat continuity as a first-class capability", "把连续性作为一等能力"],
+          ["Reference files, named assets, and history work together to preserve character, location, and prop rules.", "参考文件、命名资产与历史版本共同维护角色、场景和道具设定。"],
+          ["Keep generation controllable", "让生成过程可控"],
+          ["SSE streaming, cancellation, continued direction, and editing reduce waiting and rework.", "SSE 流式输出、取消、继续指导和编辑降低等待与重做成本。"],
+          ["Support both short and long input", "同时支持短输入和长输入"],
+          ["Handle one-line generation as well as long screenplays, shot lists, and batch tasks.", "既服务“一句话生成”，也处理长剧本、分镜列表与批量任务。"],
+          ["How data moves from user input through knowledge retrieval, the model gateway, structural validation, and persistence—and the stack behind it.", "说明数据如何从用户输入流向知识检索、模型网关、结构校验与持久化，以及产品实际使用的技术栈。"],
+          ["Technology stack", "技术栈"],
+          ["Frontend", "前端"],
+          ["Backend & streaming", "后端与流式传输"],
+          ["Request lifecycle control", "请求生命周期控制"],
+          ["Model interface", "模型接口"],
+          ["Configurable model gateway", "可配置模型网关"],
+          ["Fallback", "回退机制"],
+          ["Data & quality assurance", "数据与质量保障"],
+          ["Private Storage", "私有存储"],
+          ["Smoke Test", "冒烟测试"],
+          ["Local JSON", "本地 JSON"],
+          ["Schema validation", "结构校验"],
+          ["System architecture", "技术架构"],
+          ["User input", "用户输入"],
+          ["Ideas, screenplays, reference files, and named assets.", "创意、剧本、参考文件和命名资产。"],
+          ["Next.js / React workspace", "Next.js / React 工作台"],
+          ["Manages task state, attachments, history, assets, and the bilingual interface.", "管理任务状态、附件、历史、资产和双语界面。"],
+          ["Handles input validation, rate limiting, file policies, and request lifecycle control.", "完成输入验证、限流、文件策略和请求生命周期控制。"],
+          ["Retrieval & compilation", "检索与编译"],
+          ["The retrieval-intent module selects relevant knowledge; the prompt compiler assembles controlled context and structural protocols.", "检索意图模块选择相关知识集合，提示词编译器组合受控上下文与结构协议。"],
+          ["Model gateway", "模型网关"],
+          ["OpenAI-compatible Chat Completions with connectivity testing, timeouts, cancellation, retries, and model fallback.", "OpenAI-compatible Chat Completions 连接测试、超时、取消、重试与模型 fallback。"],
+          ["SSE & structural checks", "SSE 与结构检查"],
+          ["Streams results to the frontend and verifies that critical modules and batch items are complete.", "结果流式返回前端；检查关键模块与批量条目是否完整。"],
+          ["Dual persistence", "双持久化"],
+          ["Local JSON / file storage supports development and offline fallback; Supabase supports production deployment.", "本地 JSON / 文件系统用于开发和离线兜底，Supabase 用于正式部署。"],
+          ["Live usage, iteration driven by user signals, engineering evidence, and the methodology behind every metric.", "最后一章集中展示真实使用结果、用户信号推动的迭代、工程评测证据和数据口径。"],
+          ["Live usage outcomes", "真实使用结果"],
+          ["completed creative interactions", "次现网创作交互"],
+          ["14-day window, excluding legacy shared scopes and explicit test records", "14 天观察窗，不含旧版共享作用域和明确测试记录"],
+          ["custom-content submissions", "次自定义内容输入"],
+          ["Across 38 anonymous network scopes and 116 deduplicated needs", "覆盖 38 个匿名网络作用域，去重后为 116 个需求"],
+          ["submitted custom content", "提交自定义内容"],
+          ["38 of 68 anonymous scopes moved beyond the default examples", "68 个匿名作用域中有 38 个没有停留在默认示例"],
+          ["interacted at least twice", "至少两次交互"],
+          ["Evidence of repeat actions, but not equivalent to user retention", "说明出现重复操作，但不能等同于用户留存"],
+          ["Iteration driven by user signals", "用户信号推动的迭代"],
+          ["Continuity & assets", "连续性与资产"],
+          ["24.1% of deduplicated needs explicitly mentioned references or consistency, validating @asset references, reference files, and history reuse as core-path features.", "24.1% 的去重需求主动强调参考或一致性，支持将 @资产引用、参考文件和历史复用放在核心路径。"],
+          ["Revision & failure control", "修改与失败控制"],
+          ["Revision / redo requests and negative constraints each represented 17.2%, supporting edit, cancel, regenerate, and risk-control modules.", "修改 / 重做和负面约束各占 17.2%，支持保留编辑、取消、再次生成与风险控制模块。"],
+          ["Batch structure", "批量结构"],
+          ["Historical batch retry failures led to batch detection, itemized output, schema validation, and repair retries.", "历史中的批量重试问题推动产品增加批量识别、逐条输出、结构校验与修复重试。"],
+          ["Entry-point priority", "入口优先级"],
+          ["Image prompting represented 52.5% of custom interactions, making it the clearest high-frequency entry point.", "自定义交互中图片提示词占 52.5%，因此图片工作流是当前最明确的高频入口。"],
+          ["Engineering & evaluation evidence", "工程与评测证据"],
+          ["connectivity checks", "连接审计"],
+          ["All passed · 0 failures · 0 warnings", "全部通过 · 0 failures · 0 warnings"],
+          ["database audit", "数据库审计"],
+          ["0 high-, medium-, or low-severity runtime issues", "运行时高 / 中 / 低级别问题均为 0"],
+          ["deterministic quality score", "确定性质量评测"],
+          ["3 fixed English cases across video, image, and screenwriting workflows", "3 个固定英文案例覆盖视频、图片与编剧工作流"],
+          ["Measurement notes", "数据口径"],
+          ["Anonymous network scopes are server-side hashes of IP addresses, not unique people or accounts. The 47.1% figure indicates repeat interaction within the observation window, not retention. The 4.92/5 score is a lightweight, deterministic rule-based evaluation on fixed outputs—not a user rating, third-party score, or live model-quality metric.", "匿名网络作用域由服务端对 IP 做哈希后形成，不等同于自然人或账号；47.1% 代表观察窗内的重复交互，不代表留存率。4.92/5 是固定输出上的轻量确定性规则评测，不是用户评分、第三方评级或实时模型质量评分。"],
+          ["From problem definition and knowledge engineering to full-stack delivery and live-usage validation, this is a 0→1 AI product I built and continue to maintain independently.", "从问题定义、知识库工程到全栈交付与真实使用验证，这是一个由我独立完成并持续维护的 0→1 AI 产品。"],
+          ["Experience the Live Product ↗", "体验线上产品 ↗"],
+          ["PRODUCT CASE STUDY · BILINGUAL", "双语产品案例"],
+          ["Product screenshot", "产品截图"],
+        ].forEach(([en, zh]) => addCopy(en, en, zh));
+
+        [
+          ["meta.title", "GENIUSHUANG | AI Director Workstation", "GENIUSHUANG｜AI 影视前期创作工作站"],
+          ["meta.description", "GENIUSHUANG product case study: product context, ownership, user research, core workflow, technical architecture, and verified outcomes.", "GENIUSHUANG 中文作品集：项目基本信息、个人职责、用户研究、核心工作流、技术事实与可验证结果。"],
+          ["language.aria", "Language", "语言"],
+          ["summary.aria", "Project summary", "项目摘要"],
+          ["toc.aria", "Case study contents", "作品集章节目录"],
+          ["shot.home.title", "GENIUSHUANG Director Workstation home screen", "GENIUSHUANG 导演工作站首页"],
+          ["shot.home.aria", "Enlarge the GENIUSHUANG home screen", "放大查看 GENIUSHUANG 首页截图"],
+          ["shot.home.alt", "GENIUSHUANG Director Workstation home screen with creative input, reference upload, duration, and generation controls", "GENIUSHUANG 导演工作站首页：创意输入、参考上传、时长和生成入口"],
+          ["demo.video.aria", "GENIUSHUANG product feature demo", "GENIUSHUANG 产品功能演示"],
+          ["demo.controls.aria", "Video playback controls", "视频播放控制"],
+          ["demo.play.aria", "Play or pause video", "播放或暂停视频"],
+          ["demo.progress.aria", "Video playback progress", "视频播放进度"],
+          ["demo.mute.aria", "Toggle video sound", "切换视频声音"],
+          ["demo.fullscreen.aria", "Toggle fullscreen playback", "切换全屏播放"],
+          ["demo.switcher.aria", "Choose a product feature demo", "选择产品功能演示"],
+          ["ui.feature.aria", "Enlarge the Director workstation", "放大查看导演工作台"],
+          ["ui.feature.alt", "Full GENIUSHUANG Director workstation interface", "GENIUSHUANG 导演工作台完整界面"],
+          ["ui.thumbs.aria", "Choose a product interface", "选择产品界面"],
+          ["knowledge.flow.aria", "Knowledge engineering pipeline", "知识库工程流程"],
+          ["dialog.close.aria", "Close", "关闭"],
+          ["control.play", "Play", "播放"],
+          ["control.pause", "Pause", "暂停"],
+          ["control.enableSound", "Enable sound", "开启声音"],
+          ["control.mute", "Mute", "静音"],
+          ["control.fullscreen", "Fullscreen", "全屏"],
+          ["control.exitFullscreen", "Exit fullscreen", "退出全屏"],
+          ["zoom.label", "Enlarge", "放大查看"],
+          ["shot.generic", "Product screenshot", "产品截图"],
+          ["shot.dynamic.alt", "{title} screenshot", "{title}产品截图"],
+          ["ui.dynamic.alt", "Full {title} interface", "{title}完整界面"],
+          ["ui.dynamic.aria", "Enlarge {title}", "放大查看{title}"],
+          ["demo.1.title", "Add an idea and references", "输入创意与参考"],
+          ["demo.1.description", "Start with a one-line idea, then set language and duration and add reference material to establish context for structured generation.", "从一句创意开始，设置语言、时长并补充参考材料，形成后续结构化生成的任务上下文。"],
+          ["demo.2.title", "Generate structured prompts", "生成结构化提示词"],
+          ["demo.2.description", "The model creates editable, film-grade prompt proposals organized by style, assets, shot content, action causality, and risk controls.", "模型按风格、资产、镜头内容、动作因果与风险控制生成可编辑的电影级提示词方案。"],
+          ["demo.3.title", "Validate film-grade generation", "电影级提示词生成验证"],
+          ["demo.3.description", "Use GENIUSHUANG’s structured prompts on an external generation platform to validate cinematic quality, action logic, and visual consistency.", "将 GENIUSHUANG 的结构化提示词用于外部生成平台，直观验证电影感、动作逻辑与视觉一致性。"],
+          ["demo.4.title", "Develop an idea into a screenplay", "从创意生成剧本"],
+          ["demo.4.description", "Develop a story idea into a structured screenplay plan with characters, conflict, scenes, and dialogue.", "在编剧工作台中把故事想法发展为包含角色、冲突、场景与对白的结构化剧本方案。"],
+          ["demo.5.title", "Diagnose and improve a screenplay", "诊断并优化剧本"],
+          ["demo.5.description", "Identify issues in structure, character motivation, scene progression, and dialogue; show the rationale and generate an improved screenplay.", "识别结构、人物动机、场景推进与对白问题，给出诊断依据并生成优化后的剧本。"],
+          ["demo.6.title", "Save reusable assets", "保存可复用资产"],
+          ["demo.6.description", "Save character, location, or prop definitions as named assets that provide continuity memory for later tasks.", "把人物、场景或道具设定保存为命名资产，形成后续任务可调用的连续性记忆。"],
+          ["demo.7.title", "Reuse assets to preserve continuity", "调用资产保持连续性"],
+          ["demo.7.description", "Insert existing assets by name in a new task to reduce drift in character identity, appearance, and world rules.", "在新任务中通过命名引用插入既有资产，减少人物身份、外观与世界观设定漂移。"],
+          ["ui.1.title", "Director workstation", "导演工作台"],
+          ["ui.1.description", "Add an idea, reference files, language, and duration, then enter the image- or video-prompt workflow.", "输入创意、参考文件、语言与时长，并进入图片提示词或视频提示词工作流。"],
+          ["ui.2.title", "Screenwriting workstation", "编剧工作台"],
+          ["ui.2.description", "Generate a new screenplay around story structure, characters, scenes, and dialogue—or systematically improve an existing text.", "围绕故事结构、人物、场景和对白生成新剧本，或对已有文本进行系统优化。"],
+          ["ui.3.title", "Video prompt proposal", "视频提示词提案"],
+          ["ui.3.description", "Organize film-grade video prompts around style locks, asset locks, shot content, action causality, and risk controls.", "以风格锁定、资产锁定、镜头内容、动作因果和风险控制组织电影级视频提示词。"],
+          ["ui.4.title", "Image prompt proposal", "图片提示词提案"],
+          ["ui.4.description", "Produce positive prompts, negative prompts, and asset bindings, with the option to save definitions for future reuse.", "输出正向提示词、负面提示词与资产绑定，并支持保存设定供后续任务复用。"],
+          ["ui.5.title", "Screenplay diagnosis and improvement", "剧本诊断与优化"],
+          ["ui.5.description", "Show issues, evidence, and priorities before delivering a structured rewrite—rather than merely polishing the surface.", "先展示问题诊断、证据与优先级，再给出结构化重写结果，避免只做表面润色。"],
+          ["ui.6.title", "Save and recall assets", "资产保存与调用"],
+          ["ui.6.description", "Save characters, locations, and props as named assets, then edit or insert them into new generation tasks.", "将人物、场景和道具保存为命名资产，并在新的生成任务中继续编辑或插入引用。"],
+          ["ui.7.title", "History and cross-workflow reuse", "历史记录与跨工作流复用"],
+          ["ui.7.description", "Keep user input and generated results, then copy or send existing content back to the Director workstation for further work.", "保留用户输入和生成结果，并支持复制或把既有内容重新发送到导演工作台继续处理。"],
+        ].forEach(([key, en, zh]) => addCopy(key, en, zh));
+
+        const projectChapter = document.getElementById("project");
+        const uiOverview = document.getElementById("ui-overview");
+        if (projectChapter && uiOverview) projectChapter.append(uiOverview);
+
+        const dialog = document.getElementById("shotDialog");
+        const image = document.getElementById("shotImage");
+        const title = document.getElementById("shotTitle");
+        const close = document.getElementById("shotClose");
+        const tocLinks = [...document.querySelectorAll(".toc a")];
+        const chapters = [...document.querySelectorAll(".chapter")];
+        const chapterViewport = document.querySelector(".chapters");
+        const demoVideo = document.getElementById("demoVideo");
+        const demoMedia = document.getElementById("demoMedia");
+        const demoPlay = document.getElementById("demoPlay");
+        const demoProgress = document.getElementById("demoProgress");
+        const demoTime = document.getElementById("demoTime");
+        const demoMute = document.getElementById("demoMute");
+        const demoFullscreen = document.getElementById("demoFullscreen");
+        const demoSwitcher = document.querySelector(".demo-switcher");
+        const demoTabs = [...document.querySelectorAll(".demo-tab")];
+        const demoKicker = document.getElementById("demoKicker");
+        const demoTitle = document.getElementById("demoTitle");
+        const demoDescription = document.getElementById("demoDescription");
+        const demoDuration = document.getElementById("demoDuration");
+        const uiFeature = document.getElementById("uiFeature");
+        const uiFeatureImage = document.getElementById("uiFeatureImage");
+        const uiThumbs = [...document.querySelectorAll(".ui-thumb")];
+        const uiGalleryKicker = document.getElementById("uiGalleryKicker");
+        const uiGalleryTitle = document.getElementById("uiGalleryTitle");
+        const uiGalleryDescription = document.getElementById("uiGalleryDescription");
+        const textNodeState = new WeakMap();
+        const normalizeText = (value) => String(value).replace(/\s+/g, " ").trim();
+        const translationKeyByEnglish = new Map(
+          Object.entries(translations).map(([key, value]) => [normalizeText(value.en), key]),
+        );
+        let activeShotTitleKey = "";
+        let activeLookup = (key, variables = {}) => {
+          const value = translations[key]?.en ?? key;
+          return String(value).replace(/\{(\w+)\}/g, (match, name) => (
+            Object.prototype.hasOwnProperty.call(variables, name)
+              ? String(variables[name])
+              : match
+          ));
+        };
+
+        const translateStaticText = (lookup) => {
+          const walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+            {
+              acceptNode(node) {
+                if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+                if (node.parentElement?.closest("script, style")) return NodeFilter.FILTER_REJECT;
+                if (textNodeState.has(node)) return NodeFilter.FILTER_ACCEPT;
+                return translationKeyByEnglish.has(normalizeText(node.nodeValue))
+                  ? NodeFilter.FILTER_ACCEPT
+                  : NodeFilter.FILTER_REJECT;
+              },
+            },
+          );
+
+          let node = walker.nextNode();
+          while (node) {
+            let state = textNodeState.get(node);
+            if (!state) {
+              const raw = node.nodeValue;
+              const trimmed = raw.trim();
+              const start = raw.indexOf(trimmed);
+              state = {
+                key: translationKeyByEnglish.get(normalizeText(trimmed)),
+                leading: raw.slice(0, start),
+                trailing: raw.slice(start + trimmed.length),
+              };
+              textNodeState.set(node, state);
+            }
+            node.nodeValue = `${state.leading}${lookup(state.key)}${state.trailing}`;
+            node = walker.nextNode();
+          }
+        };
+
+        const renderActiveDemoCopy = () => {
+          const tab = document.querySelector(".demo-tab.active") || demoTabs[0];
+          if (!tab) return;
+          demoKicker.textContent = activeLookup(tab.dataset.kicker);
+          demoTitle.textContent = activeLookup(tab.dataset.titleKey);
+          demoDescription.textContent = activeLookup(tab.dataset.descriptionKey);
+          demoDuration.textContent = tab.dataset.duration;
+        };
+
+        const renderActiveUiCopy = () => {
+          const thumb = document.querySelector(".ui-thumb.active") || uiThumbs[0];
+          if (!thumb) return;
+          const translatedTitle = activeLookup(thumb.dataset.titleKey);
+          uiFeatureImage.src = thumb.dataset.image;
+          uiFeatureImage.alt = activeLookup("ui.dynamic.alt", { title: translatedTitle });
+          uiFeature.dataset.shot = thumb.dataset.image;
+          uiFeature.dataset.title = translatedTitle;
+          uiFeature.dataset.titleKey = thumb.dataset.titleKey;
+          uiFeature.setAttribute(
+            "aria-label",
+            activeLookup("ui.dynamic.aria", { title: translatedTitle }),
+          );
+          uiGalleryKicker.textContent = activeLookup(thumb.dataset.kicker);
+          uiGalleryTitle.textContent = translatedTitle;
+          uiGalleryDescription.textContent = activeLookup(thumb.dataset.descriptionKey);
+        };
+
+        const renderOpenDialogCopy = () => {
+          if (!dialog.open) return;
+          const translatedTitle = activeShotTitleKey
+            ? activeLookup(activeShotTitleKey)
+            : activeLookup("shot.generic");
+          title.textContent = translatedTitle;
+          image.alt = activeLookup("shot.dynamic.alt", { title: translatedTitle });
+        };
+
+        document.querySelectorAll("[data-shot]").forEach((button) => {
+          button.addEventListener("click", () => {
+            image.src = button.dataset.shot;
+            activeShotTitleKey = button.dataset.titleKey || "";
+            const translatedTitle = activeShotTitleKey
+              ? activeLookup(activeShotTitleKey)
+              : button.dataset.title || activeLookup("shot.generic");
+            image.alt = activeLookup("shot.dynamic.alt", { title: translatedTitle });
+            title.textContent = translatedTitle;
+            dialog.showModal();
+          });
+        });
+
+        close.addEventListener("click", () => dialog.close());
+        dialog.addEventListener("click", (event) => {
+          if (event.target === dialog) dialog.close();
+        });
+
+        const formatVideoTime = (seconds) => {
+          if (!Number.isFinite(seconds)) return "00:00";
+          const minutes = Math.floor(seconds / 60);
+          const remainder = Math.floor(seconds % 60);
+          return `${String(minutes).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`;
+        };
+
+        const syncVideoControls = () => {
+          demoPlay.textContent = demoVideo.paused
+            ? activeLookup("control.play")
+            : activeLookup("control.pause");
+          demoMute.textContent = demoVideo.muted
+            ? activeLookup("control.enableSound")
+            : activeLookup("control.mute");
+          const duration = Number.isFinite(demoVideo.duration) ? demoVideo.duration : 0;
+          const currentTime = Number.isFinite(demoVideo.currentTime) ? demoVideo.currentTime : 0;
+          demoProgress.value = duration ? String((currentTime / duration) * 100) : "0";
+          demoTime.textContent = `${formatVideoTime(currentTime)} / ${formatVideoTime(duration)}`;
+        };
+
+        demoVideo.controls = false;
+        demoPlay.addEventListener("click", () => {
+          if (demoVideo.paused) demoVideo.play().catch(() => {});
+          else demoVideo.pause();
+        });
+        demoVideo.addEventListener("click", () => {
+          if (demoVideo.paused) demoVideo.play().catch(() => {});
+          else demoVideo.pause();
+        });
+        demoProgress.addEventListener("input", () => {
+          if (!Number.isFinite(demoVideo.duration)) return;
+          demoVideo.currentTime = (Number(demoProgress.value) / 100) * demoVideo.duration;
+        });
+        demoMute.addEventListener("click", () => {
+          demoVideo.muted = !demoVideo.muted;
+          syncVideoControls();
+        });
+        demoFullscreen.addEventListener("click", () => {
+          if (document.fullscreenElement) {
+            document.exitFullscreen?.();
+          } else if (demoMedia.requestFullscreen) {
+            demoMedia.requestFullscreen();
+          } else if (demoVideo.webkitEnterFullscreen) {
+            demoVideo.webkitEnterFullscreen();
+          }
+        });
+        ["loadedmetadata", "durationchange", "timeupdate", "play", "pause", "volumechange"].forEach(
+          (eventName) => demoVideo.addEventListener(eventName, syncVideoControls),
+        );
+        document.addEventListener("fullscreenchange", () => {
+          demoFullscreen.textContent = document.fullscreenElement
+            ? activeLookup("control.exitFullscreen")
+            : activeLookup("control.fullscreen");
+        });
+        syncVideoControls();
+
+        demoTabs.forEach((tab, index) => {
+          tab.addEventListener("click", (event) => {
+            event.preventDefault();
+            const previousScrollTop = chapterViewport?.scrollTop ?? 0;
+            const restoreScrollPosition = () => {
+              if (!chapterViewport) return;
+              chapterViewport.scrollTop = previousScrollTop;
+            };
+            demoTabs.forEach((item) => {
+              const selected = item === tab;
+              item.classList.toggle("active", selected);
+              item.setAttribute("aria-selected", String(selected));
+            });
+            demoSwitcher?.style.setProperty("--active-index", String(index));
+            demoVideo.pause();
+            demoVideo.src = tab.dataset.video;
+            demoVideo.poster = tab.dataset.poster || "";
+            renderActiveDemoCopy();
+            demoProgress.value = "0";
+            demoTime.textContent = "00:00 / 00:00";
+            demoVideo.addEventListener("loadedmetadata", restoreScrollPosition, { once: true });
+            demoVideo.addEventListener("loadeddata", restoreScrollPosition, { once: true });
+            demoVideo.load();
+            demoVideo.play().catch(() => {});
+            tab.blur();
+            restoreScrollPosition();
+            requestAnimationFrame(restoreScrollPosition);
+            setTimeout(restoreScrollPosition, 80);
+            setTimeout(restoreScrollPosition, 240);
+          });
+        });
+        demoSwitcher?.style.setProperty("--active-index", "0");
+
+        uiThumbs.forEach((thumb) => {
+          thumb.addEventListener("click", () => {
+            uiThumbs.forEach((item) => {
+              const selected = item === thumb;
+              item.classList.toggle("active", selected);
+              item.setAttribute("aria-selected", String(selected));
+            });
+            renderActiveUiCopy();
+          });
+        });
+
+        tocLinks.forEach((link) => {
+          link.addEventListener("click", (event) => {
+            const target = document.querySelector(link.getAttribute("href"));
+            if (!target) return;
+            event.preventDefault();
+            target.scrollTop = 0;
+            const viewportTop = chapterViewport.getBoundingClientRect().top;
+            const targetTop = target.getBoundingClientRect().top;
+            chapterViewport.scrollTo({
+              top: chapterViewport.scrollTop + targetTop - viewportTop,
+              behavior: "smooth",
+            });
+          });
+        });
+
+        if ("IntersectionObserver" in window) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting || entry.intersectionRatio < 0.55) return;
+                tocLinks.forEach((link) => {
+                  link.classList.toggle(
+                    "active",
+                    link.getAttribute("href") === `#${entry.target.id}`,
+                  );
+                });
+              });
+            },
+            { root: chapterViewport, threshold: [0.55] },
+          );
+          chapters.forEach((chapter) => observer.observe(chapter));
+        }
+
+        tocLinks[0]?.classList.add("active");
+
+        PortfolioI18n.createController({
+          translations,
+          title: "meta.title",
+          description: "meta.description",
+          onChange(language, lookup) {
+            activeLookup = (key, variables = {}) => lookup(key, language, variables);
+            translateStaticText(activeLookup);
+            document.querySelectorAll(".clickable-shot").forEach((button) => {
+              button.dataset.zoomLabel = activeLookup("zoom.label");
+            });
+            renderActiveDemoCopy();
+            renderActiveUiCopy();
+            renderOpenDialogCopy();
+            syncVideoControls();
+            demoFullscreen.textContent = document.fullscreenElement
+              ? activeLookup("control.exitFullscreen")
+              : activeLookup("control.fullscreen");
+          },
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1802 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Selected technical storytelling across brand commercials, cultural and travel narratives, technology films, and AI-enabled production."
+  />
+  <title>Selected Technical Storytelling</title>
+  <style>
+    :root {
+      --cream: #f4e8d4;
+      --paper: #f8efdf;
+      --ink: #1a2c26;
+      --forest: #2b4a3f;
+      --gold: #c68a4a;
+      --cream-rgb: 244, 232, 212;
+      --ink-rgb: 26, 44, 38;
+      --line: rgba(var(--ink-rgb), 0.16);
+      --muted: rgba(var(--ink-rgb), 0.66);
+      --display: Inter, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 78% 8%, rgba(198, 138, 74, 0.09), transparent 27rem),
+        linear-gradient(180deg, var(--paper) 0, var(--cream) 42rem);
+      font-family: var(--display);
+      font-synthesis: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.is-locked {
+      overflow: hidden;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .language-switch {
+      position: fixed;
+      z-index: 90;
+      top: 18px;
+      right: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 4px;
+      border: 1px solid rgba(var(--ink-rgb), 0.18);
+      border-radius: 999px;
+      background: rgba(248, 239, 223, 0.9);
+      box-shadow: 0 8px 28px rgba(var(--ink-rgb), 0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .language-switch button {
+      min-width: 44px;
+      min-height: 30px;
+      padding: 0 10px;
+      color: var(--muted);
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      transition: color 180ms ease, background 180ms ease;
+    }
+
+    .language-switch button.is-active {
+      color: var(--paper);
+      background: var(--forest);
+    }
+
+    .portfolio-embedded .language-switch {
+      display: none;
+    }
+
+    .shell {
+      width: min(100% - 48px, 1480px);
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: min(602px, 64.4vh);
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(480px, 1.2fr);
+      align-items: center;
+      gap: clamp(54px, 7vw, 112px);
+      padding: 28px 0 32px;
+    }
+
+    .eyebrow,
+    .section-index {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      color: var(--forest);
+      text-transform: uppercase;
+      font-size: 10px;
+      line-height: 1.4;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+    }
+
+    .eyebrow::before {
+      width: 34px;
+      height: 1px;
+      content: "";
+      background: var(--gold);
+    }
+
+    h1 {
+      max-width: 730px;
+      margin: 24px 0 20px;
+      font-size: clamp(48px, 5vw, 82px);
+      line-height: 0.94;
+      font-weight: 650;
+      letter-spacing: -0.07em;
+    }
+
+    h1 span {
+      display: block;
+      white-space: nowrap;
+    }
+
+    h1 .outline {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--ink);
+    }
+
+    html[lang="en"] h1 {
+      font-size: clamp(44px, 4vw, 60px);
+      letter-spacing: -0.06em;
+    }
+
+    .hero-copy {
+      max-width: 550px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 1.2vw, 18px);
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      padding: 0 21px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      transition:
+        color 260ms var(--ease),
+        background 260ms var(--ease),
+        transform 260ms var(--ease);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: var(--paper);
+      background: var(--ink);
+    }
+
+    .button-primary:hover {
+      background: var(--forest);
+    }
+
+    .play-glyph {
+      width: 0;
+      height: 0;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      border-left: 7px solid currentColor;
+    }
+
+    .arrow {
+      font-size: 16px;
+      line-height: 1;
+      transition: transform 260ms var(--ease);
+    }
+
+    .button:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .hero-media {
+      position: relative;
+      align-self: stretch;
+      min-height: 434px;
+      overflow: hidden;
+      border-radius: 240px 240px 18px 18px;
+      background: var(--forest);
+      isolation: isolate;
+      box-shadow: 0 35px 80px rgba(var(--ink-rgb), 0.18);
+    }
+
+    .hero-media::after {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      content: "";
+      background:
+        linear-gradient(180deg, rgba(26, 44, 38, 0.03) 45%, rgba(26, 44, 38, 0.78) 100%),
+        linear-gradient(90deg, rgba(26, 44, 38, 0.17), transparent 45%);
+      pointer-events: none;
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.1s var(--ease);
+    }
+
+    .hero-media:hover img {
+      transform: scale(1.035);
+    }
+
+    .hero-media-content {
+      position: absolute;
+      z-index: 2;
+      right: 34px;
+      bottom: 30px;
+      left: 34px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 30px;
+      color: var(--paper);
+    }
+
+    .feature-kicker {
+      margin: 0 0 8px;
+      color: rgba(248, 239, 223, 0.7);
+      text-transform: uppercase;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+    }
+
+    .feature-title {
+      margin: 0;
+      font-size: clamp(25px, 2.4vw, 42px);
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: -0.045em;
+    }
+
+    .hero-play {
+      width: 62px;
+      aspect-ratio: 1;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      background: var(--gold);
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 300ms var(--ease), background 300ms var(--ease);
+    }
+
+    .hero-play:hover {
+      background: var(--paper);
+      transform: scale(1.08);
+    }
+
+    .hero-play .play-glyph {
+      margin-left: 3px;
+      border-top-width: 6px;
+      border-bottom-width: 6px;
+      border-left-width: 10px;
+    }
+
+    .feature-tag {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 21px;
+      color: rgba(248, 239, 223, 0.84);
+      transform: rotate(-90deg) translateX(-50%);
+      transform-origin: left top;
+      text-transform: uppercase;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+    }
+
+    .facts {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .facts-grid {
+      min-height: 154px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .fact {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 28px clamp(18px, 3vw, 48px);
+    }
+
+    .fact + .fact {
+      border-left: 1px solid var(--line);
+    }
+
+    .fact-value {
+      margin-bottom: 9px;
+      font-size: clamp(26px, 3vw, 44px);
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: -0.05em;
+    }
+
+    .fact-label {
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.19em;
+    }
+
+    .works {
+      padding: 68px 0 58px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: end;
+      margin-bottom: 54px;
+    }
+
+    .section-index {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(34px, 4.2vw, 60px);
+      line-height: 0.95;
+      font-weight: 600;
+      letter-spacing: -0.065em;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 38px;
+    }
+
+    .filter {
+      min-height: 38px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(248, 239, 223, 0.32);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 650;
+      transition:
+        color 220ms ease,
+        background 220ms ease,
+        border-color 220ms ease;
+    }
+
+    .filter:hover,
+    .filter.is-active {
+      color: var(--paper);
+      background: var(--forest);
+      border-color: var(--forest);
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: clamp(22px, 3.3vw, 48px) 18px;
+    }
+
+    .work-card {
+      grid-column: span 4;
+      min-width: 0;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      animation: reveal 560ms var(--ease) both;
+    }
+
+    .work-card:nth-child(1),
+    .work-card:nth-child(2) {
+      grid-column: span 6;
+    }
+
+    .work-card.is-hidden {
+      display: none;
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .work-cover {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      border-radius: 4px;
+      background: var(--forest);
+    }
+
+    .work-cover::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: linear-gradient(180deg, transparent 48%, rgba(26, 44, 38, 0.58));
+      opacity: 0.5;
+      transition: opacity 350ms ease;
+    }
+
+    .work-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 750ms var(--ease), filter 350ms ease;
+    }
+
+    .work-card:hover .work-cover img {
+      transform: scale(1.055);
+    }
+
+    .work-card:hover .work-cover::after {
+      opacity: 0.92;
+    }
+
+    .work-number,
+    .work-duration {
+      position: absolute;
+      z-index: 2;
+      top: 15px;
+      color: var(--paper);
+      text-shadow: 0 1px 12px rgba(0, 0, 0, 0.24);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+    }
+
+    .work-number {
+      left: 16px;
+    }
+
+    .work-duration {
+      right: 16px;
+    }
+
+    .card-play {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      left: 50%;
+      width: 56px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+      transform: translate(-50%, -42%) scale(0.85);
+      transition: opacity 300ms var(--ease), transform 300ms var(--ease);
+    }
+
+    .card-play .play-glyph {
+      margin-left: 3px;
+      border-top-width: 5px;
+      border-bottom-width: 5px;
+      border-left-width: 8px;
+    }
+
+    .work-card:hover .card-play,
+    .work-card:focus-visible .card-play {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .work-meta {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 20px;
+      padding-top: 16px;
+    }
+
+    .work-title {
+      margin: 0 0 7px;
+      font-size: clamp(17px, 1.55vw, 23px);
+      line-height: 1.2;
+      font-weight: 600;
+      letter-spacing: -0.035em;
+    }
+
+    .work-type,
+    .work-year {
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 9px;
+      line-height: 1.5;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+    }
+
+    .work-year {
+      padding-top: 5px;
+    }
+
+    .cream-ending {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      justify-items: center;
+      gap: 14px;
+      margin-top: clamp(76px, 8vw, 118px);
+      padding: 32px 0 18px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .cream-ending-label {
+      margin: 0;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+    }
+
+    .cream-ending-text {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(19px, 1.55vw, 25px);
+      line-height: 1.35;
+      font-weight: 580;
+      letter-spacing: -0.035em;
+    }
+
+    .ending-phrase {
+      padding: 0 clamp(14px, 1.5vw, 24px);
+      white-space: nowrap;
+    }
+
+    .ending-phrase:first-child {
+      padding-left: 0;
+    }
+
+    .ending-phrase + .ending-phrase {
+      border-left: 1px solid var(--line);
+    }
+
+    .ending-accent {
+      color: var(--forest);
+      font-weight: 760;
+      box-shadow: inset 0 -0.28em rgba(198, 138, 74, 0.22);
+    }
+
+    .contact-footer {
+      color: var(--paper);
+      background: var(--ink);
+    }
+
+    .contact-footer__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(440px, 1.2fr);
+      align-items: start;
+      gap: clamp(48px, 8vw, 140px);
+      padding: clamp(56px, 7vw, 104px) 0 clamp(48px, 6vw, 88px);
+    }
+
+    .contact-footer__kicker {
+      margin: 0 0 20px;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-size: 9px;
+      font-weight: 750;
+      letter-spacing: 0.22em;
+    }
+
+    .contact-footer__title {
+      margin: 0;
+      color: var(--paper);
+      font-size: clamp(38px, 4.4vw, 66px);
+      line-height: 0.96;
+      font-weight: 600;
+      letter-spacing: -0.055em;
+    }
+
+    .contact-footer__title span {
+      display: block;
+      margin-top: 15px;
+      color: rgba(var(--cream-rgb), 0.56);
+      font-size: 0.3em;
+      line-height: 1.35;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+    }
+
+    .contact-footer__role {
+      max-width: 500px;
+      margin: 26px 0 0;
+      color: rgba(var(--cream-rgb), 0.66);
+      font-size: 12px;
+      line-height: 1.75;
+    }
+
+    .contact-footer__list {
+      margin: 0;
+      border-top: 1px solid rgba(var(--cream-rgb), 0.18);
+      font-style: normal;
+    }
+
+    .contact-footer__item {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      min-height: 60px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(var(--cream-rgb), 0.18);
+    }
+
+    .contact-footer__item > span {
+      color: rgba(var(--cream-rgb), 0.46);
+      font-size: 8px;
+      font-weight: 750;
+      letter-spacing: 0.16em;
+    }
+
+    .contact-footer__item strong {
+      min-width: 0;
+      overflow: hidden;
+      color: var(--paper);
+      font-size: clamp(11px, 1vw, 14px);
+      font-weight: 550;
+      letter-spacing: 0.01em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color 200ms ease;
+    }
+
+    .contact-footer__item i {
+      color: var(--gold);
+      font-size: 14px;
+      font-style: normal;
+    }
+
+    a.contact-footer__item:hover strong,
+    a.contact-footer__item:focus-visible strong {
+      color: var(--gold);
+    }
+
+    .contact-footer__bottom {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      border-top: 1px solid rgba(var(--cream-rgb), 0.16);
+      color: rgba(var(--cream-rgb), 0.5);
+      text-transform: uppercase;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+    }
+
+    .contact-footer__bottom a {
+      color: var(--paper);
+      transition: color 180ms ease;
+    }
+
+    .contact-footer__bottom a:hover,
+    .contact-footer__bottom a:focus-visible {
+      color: var(--gold);
+    }
+
+    .player {
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 22px;
+      color: var(--paper);
+      background: rgba(17, 28, 24, 0.975);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 320ms ease, visibility 320ms ease;
+    }
+
+    .player.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .player-top {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      padding: 0 4px;
+    }
+
+    .player-title-wrap {
+      min-width: 0;
+      display: flex;
+      align-items: baseline;
+      gap: 15px;
+    }
+
+    .player-index {
+      color: var(--gold);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+    }
+
+    .player-title {
+      overflow: hidden;
+      margin: 0;
+      font-size: clamp(16px, 1.8vw, 24px);
+      font-weight: 550;
+      letter-spacing: -0.025em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .close-player {
+      width: 43px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: var(--paper);
+      border: 1px solid rgba(248, 239, 223, 0.35);
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      font-size: 22px;
+      font-weight: 300;
+      transition: color 220ms ease, background 220ms ease, transform 220ms ease;
+    }
+
+    .close-player:hover {
+      color: var(--ink);
+      background: var(--paper);
+      transform: rotate(90deg);
+    }
+
+    .player-stage {
+      position: relative;
+      min-height: 0;
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 18px 64px;
+    }
+
+    .player-video {
+      width: min(100%, 1380px);
+      max-height: calc(100vh - 180px);
+      background: #0d1613;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    .player-nav {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      width: 44px;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      border: 1px solid rgba(248, 239, 223, 0.25);
+      border-radius: 50%;
+      background: rgba(26, 44, 38, 0.72);
+      cursor: pointer;
+      transform: translateY(-50%);
+      transition: color 220ms ease, background 220ms ease;
+    }
+
+    .player-nav:hover {
+      color: var(--ink);
+      background: var(--gold);
+    }
+
+    .player-prev {
+      left: 0;
+    }
+
+    .player-next {
+      right: 0;
+    }
+
+    .player-foot {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 0 4px;
+      color: rgba(248, 239, 223, 0.52);
+      text-transform: uppercase;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero {
+        grid-template-columns: minmax(0, 0.9fr) minmax(410px, 1.1fr);
+        gap: 45px;
+      }
+
+      h1 {
+        font-size: clamp(46px, 6vw, 64px);
+      }
+
+      .hero-media {
+        min-height: 392px;
+      }
+
+      .work-card {
+        grid-column: span 6;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .shell {
+        width: min(100% - 30px, 1480px);
+      }
+
+      .hero {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        gap: 27px;
+        padding: 31px 0 21px;
+      }
+
+      h1 {
+        font-size: clamp(48px, 10.5vw, 78px);
+      }
+
+      .hero-media {
+        min-height: min(420px, 67vw);
+        border-radius: 180px 180px 12px 12px;
+      }
+
+      .facts-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .fact:nth-child(3) {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .fact:nth-child(4) {
+        border-top: 1px solid var(--line);
+      }
+
+      .works {
+        padding: 56px 0 52px;
+      }
+
+      .section-head {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        margin-bottom: 40px;
+      }
+
+      .work-card,
+      .work-card:nth-child(1),
+      .work-card:nth-child(2) {
+        grid-column: span 6;
+      }
+
+      .cream-ending {
+        grid-template-columns: 1fr;
+        gap: 13px;
+        margin-top: 76px;
+      }
+
+      .cream-ending-text {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .ending-phrase {
+        padding: 0;
+      }
+
+      .ending-phrase + .ending-phrase {
+        border-left: 0;
+      }
+
+      .contact-footer__inner {
+        grid-template-columns: 1fr;
+        gap: 44px;
+      }
+
+      .contact-footer__item {
+        grid-template-columns: 78px minmax(0, 1fr) auto;
+      }
+
+      .player-stage {
+        padding: 18px 0 68px;
+      }
+
+      .player-nav {
+        top: auto;
+        bottom: 7px;
+        transform: none;
+      }
+
+      .player-prev {
+        left: calc(50% - 54px);
+      }
+
+      .player-next {
+        right: calc(50% - 54px);
+      }
+    }
+
+    @media (max-width: 580px) {
+      h1 {
+        margin-top: 22px;
+        font-size: clamp(42px, 11.5vw, 60px);
+      }
+
+      .hero-copy {
+        font-size: 14px;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .hero-media {
+        min-height: 73vw;
+        border-radius: 120px 120px 10px 10px;
+      }
+
+      .hero-media-content {
+        right: 20px;
+        bottom: 20px;
+        left: 20px;
+      }
+
+      .hero-play {
+        width: 54px;
+      }
+
+      .facts-grid {
+        min-height: auto;
+      }
+
+      .fact {
+        min-height: 112px;
+        padding: 20px;
+      }
+
+      .contact-footer__inner {
+        padding: 54px 0 44px;
+      }
+
+      .contact-footer__item {
+        grid-template-columns: 1fr auto;
+        gap: 5px 12px;
+        padding: 15px 0;
+      }
+
+      .contact-footer__item > span {
+        grid-column: 1 / -1;
+      }
+
+      .contact-footer__bottom {
+        min-height: 84px;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+        gap: 9px;
+        padding: 20px 0;
+      }
+
+      .work-grid {
+        display: block;
+      }
+
+      .work-card {
+        width: 100%;
+        display: block;
+        margin-bottom: 38px;
+      }
+
+      .work-card.is-hidden {
+        display: none;
+      }
+
+      .work-cover {
+        aspect-ratio: 16 / 10.5;
+      }
+
+      .card-play {
+        width: 50px;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.9);
+      }
+
+      .player {
+        padding: 12px;
+      }
+
+      .player-index {
+        display: none;
+      }
+
+      .player-foot span:last-child {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="language-switch" role="group" aria-label="Language" data-i18n-aria="language.label">
+    <button type="button" data-language="en" aria-pressed="true">EN</button>
+    <button type="button" data-language="zh" aria-pressed="false">中文</button>
+  </div>
+
+  <main id="top">
+    <section class="shell hero" aria-labelledby="hero-title">
+      <div class="hero-text">
+        <div class="eyebrow" data-i18n="hero.eyebrow">Media Advertising → AI-Enabled Creativity</div>
+        <h1 id="hero-title">
+          <span data-i18n="hero.titleLine1">From Media Advertising</span>
+          <span class="outline" data-i18n="hero.titleLine2">to AI-Enabled Creativity</span>
+        </h1>
+        <p class="hero-copy" data-i18n="hero.copy">
+          Across brand commercials, cultural and travel storytelling, and technology films,
+          I shape strategy, emotion, and visual language into stories worth watching through.
+        </p>
+        <div class="hero-actions">
+          <button class="button button-primary" type="button" data-open-work="0">
+            <span class="play-glyph" aria-hidden="true"></span>
+            <span data-i18n="hero.play">Play Featured Work</span>
+          </button>
+          <a class="button" href="#works">
+            <span data-i18n="hero.browse">Explore All Work</span>
+            <span class="arrow" aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-media">
+        <img
+          src="assets/posters/AI%E5%B9%BF%E5%91%8A.mp4.jpg"
+          alt="AI commercial cover featuring a yellow sports car driving through flames"
+          data-i18n-alt="hero.imageAlt"
+        />
+        <span class="feature-tag" data-i18n="hero.featureTag">Featured / 01</span>
+        <div class="hero-media-content">
+          <div>
+            <p class="feature-kicker" data-i18n="hero.featureKicker">AI Commercial · 00:28</p>
+            <p class="feature-title" data-i18n="hero.featureTitle">AI Commercial</p>
+          </div>
+          <button
+            class="hero-play"
+            type="button"
+            data-open-work="0"
+            aria-label="Play AI Commercial"
+            data-i18n-aria="hero.playAria"
+          >
+            <span class="play-glyph" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="facts" aria-label="Portfolio overview" data-i18n-aria="facts.label">
+      <div class="shell facts-grid">
+        <div class="fact">
+          <span class="fact-value">11</span>
+          <span class="fact-label" data-i18n="facts.selected">Selected Stories</span>
+        </div>
+        <div class="fact">
+          <span class="fact-value">04</span>
+          <span class="fact-label" data-i18n="facts.fields">Creative Fields</span>
+        </div>
+        <div class="fact">
+          <span class="fact-value">13′</span>
+          <span class="fact-label" data-i18n="facts.runtime">Total Runtime</span>
+        </div>
+        <div class="fact">
+          <span class="fact-value">1.2M+</span>
+          <span class="fact-label" data-i18n="facts.viewership">Average Viewership / Video</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell works" id="works" aria-labelledby="works-title">
+      <div class="section-head">
+        <div>
+          <div class="section-index" data-i18n="works.index">01 / Selected Technical Storytelling</div>
+          <h2 id="works-title" data-i18n="works.title">Selected Technical Storytelling</h2>
+        </div>
+      </div>
+
+      <div class="filters" aria-label="Filter work by category" data-i18n-aria="filters.label">
+        <button class="filter is-active" type="button" data-filter="all" aria-pressed="true" data-i18n="filters.all">All 11</button>
+        <button class="filter" type="button" data-filter="brand" aria-pressed="false" data-i18n="filters.brand">Brand Commercials 04</button>
+        <button class="filter" type="button" data-filter="culture" aria-pressed="false" data-i18n="filters.culture">Cultural &amp; Travel 02</button>
+        <button class="filter" type="button" data-filter="tech" aria-pressed="false" data-i18n="filters.tech">Technology Films 04</button>
+        <button class="filter" type="button" data-filter="style" aria-pressed="false" data-i18n="filters.style">Style Film 01</button>
+      </div>
+
+      <div class="work-grid" id="work-grid"></div>
+
+      <div class="cream-ending" aria-label="Career progression" data-i18n-aria="ending.label">
+        <p class="cream-ending-label" data-i18n="ending.kicker">Seven years / One evolution</p>
+        <p class="cream-ending-text">
+          <span class="ending-phrase" data-i18n-html="ending.line1">Seven years in commercial filmmaking</span>
+          <span class="ending-phrase" data-i18n-html="ending.line2">From traditional editing to <span class="ending-accent">AI-enabled production</span></span>
+          <span class="ending-phrase" data-i18n-html="ending.line3">From creative content to <span class="ending-accent">AI product development</span></span>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="contact-footer" aria-labelledby="contact-title">
+    <div class="shell contact-footer__inner">
+      <div>
+        <p class="contact-footer__kicker" data-i18n="contact.kicker">Yingzhi Huang / Contact</p>
+        <h2
+          class="contact-footer__title"
+          id="contact-title"
+          data-i18n-html="contact.titleBlock"
+        >Stay in touch<span>Let’s build something worth experiencing.</span></h2>
+        <p class="contact-footer__role" data-i18n="contact.role">
+          AI Product &amp; Developer Experience Engineer · Multimodal Prototyping ·
+          Technical Storytelling
+        </p>
+      </div>
+
+      <address class="contact-footer__list">
+        <div class="contact-footer__item">
+          <span data-i18n="contact.location">Location</span>
+          <strong data-i18n="contact.locationValue">Shanghai, China</strong>
+        </div>
+        <a class="contact-footer__item" href="mailto:simonhuang0502@gmail.com">
+          <span data-i18n="contact.email">Email</span>
+          <strong>simonhuang0502@gmail.com</strong>
+          <i aria-hidden="true">↗</i>
+        </a>
+        <a
+          class="contact-footer__item"
+          href="https://github.com/YingzhiDev"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span>GitHub</span>
+          <strong>github.com/YingzhiDev</strong>
+          <i aria-hidden="true">↗</i>
+        </a>
+        <a
+          class="contact-footer__item"
+          href="https://www.linkedin.com/in/yingzhi-huang-88b94127b/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span>LinkedIn</span>
+          <strong>linkedin.com/in/yingzhi-huang-88b94127b</strong>
+          <i aria-hidden="true">↗</i>
+        </a>
+        <a
+          class="contact-footer__item"
+          href="https://www.geniushuang.cn"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span data-i18n="contact.product">Product</span>
+          <strong>www.geniushuang.cn</strong>
+          <i aria-hidden="true">↗</i>
+        </a>
+      </address>
+    </div>
+
+    <div class="shell contact-footer__bottom">
+      <span data-i18n="contact.copyright">© 2026 YINGZHI HUANG · Open to San Francisco relocation</span>
+      <a href="#top" data-i18n="contact.backToTop">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <div
+    class="player"
+    id="player"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="player-title"
+  >
+    <div class="player-top">
+      <div class="player-title-wrap">
+        <span class="player-index" id="player-index">01 / 11</span>
+        <h3 class="player-title" id="player-title">AI Commercial</h3>
+      </div>
+      <button class="close-player" id="close-player" type="button" aria-label="Close player" data-i18n-aria="player.close">×</button>
+    </div>
+    <div class="player-stage">
+      <button class="player-nav player-prev" id="player-prev" type="button" aria-label="Play previous work" data-i18n-aria="player.previous">←</button>
+      <video class="player-video" id="player-video" controls playsinline preload="metadata" aria-label="Selected work video"></video>
+      <button class="player-nav player-next" id="player-next" type="button" aria-label="Play next work" data-i18n-aria="player.next">→</button>
+    </div>
+    <div class="player-foot">
+      <span id="player-type">Technology Film · AI Commercial</span>
+      <span data-i18n="player.help">Esc to close · ← → to switch</span>
+    </div>
+  </div>
+
+  <script src="../assets/portfolio-i18n.js"></script>
+  <script>
+    const translations = {
+      "meta.title": {
+        en: "Selected Technical Storytelling",
+        zh: "技术叙事精选"
+      },
+      "meta.description": {
+        en: "Selected technical storytelling across brand commercials, cultural and travel narratives, technology films, and AI-enabled production.",
+        zh: "技术叙事精选：涵盖品牌广告、文旅叙事、科技影像与 AI 赋能的制作工作流。"
+      },
+      "language.label": { en: "Language", zh: "语言" },
+      "hero.eyebrow": {
+        en: "Media Advertising → AI-Enabled Creativity",
+        zh: "传媒广告 → AI 创意"
+      },
+      "hero.titleLine1": { en: "From Media Advertising", zh: "从传媒广告" },
+      "hero.titleLine2": { en: "to AI-Enabled Creativity", zh: "到 AI 创意的转变" },
+      "hero.copy": {
+        en: "Across brand commercials, cultural and travel storytelling, and technology films, I shape strategy, emotion, and visual language into stories worth watching through.",
+        zh: "从品牌广告、文旅叙事到科技影像，我把策略、情绪与视觉语言收束成一支值得被看完的片子。"
+      },
+      "hero.play": { en: "Play Featured Work", zh: "播放精选作品" },
+      "hero.browse": { en: "Explore All Work", zh: "浏览全部作品" },
+      "hero.imageAlt": {
+        en: "AI commercial cover featuring a yellow sports car driving through flames",
+        zh: "AI 广告作品封面：一辆黄色跑车驶过火焰场景"
+      },
+      "hero.featureTag": { en: "Featured / 01", zh: "精选 / 01" },
+      "hero.featureKicker": { en: "AI Commercial · 00:28", zh: "AI 广告 · 00:28" },
+      "hero.featureTitle": { en: "AI Commercial", zh: "AI 广告" },
+      "hero.playAria": { en: "Play AI Commercial", zh: "播放 AI 广告" },
+      "facts.label": { en: "Portfolio overview", zh: "作品集概览" },
+      "facts.selected": { en: "Selected Stories", zh: "精选作品" },
+      "facts.fields": { en: "Creative Fields", zh: "创作领域" },
+      "facts.runtime": { en: "Total Runtime", zh: "总时长" },
+      "facts.viewership": {
+        en: "Average Viewership / Video",
+        zh: "单支视频平均播放量"
+      },
+      "works.index": {
+        en: "01 / Selected Technical Storytelling",
+        zh: "01 / 技术叙事精选"
+      },
+      "works.title": {
+        en: "Selected Technical Storytelling",
+        zh: "技术叙事精选"
+      },
+      "works.playCard": {
+        en: "Play “{title}”, duration {duration}",
+        zh: "播放《{title}》，时长 {duration}"
+      },
+      "filters.label": { en: "Filter work by category", zh: "按类型筛选作品" },
+      "filters.all": { en: "All 11", zh: "全部 11" },
+      "filters.brand": { en: "Brand Commercials 04", zh: "品牌广告 04" },
+      "filters.culture": { en: "Cultural & Travel 02", zh: "文旅叙事 02" },
+      "filters.tech": { en: "Technology Films 04", zh: "科技影像 04" },
+      "filters.style": { en: "Style Film 01", zh: "风格短片 01" },
+      "ending.label": { en: "Career progression", zh: "职业经历总结" },
+      "ending.kicker": { en: "Seven years / One evolution", zh: "七年 / 一次进化" },
+      "ending.line1": {
+        en: "Seven years in commercial filmmaking",
+        zh: "七年影视广告制作经验"
+      },
+      "ending.line2": {
+        en: "From traditional editing to <span class=\"ending-accent\">AI-enabled production</span>",
+        zh: "从传统剪辑到<span class=\"ending-accent\">AI 赋能的制作流程</span>"
+      },
+      "ending.line3": {
+        en: "From creative content to <span class=\"ending-accent\">AI product development</span>",
+        zh: "从创意内容到<span class=\"ending-accent\">AI 产品开发</span>"
+      },
+      "contact.kicker": { en: "Yingzhi Huang / Contact", zh: "黄赢之 / 联系方式" },
+      "contact.titleBlock": {
+        en: "Stay in touch<span>Let’s build something worth experiencing.</span>",
+        zh: "保持联系<span>一起创造值得被体验的作品。</span>"
+      },
+      "contact.role": {
+        en: "AI Product & Developer Experience Engineer · Multimodal Prototyping · Technical Storytelling",
+        zh: "AI 产品与开发者体验工程师 · 多模态原型开发 · 技术叙事"
+      },
+      "contact.location": { en: "Location", zh: "所在地" },
+      "contact.locationValue": { en: "Shanghai, China", zh: "中国 · 上海" },
+      "contact.email": { en: "Email", zh: "邮箱" },
+      "contact.product": { en: "Product", zh: "产品" },
+      "contact.copyright": {
+        en: "© 2026 YINGZHI HUANG · Open to San Francisco relocation",
+        zh: "© 2026 黄赢之 · 可考虑迁往旧金山"
+      },
+      "contact.backToTop": { en: "Back to top ↑", zh: "返回顶部 ↑" },
+      "player.close": { en: "Close player", zh: "关闭播放器" },
+      "player.previous": { en: "Play previous work", zh: "播放上一个作品" },
+      "player.next": { en: "Play next work", zh: "播放下一个作品" },
+      "player.help": {
+        en: "Esc to close · ← → to switch",
+        zh: "Esc 关闭 · ← → 切换"
+      },
+      "player.videoAria": {
+        en: "Video player for “{title}”",
+        zh: "《{title}》视频播放器"
+      }
+    };
+
+    const works = [
+      {
+        title: { en: "AI Commercial", zh: "AI 广告" },
+        file: "小米AI广告.mp4",
+        poster: "AI广告.mp4",
+        duration: "00:28",
+        category: "tech",
+        type: { en: "Technology Film · AI Commercial", zh: "科技影像 · AI 广告" },
+        year: "2026",
+        alt: {
+          en: "Yellow sports car driving through a wall of flames",
+          zh: "黄色跑车驶过火焰场景"
+        },
+        description: {
+          en: "An AI-enabled automotive spot combining controlled spectacle with fast-paced visual storytelling.",
+          zh: "以 AI 赋能制作的汽车广告，用可控的视觉奇观与快节奏叙事强化产品冲击力。"
+        },
+        layoutOrder: -3
+      },
+      {
+        title: { en: "Brapoem", zh: "Brapoem" },
+        file: "Brapoem.mp4",
+        duration: "01:27",
+        category: "style",
+        type: { en: "Style Film · Fashion Film", zh: "风格短片 · 时尚影像" },
+        year: "2026",
+        alt: {
+          en: "Fashion film framed by greenery and a figure beside a window",
+          zh: "绿植与窗边人物构成的时尚影像"
+        },
+        description: {
+          en: "A fashion-led mood film built around intimate portraiture, tactile detail, and natural light.",
+          zh: "围绕人物肖像、材质细节与自然光展开的情绪化时尚短片。"
+        },
+        layoutOrder: -3
+      },
+      {
+        title: { en: "FILA", zh: "FILA" },
+        file: "FILA.mp4",
+        duration: "00:25",
+        category: "brand",
+        type: { en: "Brand Commercial · Sportswear", zh: "品牌广告 · 运动服饰" },
+        year: "2026",
+        alt: {
+          en: "Cover image for a FILA brand commercial",
+          zh: "FILA 品牌广告作品封面"
+        },
+        description: {
+          en: "A concise sportswear commercial shaped around movement, energy, and product presence.",
+          zh: "围绕运动、能量与产品表现力构建的精炼运动品牌广告。"
+        }
+      },
+      {
+        title: { en: "TokenPlan Introduction", zh: "TokenPlan 介绍" },
+        file: "TokenPlan介绍.mp4",
+        duration: "01:03",
+        category: "tech",
+        type: { en: "Technology Film · Product Film", zh: "科技影像 · 产品介绍" },
+        year: "2026",
+        alt: {
+          en: "Cover image for the TokenPlan product film",
+          zh: "TokenPlan 产品介绍片封面"
+        },
+        description: {
+          en: "A product introduction translating TokenPlan’s value into a clear and accessible visual narrative.",
+          zh: "把 TokenPlan 的产品价值转化为清晰、易理解的视觉叙事。"
+        },
+        layoutOrder: -2
+      },
+      {
+        title: { en: "Token Factory", zh: "Token 工厂" },
+        file: "Token工厂.mp4",
+        duration: "01:07",
+        category: "tech",
+        type: { en: "Technology Film · Brand Story", zh: "科技影像 · 品牌故事" },
+        year: "2026",
+        alt: {
+          en: "Cover image for the Token Factory brand story",
+          zh: "Token 工厂品牌影像封面"
+        },
+        description: {
+          en: "A brand story visualizing the system, scale, and production logic behind Token Factory.",
+          zh: "以品牌故事呈现 Token 工厂背后的系统、规模与生产逻辑。"
+        },
+        layoutOrder: -2
+      },
+      {
+        title: {
+          en: "Listening to the Sea: Destination Landmark",
+          zh: "听海文旅地标"
+        },
+        file: "听海文旅地标.mp4",
+        duration: "00:57",
+        category: "culture",
+        type: {
+          en: "Cultural & Travel · Destination Film",
+          zh: "文旅叙事 · 目的地影像"
+        },
+        year: "2026",
+        alt: {
+          en: "Cover image for the Listening to the Sea destination film",
+          zh: "听海文旅地标宣传片封面"
+        },
+        description: {
+          en: "A destination film presenting Listening to the Sea as a recognizable cultural and travel landmark.",
+          zh: "将“听海”塑造成具有辨识度的文化与旅行目的地地标。"
+        }
+      },
+      {
+        title: {
+          en: "Listening to the Sea: A Child’s View",
+          zh: "听海 · 孩子视角"
+        },
+        file: "听海视频孩子视角.mp4",
+        duration: "01:32",
+        category: "culture",
+        type: { en: "Cultural & Travel · Story Film", zh: "文旅叙事 · 故事短片" },
+        year: "2026",
+        alt: {
+          en: "Cover image for a child’s-view travel story",
+          zh: "听海孩子视角叙事片封面"
+        },
+        description: {
+          en: "A travel story that rediscovers Listening to the Sea through a child’s point of view.",
+          zh: "从孩子的视角重新发现“听海”的文旅故事。"
+        }
+      },
+      {
+        title: {
+          en: "Tiangang Intelligent Computing",
+          zh: "天罡智算宣传片"
+        },
+        file: "天罡智算宣传片.mp4",
+        duration: "03:20",
+        category: "tech",
+        type: { en: "Technology Film · Corporate Film", zh: "科技影像 · 企业宣传片" },
+        year: "2026",
+        alt: {
+          en: "Cover image for the Tiangang Intelligent Computing corporate film",
+          zh: "天罡智算企业宣传片封面"
+        },
+        description: {
+          en: "A corporate technology film turning intelligent-computing infrastructure into an approachable story.",
+          zh: "将智能计算基础设施转化为易理解、可感知的企业科技叙事。"
+        },
+        layoutOrder: -2
+      },
+      {
+        title: { en: "Haier Kitchen Brand Film", zh: "海尔厨房品牌篇" },
+        file: "海尔厨房品牌篇.mp4",
+        duration: "00:15",
+        category: "brand",
+        type: { en: "Brand Commercial · Home & Living", zh: "品牌广告 · 家居生活" },
+        year: "2026",
+        alt: {
+          en: "Cover image for a Haier Kitchen brand commercial",
+          zh: "海尔厨房品牌广告封面"
+        },
+        description: {
+          en: "A compact home-and-living commercial centered on the Haier kitchen experience.",
+          zh: "围绕海尔厨房体验展开的紧凑型家居生活广告。"
+        },
+        layoutOrder: -1
+      },
+      {
+        title: {
+          en: "Tsingtao Brewery: Antarctic Expedition",
+          zh: "青岛啤酒 · 南极行"
+        },
+        file: "青岛啤酒 南极行.mp4",
+        duration: "01:44",
+        category: "brand",
+        type: { en: "Brand Commercial · Documentary", zh: "品牌广告 · 纪实影像" },
+        year: "2026",
+        alt: {
+          en: "Cover image for Tsingtao Brewery’s Antarctic expedition film",
+          zh: "青岛啤酒南极行品牌影像封面"
+        },
+        description: {
+          en: "A documentary-led brand story following Tsingtao Brewery’s journey to Antarctica.",
+          zh: "以纪实方式讲述青岛啤酒南极之行的品牌故事。"
+        },
+        layoutOrder: -1
+      },
+      {
+        title: { en: "Continental Tires", zh: "马牌轮胎" },
+        file: "马牌轮胎.mp4",
+        duration: "01:00",
+        category: "brand",
+        type: { en: "Brand Commercial · Automotive", zh: "品牌广告 · 汽车行业" },
+        year: "2026",
+        alt: {
+          en: "Cover image for a Continental Tires automotive commercial",
+          zh: "马牌轮胎汽车品牌广告封面"
+        },
+        description: {
+          en: "An automotive commercial expressing performance, control, and confidence on the road.",
+          zh: "强调性能、操控与道路信心的汽车品牌广告。"
+        },
+        layoutOrder: -1
+      }
+    ];
+
+    const grid = document.querySelector("#work-grid");
+    const player = document.querySelector("#player");
+    const video = document.querySelector("#player-video");
+    const playerTitle = document.querySelector("#player-title");
+    const playerIndex = document.querySelector("#player-index");
+    const playerType = document.querySelector("#player-type");
+    const closePlayerButton = document.querySelector("#close-player");
+    let activeIndex = 0;
+    let activeFilter = "all";
+    let currentLanguage = "en";
+    let lastFocusedElement = null;
+
+    const assetPath = (folder, filename, suffix = "") =>
+      encodeURI(`${folder}/${filename}${suffix}`);
+
+    const localized = (value) => {
+      if (typeof value === "string") return value;
+      return value?.[currentLanguage] ?? value?.en ?? value?.zh ?? "";
+    };
+
+    const uiText = (key, variables = {}) => {
+      const entry = translations[key];
+      const value = typeof entry === "string"
+        ? entry
+        : entry?.[currentLanguage] ?? entry?.en ?? entry?.zh ?? key;
+      return String(value).replace(/\{(\w+)\}/g, (match, variable) => (
+        Object.prototype.hasOwnProperty.call(variables, variable)
+          ? String(variables[variable])
+          : match
+      ));
+    };
+
+    const escapeHTML = (value) => String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+    const applyActiveFilter = () => {
+      document.querySelectorAll(".work-card").forEach((card) => {
+        const shouldShow = activeFilter === "all" || card.dataset.category === activeFilter;
+        card.classList.toggle("is-hidden", !shouldShow);
+      });
+    };
+
+    const renderWorks = () => {
+      grid.innerHTML = works.map((work, index) => `
+        <button
+          class="work-card"
+          type="button"
+          data-index="${index}"
+          data-category="${work.category}"
+          aria-label="${escapeHTML(uiText("works.playCard", {
+            title: localized(work.title),
+            duration: work.duration
+          }))}"
+          aria-description="${escapeHTML(localized(work.description))}"
+          style="order: ${work.layoutOrder ?? 0}; animation-delay: ${Math.min(index * 45, 270)}ms"
+        >
+          <span class="work-cover">
+            <img
+              src="${assetPath("assets/posters", work.poster ?? work.file, ".jpg")}"
+              alt="${escapeHTML(localized(work.alt))}"
+              loading="${index < 2 ? "eager" : "lazy"}"
+            />
+            <span class="work-number">${String(index + 1).padStart(2, "0")}</span>
+            <span class="work-duration">${work.duration}</span>
+            <span class="card-play" aria-hidden="true">
+              <span class="play-glyph"></span>
+            </span>
+          </span>
+          <span class="work-meta">
+            <span>
+              <span class="work-title">${escapeHTML(localized(work.title))}</span>
+              <span class="work-type">${escapeHTML(localized(work.type))}</span>
+            </span>
+            <span class="work-year">${work.year}</span>
+          </span>
+        </button>
+      `).join("");
+      applyActiveFilter();
+    };
+
+    const updatePlayerLanguage = () => {
+      const work = works[activeIndex];
+      const title = localized(work.title);
+      playerTitle.textContent = title;
+      playerType.textContent = localized(work.type);
+      player.setAttribute("aria-description", localized(work.description));
+      video.setAttribute("aria-label", uiText("player.videoAria", { title }));
+    };
+
+    const openPlayer = (index) => {
+      activeIndex = (index + works.length) % works.length;
+      const work = works[activeIndex];
+
+      if (!player.classList.contains("is-open")) {
+        lastFocusedElement = document.activeElement;
+      }
+      updatePlayerLanguage();
+      playerIndex.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(works.length).padStart(2, "0")}`;
+      video.poster = assetPath("assets/posters", work.poster ?? work.file, ".jpg");
+      video.src = assetPath("VIDEO", work.file);
+      player.classList.add("is-open");
+      player.setAttribute("aria-hidden", "false");
+      document.body.classList.add("is-locked");
+      closePlayerButton.focus();
+
+      const playAttempt = video.play();
+      if (playAttempt) playAttempt.catch(() => {});
+    };
+
+    const closePlayer = () => {
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+      player.classList.remove("is-open");
+      player.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("is-locked");
+      if (lastFocusedElement) lastFocusedElement.focus();
+    };
+
+    grid.addEventListener("click", (event) => {
+      const card = event.target.closest(".work-card");
+      if (card) openPlayer(Number(card.dataset.index));
+    });
+
+    document.querySelectorAll("[data-open-work]").forEach((button) => {
+      button.addEventListener("click", () => openPlayer(Number(button.dataset.openWork)));
+    });
+
+    document.querySelectorAll(".filter").forEach((filterButton) => {
+      filterButton.addEventListener("click", () => {
+        activeFilter = filterButton.dataset.filter;
+
+        document.querySelectorAll(".filter").forEach((button) => {
+          const isActive = button === filterButton;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", String(isActive));
+        });
+
+        applyActiveFilter();
+      });
+    });
+
+    closePlayerButton.addEventListener("click", closePlayer);
+    document.querySelector("#player-prev").addEventListener("click", () => openPlayer(activeIndex - 1));
+    document.querySelector("#player-next").addEventListener("click", () => openPlayer(activeIndex + 1));
+
+    player.addEventListener("click", (event) => {
+      if (event.target === player) closePlayer();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (!player.classList.contains("is-open")) return;
+      if (event.key === "Escape") closePlayer();
+      if (event.key === "ArrowLeft") openPlayer(activeIndex - 1);
+      if (event.key === "ArrowRight") openPlayer(activeIndex + 1);
+    });
+
+    window.addEventListener("message", (event) => {
+      if (event.source !== window.parent || event.data !== "portfolio:pause") return;
+      video.pause();
+    });
+
+    renderWorks();
+    updatePlayerLanguage();
+
+    const languageController = PortfolioI18n.createController({
+      translations,
+      title: "meta.title",
+      description: "meta.description",
+      onChange(language) {
+        currentLanguage = language;
+        renderWorks();
+        updatePlayerLanguage();
+      }
+    });
+  </script>
+</body>
+</html>
